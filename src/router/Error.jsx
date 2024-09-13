@@ -1,6 +1,7 @@
 const Error =()=>{
     return(
         <>
+        404
         </>
     )
 }

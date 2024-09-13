@@ -1,0 +1,100 @@
+.container-titulo {
+    display: grid;
+    grid-template-columns: initial;
+    width: 100%;
+    height: 100px;
+    padding-top: 50px;
+    text-align: center;
+    align-items: center;
+    color: var(--color-1);
+    text-transform: uppercase;
+  }
+  
+  .container-titulo h1 {
+    font-family: var(--fonte-quantico);
+  }
+  
+  .container-titulo h4 {
+    font-family: var(--fonte-Jura);
+  }
+  
+  .primary-navbar {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid var(--vermelho);
+  }
+  
+  .nav-left {
+    display: flex;
+    padding-left: 36px;
+    height: 60px;
+    border: 1px solid var(--vermelho);
+    -webkit-transform: skew(-30deg);
+    transform: skew(-30deg);
+    position: relative;
+    left: -1.85rem;
+    align-items: center;
+    justify-content: center;
+    background-color: #0a1520;
+  }
+  
+  .logo-comp {
+    -webkit-transform: skew(30deg);
+    transform: skew(30deg);
+    display: flex;
+    align-items: center;
+  }
+  
+  #logo {
+    height: 10vh;
+    width: 170px;
+    cursor: pointer;
+  }
+  
+  #nav-right {
+    display: flex;
+    justify-content: space-between;
+    padding: 7px 25px 7px 0;
+  }
+  
+  #nav-right ul {
+    display: flex;
+    gap: 2rem;
+    margin-right: 20px;
+    color: var(--color-1);
+    font-family: var(--fonte-Jura);
+  }
+  
+  #nav-right ul li {
+    display: flex;
+    list-style: none;
+  }
+  
+  #nav-right ul li a {
+    display: flex;
+    text-decoration: none;
+    color: var(--color-1);
+    align-items: center;
+    font-size: 14px;
+    text-transform: uppercase;
+  }
+  
+  .img-profile {
+    height: 3.5vh;
+  }
+  
+  .cad-log-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .profile-container {
+    display: flex;
+  }
+  
+  .profile-container img {
+    padding-right: 10px;
+  }
