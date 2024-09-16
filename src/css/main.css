@@ -8,12 +8,13 @@
   --branco: #FBFBFF;
   --vermelho: #D50019;
   --fonte-Jura: "Jura", sans-serif;
-  --fonte-quantico: "Quantico", sans-serif;
+  --fonte-Quantico: "Quantico", sans-serif;
 }
 
 * {
     padding: 0;
     margin: 0;
+    font-family: var(--fonte-Jura);
   }
   
   body {
@@ -30,4 +31,8 @@
   
   .main {
     margin: 50px;
+  }
+
+  .min-h-full{
+    height: 100vh;
   }
