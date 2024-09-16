@@ -2,9 +2,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Jura:wght@300..700&family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 
 :root {
-  --vermelho: #a50000;
-  --color-1: #fff;
-  --color-2: #000;
+  --azul-petroleo: #008080;
+  --azul-escuro: #080618;
+  --azul-claro: #0A3CFF;
+  --branco: #FBFBFF;
+  --vermelho: #D50019;
   --fonte-Jura: "Jura", sans-serif;
   --fonte-quantico: "Quantico", sans-serif;
 }
@@ -15,15 +17,7 @@
   }
   
   body {
-    background: rgb(10, 21, 32);
-    background: linear-gradient(
-      180deg,
-      #0a1520 38%,
-      #1a2731 82%,
-      #2f3e46 100%
-    );
-    background-attachment: fixed;
-    overflow-x: hidden;
+    background-color: var(--azul-escuro);
   }
   
   .margin {
@@ -31,7 +25,7 @@
   }
   
   strong {
-    color: var(--vermelho);
+    color: var(--azul-petroleo);
   }
   
   .main {

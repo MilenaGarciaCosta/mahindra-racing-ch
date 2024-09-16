@@ -1,7 +1,8 @@
-import "../css/nav.css"
-import '../css/main.css'
-import Logo from "../img/logo.png"
-import ProfileIcon from "../img/profile-icon.png"
+import "../css/nav.css";
+import "../css/main.css";
+import Logo from "../img/logo.png";
+import ProfileIcon from "../img/profile-icon.png";
+import { Link } from "react-router-dom";
 
 const Nav = () => {
   return (
@@ -14,32 +15,14 @@ const Nav = () => {
         </div>
       </div>
       <div id="nav-right">
-        <ul>
-          <li>
-            <a href="../formulaE-pag/formulaE.html">Fórmula E</a>
-          </li>
-          <li>
-            <a href="../loja-pag/loja.html">Loja</a>
-          </li>
-          <li>
-            <a href="../eGame-pag/eGame.html">E-game</a>
-          </li>
-          <div className="profile-container">
-            <li>
-              <a href="">
-                <img src={ProfileIcon} alt="" />
-              </a>
-            </li>
-            <div className="cad-log-container">
-              <li>
-                <a href="../entrar-pag/entrar.html">Entrar</a>
-              </li>
-              <li>
-                <a href="../cadastro-pag/cadastro.html">Cadastrar</a>
-              </li>
-            </div>
-          </div>
-        </ul>
+        <div className="menu-container">
+          <label className="burger" htmlFor="burger">
+            <input type="checkbox" id="burger" />
+            <span></span>
+            <span></span>
+            <span></span>
+          </label>
+        </div>
       </div>
     </nav>
   );
