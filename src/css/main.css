@@ -18,15 +18,18 @@
 * {
     padding: 0;
     margin: 0;
+    color: var(--branco);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
   
   body {
     background-color: var(--azul-escuro);
     font-family: var(--fonte-Jura);
-  }
-  
-  .margin {
-    margin: 10px 20px;
   }
   
   strong {
@@ -35,8 +38,4 @@
   
   .main {
     margin: 50px;
-  }
-
-  .min-h-full{
-    height: 100vh;
   }

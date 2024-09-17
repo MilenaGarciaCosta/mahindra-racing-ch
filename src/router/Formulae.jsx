@@ -1,10 +1,9 @@
 import "../css/formula.css"
 
-const Formula=()=>{
-    return(
-    <>
-
-    </>
+const Formula = () => {
+    return (
+        <section className="main">
+        </section>
     )
-} 
+}
 export default Formula;
