@@ -5,6 +5,8 @@ import App from './App.jsx';
 import Error from './router/Error.jsx';
 import Home from './router/Home.jsx';
 import Loja from './router/Loja.jsx';
+import Egame from './router/Egame.jsx'
+import FormulaE from './router/Formulae.jsx'
 
 const router = createBrowserRouter([
   {
@@ -16,6 +18,8 @@ const router = createBrowserRouter([
     children:[
       {path: '/', element:<Home/>},
       {path: '/loja', element:<Loja/>},
+      {path: '/egame', element:<Egame/>},
+      {path: '/formulae', element:<FormulaE/>},
     ]
   }
 ])
