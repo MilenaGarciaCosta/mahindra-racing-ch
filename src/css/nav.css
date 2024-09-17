@@ -1,16 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-:root {
-  --azul-petroleo: #008080;
-  --branco: #FBFBFF;
-  --azul-claro: #0A3CFF;
-  --azul-escuro: #030027;
-}
-
 /* Menu hamburguer */
-
 .burger {
   position: relative;
   width: 20px;
@@ -72,7 +60,6 @@
 }
 
 /* Nav geral */
-
 .container-titulo {
   display: grid;
   grid-template-columns: initial;
@@ -94,8 +81,7 @@
 
 .primary-navbar {
   display: flex;
-  justify-content: space-between;
-  width: 100%;
+
   height: 50px;
   border-bottom: 2px solid var(--azul-petroleo);
   background-color: var(--azul-escuro);
@@ -113,6 +99,7 @@
   align-items: center;
   justify-content: center;
   background-color: var(--azul-escuro);
+  z-index: 1000000;
 }
 
 .logo-comp {
@@ -128,15 +115,56 @@
   cursor: pointer;
 }
 
-#nav-right {
+.nav-right{
+  width: 100%;
   display: flex;
+  justify-content: end;
   align-items: center;
-  justify-content: space-between;
-  padding: 7px 25px 7px 0;
+  gap: 30px;
+  margin-right: 30px;
+  list-style: none;
 }
 
-.menu-container {
+.nav-dropDown{
+  position: absolute;
+  top: 50px;
+  height: 100%;
+  padding-top: 40px;
+  width: 100%;
+  z-index: 100000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  backdrop-filter: blur( 4px );
+  display: none;
+}
+
+.nav-right li, .nav-dropDown li{
+  color: var(--branco);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.menu-burguer {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: end;
+  margin-right: 30px;
+  display: none;
+}
+
+/* Responsividade Nav*/
+
+@media screen and (max-width: 952px){
+  .menu-burguer{
+    width: 100%;
+    display: flex;
+  }
+
+  .nav-right{
+    display: none;
+  }
+
 }

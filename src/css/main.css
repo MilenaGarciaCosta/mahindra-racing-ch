@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @import url("https://fonts.googleapis.com/css2?family=Jura:wght@300..700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Jura:wght@300..700&family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 
@@ -14,11 +18,11 @@
 * {
     padding: 0;
     margin: 0;
-    font-family: var(--fonte-Jura);
   }
   
   body {
     background-color: var(--azul-escuro);
+    font-family: var(--fonte-Jura);
   }
   
   .margin {
