@@ -12,9 +12,13 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:5000/api/login', { email, senha });
-      localStorage.setItem('token', response.data.token);  // Salva o token no localStorage
+
+      // Armazene o usuarioId no localStorage
+      localStorage.setItem('usuarioId', response.data.usuarioId);
+
       navigate('/egame');  // Redireciona para o E-game após o login
     } catch (err) {
+      console.error(err.response ? err.response.data : err.message);
       alert('Erro no login');
     }
   };
@@ -42,4 +46,6 @@ const Login = () => {
 };
 
 export default Login;
+
+
 
