@@ -7,6 +7,8 @@ import Home from './router/Home.jsx';
 import Loja from './router/Loja.jsx';
 import Egame from './router/Egame.jsx'
 import FormulaE from './router/Formulae.jsx'
+import Login from './router/Login.jsx';   
+import Cadastro from './router/Cadastro.jsx';  
 
 const router = createBrowserRouter([
   {
@@ -20,6 +22,9 @@ const router = createBrowserRouter([
       {path: '/loja', element:<Loja/>},
       {path: '/egame', element:<Egame/>},
       {path: '/formulae', element:<FormulaE/>},
+      { path: '/login', element: <Login /> },     
+      { path: '/cadastro', element: <Cadastro /> }  
+      
     ]
   }
 ])
