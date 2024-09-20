@@ -20,7 +20,7 @@ const Produto = () => {
                             <div className="valorProduto"><p><span className="valor">100</span> pontos</p></div>
 
                             <div className="compraContainer">
-                                <button> Resgatar </button>
+                                <button className="button"> Resgatar </button>
                             </div>
                         </div>
                     </div>
