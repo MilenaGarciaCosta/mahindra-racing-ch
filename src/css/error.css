@@ -31,3 +31,7 @@ body{
 Link a{
     background-color: var(--vermelho);
 }
+
+.min-h-full{
+    height: 100vh;
+}

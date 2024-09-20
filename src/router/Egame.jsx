@@ -46,6 +46,9 @@ const Egame = () => {
 
   return (
     <section className="egame">
+      <div className="titulo-container">
+        <h2>E-game</h2>
+      </div>
       <h2>Faça seu palpite!</h2>
       <div>
         <h1>CORRIDA PASSADA</h1>
@@ -54,11 +57,11 @@ const Egame = () => {
         <p>3: 'Roberto Merhi - Mahindra Racing', velocidade: '190km/h'</p>
       </div>
       <form onSubmit={handleSubmit}>
-        <input 
-          type="number" 
-          placeholder="Digite a posição do jogador que você acha que ganhará na próxima corrida" 
-          value={palpite} 
-          onChange={(e) => setPalpite(e.target.value)} 
+        <input
+          type="number"
+          placeholder="Digite a posição do jogador que você acha que ganhará na próxima corrida"
+          value={palpite}
+          onChange={(e) => setPalpite(e.target.value)}
         />
         <button type="submit">Enviar Palpite</button>
       </form>
@@ -78,7 +81,7 @@ const Egame = () => {
         </div>
       )}
 
-      
+
       <div id="grafico-corrida">
         <p>Aqui em baixo vai ter a importação do gráfico</p>
         {/* Gráfico da corrida gerado a partir do C++ */}
