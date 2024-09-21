@@ -39,3 +39,7 @@
   .main {
     margin: 50px;
   }
+
+  #pontosSvg{
+    height: 30px;
+  }
