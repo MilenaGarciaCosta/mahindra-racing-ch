@@ -24,6 +24,7 @@
     "react-router-dom": "^6.26.2",
     "sequelize": "^6.37.3",
     "styled-components": "^6.1.13",
+    "swiper": "^11.1.14",
     "tw-elements-react": "^1.0.0-alpha-end"
   },
   "devDependencies": {

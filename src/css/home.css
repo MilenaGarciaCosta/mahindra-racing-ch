@@ -1,0 +1,29 @@
+@import 'swiper/swiper-bundle.css';
+
+.banner{
+    width: 100%;
+    height: 500px;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: #ff0000; 
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  color: #00ffc8; 
+}
+
+.swiper-pagination-bullet {
+    background-color: #ff0000; 
+    opacity: 1; 
+    width: 12px; 
+    height: 12px; 
+    border-radius: 50%; 
+    margin: 0 5px; 
+  }
+
+  .swiper-pagination-bullet-active {
+    background-color: #00ffc8; 
+  }
