@@ -103,11 +103,11 @@ const Loja = () => {
               />
             </div>
             <div className="relative text-white px-6 pb-6 mt-6">
-              <span className="block opacity-75 -mb-1">Roupas</span>
-              <span className="font-semibold text-lg">Moletom Formula E</span>
+              <span className="block opacity-75 -mb-1">Itens</span>
+              <span className="font-semibold text-lg">Garrafa</span>
               <div className="flex justify-center">
                 <Link to="/produto" className="bg-white w-fit mt-2 cursor-pointer rounded-full text-teal-500 text-xs font-bold px-5 py-2 leading-none flex items-center">
-                  $45.00
+                  $20.00
                 </Link>
               </div>
             </div>
@@ -154,7 +154,7 @@ const Loja = () => {
             </div>
             <div className="relative text-white px-6 pb-6 mt-6">
               <span className="block opacity-75 -mb-1">Roupas</span>
-              <span className="font-semibold text-lg">Moletom Formula E</span>
+              <span className="font-semibold text-lg">Boné Formula E</span>
               <div className="flex justify-center">
                 <Link to="/produto" className="bg-white w-fit mt-2 cursor-pointer rounded-full text-teal-500 text-xs font-bold px-5 py-2 leading-none flex items-center">
                   $45.00
@@ -201,8 +201,8 @@ const Loja = () => {
               />
             </div>
             <div className="relative text-white px-6 pb-6 mt-6">
-              <span className="block opacity-75 -mb-1">Roupas</span>
-              <span className="font-semibold text-lg">Moletom Formula E</span>
+              <span className="block opacity-75 -mb-1">Acessórios</span>
+              <span className="font-semibold text-lg">Tickets</span>
               <div className="flex justify-center">
                 <Link to="/produto" className="bg-white w-fit mt-2 cursor-pointer rounded-full text-teal-500 text-xs font-bold px-5 py-2 leading-none flex items-center">
                   $45.00
