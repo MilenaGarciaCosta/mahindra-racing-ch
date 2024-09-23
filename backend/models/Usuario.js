@@ -13,12 +13,23 @@ const Usuario = sequelize.define('Usuario', {
   },
   pontos: {
     type: DataTypes.INTEGER,
-    defaultValue: 0,
+    defaultValue: 0, // Alterado de 100 para 0
+  },
+  codigo_unico: {
+    type: DataTypes.CHAR(6),
+    allowNull: false,
+    unique: true,
+  },
+  codigo_divulgacao: {
+    type: DataTypes.CHAR(6),
+    allowNull: true,
   },
 }, {
   timestamps: false  // Desativa createdAt e updatedAt
 });
 
 export default Usuario;
+
+
 
 
