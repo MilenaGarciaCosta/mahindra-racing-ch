@@ -9,7 +9,7 @@ import Egame from './router/Egame.jsx'
 import FormulaE from './router/Formulae.jsx'
 import Login from './router/Login.jsx';   
 import Cadastro from './router/Cadastro.jsx';
-import Produto from './router/Produto.jsx'
+import Produto from './router/Produto.jsx';
 
 const router = createBrowserRouter([
   {

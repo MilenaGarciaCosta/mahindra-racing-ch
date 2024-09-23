@@ -24,23 +24,29 @@ const Login = () => {
   };
 
   return (
-    <section className="login">
-      <form onSubmit={handleSubmit}>
-        <input 
-          type="email" 
-          placeholder="Email" 
-          value={email} 
-          onChange={(e) => setEmail(e.target.value)} 
-        />
-        <input 
-          type="password" 
-          placeholder="Senha" 
-          value={senha} 
-          onChange={(e) => setSenha(e.target.value)} 
-        />
-        <button type="submit">Entrar</button>
+    <section className="main loginContainer">
+
+      <form className='form-login' onSubmit={handleSubmit}>
+        <div className="titulo-container">
+          <h2>login</h2>
+        </div>
+
+        <div className="input-group">
+          <input required type="text" name="email" className="input" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <label className="user-label">Email</label>
+        </div>
+
+        <div className="input-group">
+          <input required type="password" name="email" className="input" value={senha} onChange={(e) => setSenha(e.target.value)} />
+          <label className="user-label">Senha</label>
+        </div>
+
+        <div className="compraContainer">
+          <button className="button" type="submit"> Entrar </button>
+        </div>
+
+        <p>Ainda não tem uma conta? <span onClick={() => navigate('/cadastro')}>Cadastre-se</span></p>
       </form>
-      <p>Ainda não tem uma conta? <span onClick={() => navigate('/cadastro')}>Cadastre-se aqui</span></p>
     </section>
   );
 };

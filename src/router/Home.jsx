@@ -5,8 +5,6 @@ const Home = () => {
   return (
     <section className="main">
     </section>
-
-    
   );
 };
 

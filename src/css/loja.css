@@ -1,12 +1,3 @@
-.titulo-container{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-.titulo-container h2{
-    font-family: var(--fonte-Quantico);
-    font-size: 30px;
-    font-weight: 500;
-    letter-spacing: 2px;
+.bg-card{
+    background-color: var(--azul-petroleo);
 }

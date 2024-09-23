@@ -1,7 +1,68 @@
-form {
-  margin-top: 10%;  /* Margem superior de 20% */
+input {
+  color: var(--azul-escuro);
+  font-weight: 600;
+  padding: 5px;
 }
 
-input {
-  color: black;  /* Texto dentro dos inputs será preto */
+.loginContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-login {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+/* input */
+.input-group {
+  position: relative;
+}
+
+.input {
+  border: solid 1.5px var(--vermelho);
+  border-radius: 10px;
+  background: none;
+  padding: 15px;
+  width: 300px;
+  font-size: 1rem;
+  color: var(--branco);
+  transition: border 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.user-label {
+  position: absolute;
+  left: 15px;
+  color: var(--vermelho);
+  pointer-events: none;
+  transform: translateY(1rem);
+  transition: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.input:focus,
+input:valid {
+  outline: none;
+  border: 1.5px solid var(--azul-petroleo);
+}
+
+.input:focus~label,
+input:valid~label {
+  transform: translateY(-50%) scale(0.8);
+  background-color: var(--azul-escuro);
+  padding: 0 10px;
+  color: var(--azul-petroleo);
+  font-size: 18px;
+}
+
+.form-login p{
+  font-size: 13px;
+  text-transform: uppercase;
+  text-decoration: underline;
+  font-weight: 100;
+  color: var(--branco);
+  letter-spacing: 1px;
 }
