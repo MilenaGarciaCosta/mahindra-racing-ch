@@ -23,9 +23,9 @@ const Nav = () => {
     <>
       <div>
         <Disclosure as="nav" className="navBar-color">
-          <div className="mx-auto px-4 sm:px-6 lg:px-8 primary-navbar">
+          <div className="mx-auto px-4 sm:px-6 lg:px-8 primary-navbar bordaNeon">
             <div className="flex h-16 items-center justify-between">
-              <div className="nav-left">
+              <div className="nav-left bordaNeon">
                 <img id="logo" alt="Logo" src={Logo} />
               </div>
               <div className="hidden md:block">

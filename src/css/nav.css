@@ -1,24 +1,15 @@
 /* Nav geral */
-.container-titulo h1 {
-  font-family: var(--fonte-quantico);
-}
-
 .primary-navbar {
-  border-bottom: 2px solid var(--azul-petroleo);
-  box-shadow: 1px 0px 27px 3px rgba(0, 128, 128, 0.75);
-  -webkit-box-shadow: 1px 0px 27px 3px rgba(0, 128, 128, 0.75);
-  -moz-box-shadow: 1px 0px 27px 3px rgba(0, 128, 128, 0.75);
   background-color: var(--azul-escuro);
+  z-index: 10;
+  position: relative;
+
 }
 
 .nav-left {
   display: flex;
   padding-left: 36px;
   height: 90px;
-  border: 2px solid var(--azul-petroleo);
-  box-shadow: 1px 0px 27px 3px rgba(0, 128, 128, 0.75);
-  -webkit-box-shadow: 1px 0px 27px 3px rgba(0, 128, 128, 0.75);
-  -moz-box-shadow: 1px 0px 27px 3px rgba(0, 128, 128, 0.75);
   -webkit-transform: skew(-30deg);
   transform: skew(-30deg);
   position: relative;
@@ -26,7 +17,14 @@
   align-items: center;
   justify-content: center;
   background-color: var(--azul-escuro);
-  z-index: 1000000;
+  z-index: 100;
+}
+
+.bordaNeon {
+  border: 1px solid var(--azul-petroleo);
+  box-shadow: 1px 0px 27px 3px rgba(0, 128, 128, 0.75);
+  -webkit-box-shadow: 1px 0px 27px 3px rgba(0, 128, 128, 0.75);
+  -moz-box-shadow: 1px 0px 27px 3px rgba(0, 128, 128, 0.75);
 }
 
 #logo {

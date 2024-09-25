@@ -29,7 +29,12 @@
 
 body {
   background-color: var(--azul-escuro);
+  background-image: url('../img/background_img.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   font-family: var(--fonte-Jura);
+  height: 100vh;
 }
 
 strong {
@@ -38,6 +43,7 @@ strong {
 
 .main {
   margin: 50px;
+  height: 100%;
 }
 
 #pontosSvg {

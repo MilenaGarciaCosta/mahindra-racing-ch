@@ -9,6 +9,7 @@ input {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 81vh;
 }
 
 .form-login {
@@ -16,6 +17,9 @@ input {
   flex-direction: column;
   gap: 20px;
   align-items: center;
+  padding: 45px 15px;
+  border-radius: 10px;
+  background-color: rgb(17, 17, 31);
 }
 
 /* input */
@@ -25,10 +29,11 @@ input {
 
 .input {
   border: solid 1.5px var(--vermelho);
-  border-radius: 10px;
+  border-radius: 7px;
   background: none;
   padding: 15px;
   width: 300px;
+  height: 45px;
   font-size: 1rem;
   color: var(--branco);
   transition: border 150ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -37,6 +42,7 @@ input {
 .user-label {
   position: absolute;
   left: 15px;
+  bottom: 27px;
   color: var(--vermelho);
   pointer-events: none;
   transform: translateY(1rem);
@@ -51,18 +57,18 @@ input:valid {
 
 .input:focus~label,
 input:valid~label {
-  transform: translateY(-50%) scale(0.8);
-  background-color: var(--azul-escuro);
+  transform: translateY(-20%) scale(0.8);
+  background-color: rgb(17, 17, 31);
   padding: 0 10px;
   color: var(--azul-petroleo);
   font-size: 18px;
 }
 
-.form-login p{
-  font-size: 13px;
+.form-login p {
+  font-size: 12px;
   text-transform: uppercase;
   text-decoration: underline;
   font-weight: 100;
-  color: var(--branco);
   letter-spacing: 1px;
+  cursor: pointer;
 }

@@ -70,10 +70,10 @@ h2 {
     letter-spacing: 4px;
     width: 100%;
     font-size: 15px;
-    padding: 0.7em 2.7em;
+    padding: 8px 30px;
     position: relative;
     font-family: inherit;
-    border-radius: 0.6em;
+    border-radius: 7px;
     overflow: hidden;
     transition: all 0.3s;
     line-height: 1.4em;

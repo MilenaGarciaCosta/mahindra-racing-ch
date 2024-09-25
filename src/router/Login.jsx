@@ -1,7 +1,8 @@
 import { useState } from 'react';
+import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import '../css/login.css';
+import '../css/entrar_cad.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -19,16 +20,15 @@ const Login = () => {
       navigate('/egame');  // Redireciona para o E-game após o login
     } catch (err) {
       console.error(err.response ? err.response.data : err.message);
-      alert('Erro no login');
+      alert('Erro ao entrar.');
     }
   };
 
   return (
     <section className="main loginContainer">
-
       <form className='form-login' onSubmit={handleSubmit}>
         <div className="titulo-container">
-          <h2>login</h2>
+          <h2>Entrar</h2>
         </div>
 
         <div className="input-group">
@@ -45,7 +45,7 @@ const Login = () => {
           <button className="button" type="submit"> Entrar </button>
         </div>
 
-        <p>Ainda não tem uma conta? <span onClick={() => navigate('/cadastro')}>Cadastre-se</span></p>
+        <Link to="/cadastro"><p>Ainda não tem uma conta? Cadastre-se</p></Link>
       </form>
     </section>
   );

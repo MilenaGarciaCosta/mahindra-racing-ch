@@ -1,29 +1,37 @@
 @import 'swiper/swiper-bundle.css';
 
-.banner{
-    width: 100%;
-    height: 500px;
+.banner {
+  width: 100%;
+  height: 60vh;
+
 }
 
 .swiper-button-next,
 .swiper-button-prev {
-  color: #ff0000; 
+  color: var(--vermelho);
 }
 
 .swiper-button-next:hover,
 .swiper-button-prev:hover {
-  color: #00ffc8; 
+  color: var(--azul-petroleo);
+  transition: 0.5s;
 }
 
 .swiper-pagination-bullet {
-    background-color: #ff0000; 
-    opacity: 1; 
-    width: 12px; 
-    height: 12px; 
-    border-radius: 50%; 
-    margin: 0 5px; 
-  }
+  border: 1px solid var(--branco);
+  background-color: transparent;
+  opacity: 0.7;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
 
-  .swiper-pagination-bullet-active {
-    background-color: #00ffc8; 
-  }
+.swiper-pagination-bullet:hover{
+  background-color: var(--vermelho);
+  opacity: 0.3;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: var(--vermelho);
+  border: none;
+}
