@@ -11,9 +11,9 @@ const Loja = () => {
         <h2>LOJA</h2>
       </div>
 
-      <div className=" grid justify-center">
+      <div className="gridCardsProduto grid justify-center">
         {/* Aqui esta sendo aplicado o grid */}
-        <div className="p-1 grid grid-cols-4">
+        <div className="cardProduto p-1 grid grid-cols-4">
           {/* Aqui começa o primeiro card */}
           <div className="flex-shrink-0 m-6 w-60 relative overflow-hidden bg-card rounded-lg max-w-xs shadow-lg">
             <svg
@@ -53,11 +53,11 @@ const Loja = () => {
               />
             </div>
             <div className="relative text-white px-6 pb-6 mt-6">
-              <span className="block opacity-75 -mb-1">Roupas</span>
-              <span className="font-semibold text-lg">Moletom Formula E</span>
+              <span className="block opacity-75 -mb-1 capitalize">Acessórios</span>
+              <span className="font-bold text-l capitalize">Boné Mahindra Racing</span>
               <div className="flex justify-center">
-                <Link to="/produto" className="bg-white w-fit mt-2 cursor-pointer rounded-full text-teal-500 text-xs font-bold px-5 py-2 leading-none flex items-center">
-                  $45.00
+                <Link to="/bone" className="produtoValText bg-white w-fit mt-2 cursor-pointer rounded-full text-teal-500 font-bold px-5 py-2 leading-none flex items-center">
+                  <span id="valorDePontosItem">100 </span>&nbsp;&nbsp;pontos
                 </Link>
               </div>
             </div>
@@ -103,11 +103,11 @@ const Loja = () => {
               />
             </div>
             <div className="relative text-white px-6 pb-6 mt-6">
-              <span className="block opacity-75 -mb-1">Itens</span>
-              <span className="font-semibold text-lg">Garrafa</span>
+              <span className="block opacity-75 -mb-1 capitalize">Itens</span>
+              <span className="font-bold text-l capitalize">Garrafa vigil race</span>
               <div className="flex justify-center">
-                <Link to="/produto" className="bg-white w-fit mt-2 cursor-pointer rounded-full text-teal-500 text-xs font-bold px-5 py-2 leading-none flex items-center">
-                  $20.00
+                <Link to="/garrafa" className="produtoValText bg-white w-fit mt-2 cursor-pointer rounded-full text-teal-500 font-bold px-5 py-2 leading-none flex items-center">
+                  <span id="valorDePontosItem">100 </span>&nbsp;&nbsp;pontos
                 </Link>
               </div>
             </div>
@@ -153,11 +153,11 @@ const Loja = () => {
               />
             </div>
             <div className="relative text-white px-6 pb-6 mt-6">
-              <span className="block opacity-75 -mb-1">Roupas</span>
-              <span className="font-semibold text-lg">Boné Formula E</span>
+              <span className="block opacity-75 -mb-1 capitalize">Roupas</span>
+              <span className="font-bold text-l capitalize">Moletom Formula E</span>
               <div className="flex justify-center">
-                <Link to="/produto" className="bg-white w-fit mt-2 cursor-pointer rounded-full text-teal-500 text-xs font-bold px-5 py-2 leading-none flex items-center">
-                  $45.00
+                <Link to="/moletom" className="produtoValText bg-white w-fit mt-2 cursor-pointer rounded-full text-teal-500 font-bold px-5 py-2 leading-none flex items-center">
+                  <span id="valorDePontosItem">100 </span>&nbsp;&nbsp;pontos
                 </Link>
               </div>
             </div>
@@ -201,11 +201,11 @@ const Loja = () => {
               />
             </div>
             <div className="relative text-white px-6 pb-6 mt-6">
-              <span className="block opacity-75 -mb-1">Acessórios</span>
-              <span className="font-semibold text-lg">Tickets</span>
+              <span className="block opacity-75 -mb-1 capitalize">Itens</span>
+              <span className="font-bold text-l capitalize">Tickets</span>
               <div className="flex justify-center">
-                <Link to="/produto" className="bg-white w-fit mt-2 cursor-pointer rounded-full text-teal-500 text-xs font-bold px-5 py-2 leading-none flex items-center">
-                  $45.00
+                <Link to="/tickets" className="produtoValText bg-white w-fit mt-2 cursor-pointer rounded-full text-teal-500 font-bold px-5 py-2 leading-none flex items-center">
+                  <span id="valorDePontosItem">100 </span>&nbsp;&nbsp;pontos
                 </Link>
               </div>
             </div>

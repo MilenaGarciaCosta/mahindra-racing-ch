@@ -1,3 +1,13 @@
 .bg-card{
     background-color: var(--azul-petroleo);
 }
+
+.gridCardsProduto .produtoValText, #valorDePontosItem{
+    font-weight: 600;
+    color: var(--azul-petroleo);
+    font-size: 13px;
+    font-family: var(--fonte-Quantico);
+    text-transform: uppercase;
+}
+
+ 
