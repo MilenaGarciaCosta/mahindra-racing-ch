@@ -52,9 +52,9 @@ const Egame = () => {
       <h2>Faça seu palpite!</h2>
       <div>
         <h1>CORRIDA PASSADA</h1>
-        <p>1: 'Lucas di Grassi - Mahindra Racing', velocidade: '200km/h'</p>
-        <p>2: 'Nyck de Vries - Mahindra Racing', velocidade: '195km/h'</p>
-        <p>3: 'Roberto Merhi - Mahindra Racing', velocidade: '190km/h'</p>
+        <p>1: Lucas di Grassi - Mahindra Racing, velocidade: 200km/h</p>
+        <p>2: Nyck de Vries - Mahindra Racing, velocidade: 195km/h</p>
+        <p>3: Roberto Merhi - Mahindra Racing, velocidade: 190km/h</p>
       </div>
       <form onSubmit={handleSubmit}>
         <input
@@ -84,7 +84,15 @@ const Egame = () => {
 
       <div id="grafico-corrida">
         <p>Aqui em baixo vai ter a importação do gráfico</p>
-        {/* Gráfico da corrida gerado a partir do C++ */}
+        <div>
+      <iframe 
+        src="http://20.206.203.235:1880/ui" 
+        width="100%" 
+        height="600px" 
+        style={{ border: 'none' }} 
+        title="Iframe Example"
+      ></iframe>
+    </div>
       </div>
     </section>
   );

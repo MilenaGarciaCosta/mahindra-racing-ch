@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import fotoProduto1 from "../img/bone-mahindra-ft1.png";
 import fotoProduto2 from "../img/bone-mahindra-ft2.png";
 import { Link } from "react-router-dom";

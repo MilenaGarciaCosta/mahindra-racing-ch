@@ -2,9 +2,10 @@ import "../css/home.css"
 import { Swiper, SwiperSlide } from "swiper/react";
 import { register } from "swiper/element/bundle";
 register();
-import banner1 from "../img/banner1.png";
-import banner2 from "../img/banner2.png";
+import banner1 from "../img/card1.png";
+import banner2 from "../img/card2.png";
 import banner3 from "../img/banner3.png";
+
 
 const Home = () => {
   const data = [

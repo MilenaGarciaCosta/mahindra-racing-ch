@@ -49,7 +49,7 @@ const Cadastro = () => {
         </div>
 
         <div className="input-group">
-          <input required type="text" className="input" value={codigoDivulgacao} onChange={(e) => setCodigoDivulgacao(e.target.value.toUpperCase())} maxLength={6}/>
+          <input type="text" className="input" value={codigoDivulgacao} onChange={(e) => setCodigoDivulgacao(e.target.value.toUpperCase())} maxLength={6}/>
           <label className="user-label">Código de divulgação</label>
         </div>
 
