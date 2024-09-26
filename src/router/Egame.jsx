@@ -88,7 +88,7 @@ const Egame = () => {
       <iframe 
         src="http://20.206.203.235:1880/ui" 
         width="100%" 
-        height="600px" 
+        height="500px" 
         style={{ border: 'none' }} 
         title="Iframe Example"
       ></iframe>
