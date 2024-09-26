@@ -26,6 +26,8 @@ const Home = () => {
           </SwiperSlide>
         ))}
       </Swiper>
+
+      
     <section className="main">
         
     </section>
