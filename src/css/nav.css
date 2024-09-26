@@ -3,13 +3,12 @@
   background-color: var(--azul-escuro);
   z-index: 10;
   position: relative;
-
+  text-transform: uppercase;
 }
 
 .nav-left {
   display: flex;
-  padding-left: 36px;
-  height: 90px;
+  padding: 36px 40px 15px 75px;
   -webkit-transform: skew(-30deg);
   transform: skew(-30deg);
   position: relative;
@@ -28,7 +27,9 @@
 }
 
 #logo {
-  width: 200px;
+  height: 60px;
+  -webkit-transform: skew(30deg);
+  transform: skew(30deg);
 }
 
 .navBar-color {

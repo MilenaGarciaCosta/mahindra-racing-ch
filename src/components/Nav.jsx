@@ -1,18 +1,19 @@
 import "../css/nav.css"
 import "../css/main.css"
 import "../script/nav"
-import Logo from "../img/logo.png"
+import Logo from "../img/Vigil Race logo-prata.svg"
+import profileIcon from "../img/profile-icon.png"
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 
 const navigation = [
   { name: 'Home', href: '/' },
+  { name: 'Formula E', href: '/formulae' },
   { name: 'Egame', href: '/egame' },
   { name: 'Loja', href: '/loja' },
-  { name: 'Formula E', href: '/formulae' },
 ]
 const userNavigation = [
-  { name: 'Entrar', href: '/login' },
+  { name: 'Meu perfil', href: '/login' },
 ]
 
 function classNames(...classes) {
@@ -29,12 +30,11 @@ const Nav = () => {
                 <img id="logo" alt="Logo" src={Logo} />
               </div>
               <div className="hidden md:block">
-                <div className="ml-10 flex items-baseline space-x-4">
+                <div className="ml-10 flex space-x-4">
                   {navigation.map((item) => (
                     <a
                       key={item.name}
                       href={item.href}
-                      aria-current={item.current ? 'page' : undefined}
                       className={classNames(
                         item.current ? 'text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                         'rounded-md px-3 py-2 text-sm font-medium',
@@ -43,6 +43,16 @@ const Nav = () => {
                       {item.name}
                     </a>
                   ))}
+
+                  {userNavigation.map((item) => (
+                  <DisclosureButton
+                    key={item.name}
+                    as="a"
+                    href={item.href}
+                  >
+                    <img src={profileIcon} className="h-8" />
+                  </DisclosureButton>
+                ))}
                 </div>
               </div>
               <div className="-mr-2 flex md:hidden">
@@ -57,7 +67,7 @@ const Nav = () => {
           </div>
 
           <DisclosurePanel className="md:hidden">
-            <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
+            <div className="space-y-1 text-right px-2 pb-3 pt-2 sm:px-3 mt-8">
               {navigation.map((item) => (
                 <DisclosureButton
                   key={item.name}
@@ -72,7 +82,7 @@ const Nav = () => {
               ))}
             </div>
             <div className="border-t border-gray-700 pb-3 pt-4">
-              <div className="space-y-1 px-2">
+              <div className="space-y-1 px-2 text-right">
                 {userNavigation.map((item) => (
                   <DisclosureButton
                     key={item.name}
