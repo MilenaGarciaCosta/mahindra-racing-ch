@@ -3,7 +3,6 @@
 .banner {
   width: 100%;
   height: 60vh;
-
 }
 
 .swiper-button-next,
@@ -36,14 +35,15 @@
   border: none;
 }
 
-/* card */
-
+/* card como jogar */
 .container-home{
   width: 100%;
-  height: 400px;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 100px;
+  padding: 50px  0 100px 0;
 }
 
 .parent {
@@ -55,10 +55,10 @@
 .card {
   height: 100%;
   border-radius: 50px;
-  background: linear-gradient(135deg, rgb(0, 255, 214) 0%, rgb(8, 226, 96) 100%);
+  background: linear-gradient(135deg, var(--azul-petroleo) 0%, var(--azul-petroleo) 100%);
   transition: all 0.5s ease-in-out;
   transform-style: preserve-3d;
-  box-shadow: rgba(5, 71, 17, 0) 40px 50px 25px -40px, rgba(5, 71, 17, 0.2) 0px 25px 25px -5px;
+  box-shadow: #01c9c91a 40px 50px 25px -40px, rgba(5, 71, 17, 0.2) 0px 25px 25px -5px;
 }
 
 .glass {
@@ -67,12 +67,10 @@
   inset: 8px;
   border-radius: 55px;
   border-top-right-radius: 100%;
-  background: linear-gradient(0deg, rgba(255, 253, 253, 0.349) 0%, rgba(255, 255, 255, 0.815) 100%);
-  /* -webkit-backdrop-filter: blur(5px);
-  backdrop-filter: blur(5px); */
+  background: linear-gradient(0deg, rgba(255, 253, 253, 0.349) 0%, var(--branco) 100%);
   transform: translate3d(0px, 0px, 25px);
-  border-left: 1px solid white;
-  border-bottom: 1px solid white;
+  border-left: 1px solid var(--branco);
+  border-bottom: 1px solid var(--branco);
   transition: all 0.5s ease-in-out;
 }
 
@@ -83,14 +81,14 @@
 
 .content .title {
   display: block;
-  color: #00894d;
+  color: var(--azul-petroleo);
   font-weight: 900;
   font-size: 20px;
 }
 
 .content .text {
   display: block;
-  color: rgba(0, 137, 78, 0.7647058824);
+  color: var(--azul-petroleo);
   font-size: 15px;
   margin-top: 20px;
 }
@@ -123,16 +121,8 @@
 .bottom .view-more .view-more-button {
   background: none;
   border: none;
-  color: #00c37b;
   font-weight: bolder;
   font-size: 12px;
-}
-
-.bottom .view-more .svg {
-  fill: none;
-  stroke: #00c37b;
-  stroke-width: 3px;
-  max-height: 15px;
 }
 
 .bottom .social-buttons-container {
@@ -145,12 +135,12 @@
   width: 30px;
   aspect-ratio: 1;
   padding: 5px;
-  background: rgb(255, 255, 255);
+  background: var(--branco);
   border-radius: 50%;
   border: none;
   display: grid;
   place-content: center;
-  box-shadow: rgba(5, 71, 17, 0.5) 0px 7px 5px -5px;
+  box-shadow: #01c9c91a 0px 7px 5px -5px;
 }
 
 .bottom .social-buttons-container .social-button:first-child {
@@ -165,25 +155,8 @@
   transition: transform 0.2s ease-in-out 0.8s, box-shadow 0.2s ease-in-out 0.8s;
 }
 
-.bottom .social-buttons-container .social-button .svg {
-  width: 15px;
-  fill: #00894d;
-}
-
 .bottom .social-buttons-container .social-button:hover {
   background: black;
-}
-
-.bottom .social-buttons-container .social-button:hover .svg {
-  fill: white;
-}
-
-.bottom .social-buttons-container .social-button:active {
-  background: rgb(255, 234, 0);
-}
-
-.bottom .social-buttons-container .social-button:active .svg {
-  fill: black;
 }
 
 .logo {
@@ -250,9 +223,12 @@
   transition-delay: 1.6s;
 }
 
-.logo .circle5 .svg {
+.logo .circle5 .comoJogarNum {
   width: 20px;
-  fill: white;
+  font-weight: 500;
+  font-size: 20px;
+  font-family: var(--fonte-Quantico);
+  color: var(--branco);
 }
 
 .parent:hover .card {
