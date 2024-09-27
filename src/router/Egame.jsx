@@ -131,7 +131,12 @@ const Egame = () => {
       )}
 </div>
       <div id="grafico-corrida">
-        <p>Aqui em baixo vai ter a importação do gráfico</p>
+      <iframe
+        src="http://20.206.203.235:1880/ui"
+        style={{ width: '100%', height: '100%', border: 'none' }}
+        title="Node-RED Dashboard"
+      />
+
       </div>
     </section>
   );
