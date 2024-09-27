@@ -1,0 +1,137 @@
+
+.titulo-container{
+    padding: 15px;
+}
+
+#tabela-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+  
+  .tg-0lax {
+    padding: 5px 20px;
+    font-weight: 300;
+  }
+  
+  thead .tg-0lax {
+    text-align: center;
+    font-size: 18px;
+    text-transform: uppercase;
+  }
+
+  .seletor h3 {
+    color: var(--color-1);
+    font-family: var(--fonte-Jura);
+    font-weight: 400;
+    margin-bottom: 20px;
+  }
+  
+  thead tr {
+    background-color: var(--vermelho);
+    color: var(--color-1);
+    font-family: var(--fonte-quantico);
+  }
+  
+  tbody .tg-0lax {
+    color: var(--color-1);
+    font-family: var(--fonte-Jura);
+    background-color: #0a15209d;
+    font-size: 18px;
+  }
+
+  #race-last{
+    text-align: center;
+    font-size: 30px;
+    padding: 40px;
+  }
+
+  .race-space{
+    margin: 20px;
+  }
+
+  .palpite-form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 20px;
+    text-align: center;
+  }
+  
+  
+  .palpite-select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    width: 200px; 
+    font-size: 16px; 
+    color: white;
+    background-color: var(--vermelho);
+    text-align: center;
+  }
+  .palpite-button {
+    background-color: var(--vermelho);
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .palpite-button:hover {
+    background-color: #7a0202;
+  }
+
+  #resultado {
+    width: 850px;
+    background-color: var(--vermelho);
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    margin-top: 20px;
+    font-size: 18px;
+    color: #070606;
+    list-style: none;
+    transition: transform 0.3s, background-color 0.3s; 
+}
+
+#resultado:hover {
+    background-color: rgba(0, 0, 0, 0.8); 
+}
+
+#resultado p {
+    margin: 10px 0;
+    opacity: 0; 
+    transform: translateY(20px); 
+    animation: fadeInUp 0.5s forwards; 
+}
+
+#resultado p:nth-child(1) { animation-delay: 0.2s; } 
+#resultado p:nth-child(n+2) { animation-delay: 0.4s; } 
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+#container-camp{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.resposta-palpite{
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    font-size: 18px;
+    
+}
+

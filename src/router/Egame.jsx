@@ -7,20 +7,26 @@ const Egame = () => {
   const [palpite, setPalpite] = useState('');
   const [pontos, setPontos] = useState(0);
   const [pilotos, setPilotos] = useState([]);
-  const [resultadoPalpite, setResultadoPalpite] = useState(''); // Nova variável de estado
+  const [resultadoPalpite, setResultadoPalpite] = useState('');
+  const [loading, setLoading] = useState(false); // Loading state
   const navigate = useNavigate();
 
   useEffect(() => {
     const usuarioId = localStorage.getItem('usuarioId');
     if (!usuarioId) {
-      // Se não houver usuarioId, redirecione para o login
       navigate('/login');
     }
   }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const usuarioId = localStorage.getItem('usuarioId');  // Pega o ID do usuário armazenado após o login
+    if (!palpite) {
+      alert('Por favor, selecione uma posição!');
+      return;
+    }
+
+    setLoading(true);
+    const usuarioId = localStorage.getItem('usuarioId');
 
     try {
       const response = await axios.post('http://localhost:5000/api/game/palpite', {
@@ -29,9 +35,8 @@ const Egame = () => {
       });
 
       setPontos(response.data.total_pontos);
-      setPilotos(response.data.pilotos); // Armazena os pilotos recebidos
+      setPilotos(response.data.pilotos);
 
-      // Define a mensagem personalizada com base no resultado
       if (response.data.pontos_ganhos > 0) {
         setResultadoPalpite(`Palpite Correto! +10 pontos foram atualizados ao seu saldo. Agora seu saldo total atual é ${response.data.total_pontos}`);
       } else {
@@ -41,6 +46,8 @@ const Egame = () => {
     } catch (err) {
       console.error(err.response ? err.response.data : err.message);
       alert('Erro ao enviar palpite');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -49,29 +56,70 @@ const Egame = () => {
       <div className="titulo-container">
         <h2>E-game</h2>
       </div>
-      <h2>Faça seu palpite!</h2>
-      <div>
-        <h1>CORRIDA PASSADA</h1>
-        <p>1: Lucas di Grassi - Mahindra Racing, velocidade: 200km/h</p>
-        <p>2: Nyck de Vries - Mahindra Racing, velocidade: 195km/h</p>
-        <p>3: Roberto Merhi - Mahindra Racing, velocidade: 190km/h</p>
-      </div>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="number"
-          placeholder="Digite a posição do jogador que você acha que ganhará na próxima corrida"
+      <div className="race-space">
+        <div id="tabela-container">
+          <h1 id="race-last">CORRIDA PASSADA</h1>
+          <table className="tg">
+            <thead>
+              <tr>
+                <th className="tg-0lax">Piloto</th>
+                <th className="tg-0lax">Equipe</th>
+                <th className="tg-0lax">Pontos</th>
+                <th className="tg-0lax">Valor</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="tg-0lax">Nick Cassidy</td>
+                <td className="tg-0lax">JAGUAR TCS RACING</td>
+                <td className="tg-0lax">167</td>
+                <td className="tg-0lax">50</td>
+              </tr>
+              <tr>
+                <td className="tg-0lax">Pascal Wehrlein</td>
+                <td className="tg-0lax">TAG HEUER PORSCHE FORMULA E TEAM</td>
+                <td className="tg-0lax">142</td>
+                <td className="tg-0lax">47</td>
+              </tr>
+              <tr>
+                <td className="tg-0lax">Mitch Evans</td>
+                <td className="tg-0lax">JAGUAR TCS RACING</td>
+                <td className="tg-0lax">132</td>
+                <td className="tg-0lax">44</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      
+
+      <h2 id="race-last">Faça seu palpite!</h2>
+      <form onSubmit={handleSubmit} className="palpite-form">
+        <select
+          name="seletor3"
+          id="seletor3"
           value={palpite}
           onChange={(e) => setPalpite(e.target.value)}
-        />
-        <button type="submit">Enviar Palpite</button>
+          className="palpite-select"
+        >
+          <option value="">Selecione a posição</option>
+          <option value="01">01</option>
+          <option value="02">02</option>
+          <option value="03">03</option>
+        </select>
+        <button type="submit" className="palpite-button" disabled={loading}>
+          {loading ? 'Enviando...' : 'Enviar Palpite'}
+        </button>
+        
       </form>
-
-      {/* Exibe a mensagem personalizada após o palpite */}
+      <div className="resposta-palpite">
       {resultadoPalpite && <p>{resultadoPalpite}</p>}
-
-      {/* Exibe os pilotos após receber a resposta */}
+      </div>
+      
+      
       {pilotos.length > 0 && (
-        <div>
+        <div id="container-camp">
+        <div id="resultado">
+          
           <p>O piloto vencedor foi: {pilotos[0].piloto}, com a velocidade total de: {pilotos[0].velocidade} km/h.</p>
           {pilotos.slice(1).map((piloto) => (
             <p key={piloto.id}>
@@ -79,26 +127,14 @@ const Egame = () => {
             </p>
           ))}
         </div>
+        </div>
       )}
-
-
+</div>
       <div id="grafico-corrida">
         <p>Aqui em baixo vai ter a importação do gráfico</p>
-        <div>
-      <iframe 
-        src="http://20.206.203.235:1880/ui" 
-        width="100%" 
-        height="500px" 
-        style={{ border: 'none' }} 
-        title="Iframe Example"
-      ></iframe>
-    </div>
       </div>
     </section>
   );
 };
 
 export default Egame;
-
-
-
