@@ -1,0 +1,105 @@
+/* chat geral */
+.chatContainer {
+  background-color: rgba(17, 17, 31, 0.788);
+  height: 76vh;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: center;
+  padding: 20px;
+  margin: 50px 30px;
+}
+
+.chat-body {
+  height: 60vh;
+  width: 100%;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  padding: 0 15px;
+}
+
+.mensagensContainer {
+  width: 100%;
+}
+
+/* input */
+.messageBox {
+  width: fit-content;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #2d2d2d;
+  padding: 0 15px;
+  border-radius: 10px;
+  border: 1px solid rgb(63, 63, 63);
+  margin-top: 30px;
+}
+.messageBox:focus-within {
+  border: 1px solid rgb(110, 110, 110);
+}
+
+#messageInput {
+  width: 30vw;
+  height: 100%;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  padding-left: 10px;
+  color: white;
+}
+#messageInput:focus ~ #sendButton svg path,
+#messageInput:valid ~ #sendButton svg path {
+  fill: #3c3c3c;
+  stroke: white;
+}
+
+/* botão de enviar */
+#sendButton {
+  width: fit-content;
+  height: 100%;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+#sendButton svg {
+  height: 18px;
+  transition: all 0.3s;
+}
+#sendButton svg path {
+  transition: all 0.3s;
+}
+
+/* container de cada mensagem */
+.message-container {
+  max-width: 250px;
+  background-color: var(--azul-petroleo);
+  margin-top: 10px;
+  padding: 5px 10px;
+  border-radius: 7px;
+  align-self: flex-start;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  font-size: 15px;
+}
+
+.message-mine {
+  align-self: flex-end;
+  background-color: var(--azul-claro);
+  text-align: end;
+}
+
+.authorName {
+  color: var(--azul-escuro);
+  text-transform: uppercase;
+  font-family: var(--fonte-Quantico);
+  font-weight: 700;
+  font-size: 15px;
+}
