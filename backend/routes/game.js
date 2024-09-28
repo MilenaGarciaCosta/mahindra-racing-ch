@@ -2,12 +2,8 @@ import express from 'express';
 import Usuario from '../models/Usuario.js';
 import Corrida from '../models/Corrida.js'; 
 
-
 const router = express.Router();
 
-const vencedor = 1;  // Defina o vencedor conforme sua lógica
-
-// Rota para enviar palpite
 // Rota para enviar palpite
 router.post('/palpite', async (req, res) => {
   const { palpite, usuarioId } = req.body;
@@ -39,12 +35,12 @@ router.post('/palpite', async (req, res) => {
     });
 
     // Define o vencedor (o piloto na primeira posição)
-    const vencedor = pilotosOrdenados[0].posicao;
+    const pilotoVencedor = pilotosOrdenados[0].piloto; // Nome do piloto vencedor
 
     let pontos = 0;
 
-    // Se o palpite for igual ao vencedor, o usuário ganha 10 pontos
-    if (parseInt(palpite) === vencedor) {
+    // Se o palpite for igual ao nome do piloto vencedor, o usuário ganha 10 pontos
+    if (palpite === pilotoVencedor) {
       pontos = 10;
     }
 
@@ -53,7 +49,7 @@ router.post('/palpite', async (req, res) => {
     await usuario.save();
 
     res.json({
-      mensagem: `Palpite ${parseInt(palpite) === vencedor ? 'correto' : 'incorreto'}`,
+      mensagem: `Palpite ${palpite === pilotoVencedor ? 'correto' : 'incorreto'}`,
       pontos_ganhos: pontos,
       total_pontos: usuario.pontos,
       pilotos: pilotosOrdenados // Inclui os pilotos ordenados na resposta
@@ -65,4 +61,16 @@ router.post('/palpite', async (req, res) => {
   }
 });
 
+// Rota para buscar todos os pilotos
+router.get('/pilotos', async (req, res) => {
+  try {
+    const pilotos = await Corrida.findAll();
+    res.json({ pilotos });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erro ao buscar pilotos' });
+  }
+});
+
 export default router;
+
