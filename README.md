@@ -25,7 +25,7 @@ O projeto permite que os usuários participem de um E-game, onde podem adivinhar
 
 ```bash
 # Clone o repositório e instale as dependências
-git clone https://github.com/seu-usuario/formula-e.git
+git clone (https://github.com/MilenaGarciaCosta/mahindra-racing-ch.git)
 npm install
 
 # Inicie o backend
