@@ -2,7 +2,6 @@
 import { useState } from 'react';
 import { Link } from "react-router-dom";
 import axios from 'axios';
-import '../css/cadastro.css';
 
 const Cadastro = () => {
   const [email, setEmail] = useState('');

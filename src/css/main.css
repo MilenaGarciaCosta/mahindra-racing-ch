@@ -8,9 +8,9 @@
 :root {
   --azul-petroleo: #008080;
   --azul-escuro: rgb(8, 6, 24);
-  --azul-claro: #0A3CFF;
-  --branco: #FBFBFF;
-  --vermelho: #D50019;
+  --azul-claro: #0a3cff;
+  --branco: #fbfbff;
+  --vermelho: #d50019;
   --fonte-Jura: "Jura", sans-serif;
   --fonte-Quantico: "Quantico", sans-serif;
 }
@@ -30,12 +30,15 @@
 
 body {
   background-color: var(--azul-escuro);
-  background-image: url('../img/background_img.png');
+  background-image: url("../img/background_img.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   font-family: var(--fonte-Jura);
   height: 100vh;
+
+  scrollbar-width: 2px;
+  scrollbar-color: var(--azul-petroleo) rgba(77, 77, 206, 0.295); /* scroll thumb and track */
 }
 
 strong {
@@ -62,5 +65,5 @@ strong {
   font-size: 30px;
   font-weight: 500;
   letter-spacing: 2px;
+  text-align: center;
 }
-
