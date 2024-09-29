@@ -1,27 +1,25 @@
 /* chat geral */
 .chatContainer {
-  background-color: rgba(17, 17, 31, 0.788);
   height: 76vh;
+  display: flex;
+  justify-content: center;
+}
+
+.chatMaster {
+  background-color: rgba(17, 17, 31, 0.788);
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  justify-content: end;
-  align-items: center;
-  padding: 20px;
-  margin: 50px 30px;
+  justify-content: center;
+  padding: 0 15px;
 }
 
 .chat-body {
   height: 60vh;
-  width: 100%;
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
-  padding: 0 15px;
-}
-
-.mensagensContainer {
-  width: 100%;
+  padding: 0 10px;
 }
 
 /* input */
@@ -37,12 +35,13 @@
   border: 1px solid rgb(63, 63, 63);
   margin-top: 30px;
 }
+
 .messageBox:focus-within {
   border: 1px solid rgb(110, 110, 110);
 }
 
 #messageInput {
-  width: 30vw;
+  width: 400px;
   height: 100%;
   background-color: transparent;
   outline: none;
@@ -50,8 +49,9 @@
   padding-left: 10px;
   color: white;
 }
-#messageInput:focus ~ #sendButton svg path,
-#messageInput:valid ~ #sendButton svg path {
+
+#messageInput:focus~#sendButton svg path,
+#messageInput:valid~#sendButton svg path {
   fill: #3c3c3c;
   stroke: white;
 }
@@ -69,10 +69,12 @@
   cursor: pointer;
   transition: all 0.3s;
 }
+
 #sendButton svg {
   height: 18px;
   transition: all 0.3s;
 }
+
 #sendButton svg path {
   transition: all 0.3s;
 }
@@ -83,7 +85,7 @@
   background-color: var(--azul-petroleo);
   margin-top: 10px;
   padding: 5px 10px;
-  border-radius: 7px;
+  border-radius: 0 7px 7px 7px;
   align-self: flex-start;
   word-wrap: break-word;
   overflow-wrap: break-word;
@@ -94,6 +96,7 @@
   align-self: flex-end;
   background-color: var(--azul-claro);
   text-align: end;
+  border-radius: 7px 0 7px 7px;
 }
 
 .authorName {
@@ -102,4 +105,10 @@
   font-family: var(--fonte-Quantico);
   font-weight: 700;
   font-size: 15px;
+}
+
+@media (max-width: 600px) {
+  #messageInput {
+    width: 250px;
+  }
 }
