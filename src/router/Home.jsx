@@ -101,6 +101,58 @@ const Home = () => {
             </div>
           </div>
         </div>
+
+        <div className="container-card">
+          
+<div className="flip-card">
+    <div className="flip-card-inner">
+        <div className="flip-card-front">
+            <p className="title">Data da Corrida</p>
+            <p></p>
+        </div>
+        <div className="flip-card-back">
+            <p className="title">BACK</p>
+            <p>Leave Me</p>
+        </div>
+    </div>
+</div>
+<div className="flip-card">
+    <div className="flip-card-inner">
+        <div className="flip-card-front">
+            <p className="title">Data da Corrida</p>
+            <p></p>
+        </div>
+        <div className="flip-card-back">
+            <p className="title">BACK</p>
+            <p>Leave Me</p>
+        </div>
+    </div>
+</div>
+<div className="flip-card">
+    <div className="flip-card-inner">
+        <div className="flip-card-front">
+            <p className="title">Data da Corrida</p>
+            <p></p>
+        </div>
+        <div className="flip-card-back">
+            <p className="title">BACK</p>
+            <p>Leave Me</p>
+        </div>
+    </div>
+</div>
+<div className="flip-card">
+    <div className="flip-card-inner">
+        <div className="flip-card-front">
+            <p className="title">Data da Corrida</p>
+            <p></p>
+        </div>
+        <div className="flip-card-back">
+            <p className="title">BACK</p>
+            <p>Leave Me</p>
+        </div>
+    </div>
+</div>
+        </div>
       </section>
     </>
   );

@@ -1,6 +1,24 @@
 @import url("https://fonts.googleapis.com/css2?family=Jura:wght@300..700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Jura:wght@300..700&family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 
+:root {
+  --cor-de-fundo-topo: #0a1520;
+  --cor-de-fundo-meio: #1a2731;
+  --cor-de-fundo-final: #2f3e46;
+  --cor-da-nav: #a50000;
+  --color-1: #fff;
+  --color-2: #000;
+  --fonte-Jura: "Jura", sans-serif;
+  --fonte-quantico: "Quantico", sans-serif;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+
 
 .proposta {
   display: grid;
@@ -25,7 +43,17 @@
 }
 
 .main {
-  margin: 80px;
+  margin: 25px;
+}
+
+#text-titulo{
+  text-align: center;
+  font-size: 25px;
+  font-weight: 900;
+}
+
+#textTi{
+  text-align: center;
 }
 
 #text {
@@ -36,7 +64,7 @@
   color: var(--color-1);
 }
 
-.spanFormula {
+span {
   color: #e57272;
 }
 
@@ -67,8 +95,9 @@
   border-radius: 10px 10px 0px 0px;
 }
 
+
 .container-info {
-  display: flex;
+  display: flex; 
   width: 100%;
   height: fit-content;
   background-image: linear-gradient(to right, #121d28, #121d28);
@@ -76,10 +105,14 @@
   border-radius: 20px;
   font-family: var(--fonte-Jura);
   color: var(--color-1);
-  padding: 50px;
+  padding: 30px;
   align-items: center;
   margin-bottom: 30px;
   justify-content: space-between;
+}
+
+.h2todos{
+  font-size: 20px;
 }
 
 h2{
@@ -113,7 +146,12 @@ h2{
 }
 
 .linhaDoTempo{
-  margin: 95px 0 5px -50px;
+  margin: -50;
+}
+
+#img-linha{
+  margin-top: 50px;
+  margin-left: -90px;
 }
 
 .linhaDoTempo img{
