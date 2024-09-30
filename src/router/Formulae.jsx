@@ -70,19 +70,18 @@ const Formula = () => {
           A Fórmula E foi criada para ser um campeonato de monopostos elétricos
           em pistas de rua temporárias dentro das cidades. A ideia se
           concretizou em <span>13 de setembro de 2014</span>, com o
-          <span>ePrix</span> de Pequim, a
-          <span>primeira corrida da categoria</span>.
+          <span> ePrix</span> de Pequim, a
+          <span> primeira corrida da categoria</span>.
         </p>
         <p id="text">
-          A Fórmula E
+          A Fórmula E 
           <span>
-            desempenha para os veículos elétricos o mesmo papel que a Fórmula 1
-            teve para os veículos a combustão</span
-          >: testar novas tecnologias que eventualmente chegam aos carros
+          desempenha para os veículos elétricos o mesmo papel que a Fórmula 1
+          teve para os veículos a combustão</span>: testar novas tecnologias que eventualmente chegam aos carros
           elétricos de passeio. No início, os pilotos precisavam trocar de carro
           durante a corrida devido à baixa autonomia das baterias. Hoje, as
           baterias possuem
-          <span>150% mais autonomia e duram a corrida inteira.</span>
+          <span> 150% mais autonomia e duram a corrida inteira.</span>
         </p>
       </div>
 

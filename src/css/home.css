@@ -257,7 +257,7 @@
   transform: translate3d(0, 0, 120px);
 }
 
-/* From Uiverse.io by joe-watson-sbf */ 
+
 .flip-card {
   background-color: transparent;
   width: 190px;
@@ -296,25 +296,53 @@
   height: 100%;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  border: 1px solid lightblue; /* Borda azul claro */
+  border: 1px solid lightblue; 
   border-radius: 1rem;
 }
 
 .flip-card-front {
-  background-color: #003366; /* Azul escuro */
-  color: lightblue; /* Texto azul claro */
+  background-color: #003366;
+  color: lightblue; 
+  background-image: url('../img/card2.png'); 
+  background-size: cover;
+  background-position: center; 
 }
 
 .flip-card-back {
-  background-color: #004080; /* Azul escuro */
-  color: lightblue; /* Texto azul claro */
+  background-color: #0b0069f3; 
+  color: lightblue; 
   transform: rotateY(180deg);
 }
 
 .container-card{
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   height: 300px;
   align-items: center;
+}
+
+#dt-corridas {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 20px;
+  color: #fff;
+  font-weight: bold;
+  text-transform: uppercase;
+  position: relative;
+  background: linear-gradient(90deg, #fff, #0a85b6, #fff); 
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: shine 3s linear infinite;
+}
+
+
+@keyframes shine {
+  0% {
+    background-position: 200% center;
+  }
+  100% {
+    background-position: -200% center;
+  }
 }

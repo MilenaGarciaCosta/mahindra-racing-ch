@@ -35,7 +35,7 @@ const Home = () => {
 
       <section className="main">
         <div className="aprenda">
-          <p>aprenda a jogar</p>
+          <h3 id="dt-corridas">Aprenda a jogar</h3>
         </div>
         <div className="container-home">
           <div className="parent">
@@ -53,7 +53,7 @@ const Home = () => {
               <div className="content">
                 <span className="title">Como Jogar</span>
                 <span className="text">
-                  Create, share, and use beautiful custom elements made with CSS
+                  Entre no link de formula E para acessar o jogo e começar a se divertir!
                 </span>
               </div>
             </div>
@@ -74,7 +74,7 @@ const Home = () => {
               <div className="content">
                 <span className="title">Como Jogar</span>
                 <span className="text">
-                  Create, share, and use beautiful custom elements made with CSS
+                  Dentro do Formula E, análise todas a tabela para um chute melhor de quem vai ganhar
                 </span>
               </div>
             </div>
@@ -95,63 +95,86 @@ const Home = () => {
               <div className="content">
                 <span className="title">Como Jogar</span>
                 <span className="text">
-                  Create, share, and use beautiful custom elements made with CSS
+                  Escolha o corredor que mais te agrada e aposte nele
                 </span>
               </div>
             </div>
           </div>
         </div>
-
+        <h3 id="dt-corridas">Data das corridas</h3>
         <div className="container-card">
-          
-<div className="flip-card">
-    <div className="flip-card-inner">
-        <div className="flip-card-front">
-            <p className="title">Data da Corrida</p>
-            <p></p>
-        </div>
-        <div className="flip-card-back">
-            <p className="title">BACK</p>
-            <p>Leave Me</p>
-        </div>
-    </div>
-</div>
-<div className="flip-card">
-    <div className="flip-card-inner">
-        <div className="flip-card-front">
-            <p className="title">Data da Corrida</p>
-            <p></p>
-        </div>
-        <div className="flip-card-back">
-            <p className="title">BACK</p>
-            <p>Leave Me</p>
-        </div>
-    </div>
-</div>
-<div className="flip-card">
-    <div className="flip-card-inner">
-        <div className="flip-card-front">
-            <p className="title">Data da Corrida</p>
-            <p></p>
-        </div>
-        <div className="flip-card-back">
-            <p className="title">BACK</p>
-            <p>Leave Me</p>
-        </div>
-    </div>
-</div>
-<div className="flip-card">
-    <div className="flip-card-inner">
-        <div className="flip-card-front">
-            <p className="title">Data da Corrida</p>
-            <p></p>
-        </div>
-        <div className="flip-card-back">
-            <p className="title">BACK</p>
-            <p>Leave Me</p>
-        </div>
-    </div>
-</div>
+          <div className="flip-card">
+            <div className="flip-card-inner">
+              <div className="flip-card-front">
+                <p className="title">Corrida</p>
+                <p></p>
+              </div>
+              <div className="flip-card-back">
+                <p className="title">21/04/2025</p>
+                
+              </div>
+            </div>
+          </div>
+          <div className="flip-card">
+            <div className="flip-card-inner">
+              <div className="flip-card-front">
+                <p className="title">Corrida</p>
+                <p></p>
+              </div>
+              <div className="flip-card-back">
+                <p className="title">21/04/2025</p>
+                
+              </div>
+            </div>
+          </div>
+          <div className="flip-card">
+            <div className="flip-card-inner">
+              <div className="flip-card-front">
+                <p className="title">Corrida</p>
+                <p></p>
+              </div>
+              <div className="flip-card-back">
+                <p className="title">21/04/2025</p>
+                
+              </div>
+            </div>
+          </div>
+          <div className="flip-card">
+            <div className="flip-card-inner">
+              <div className="flip-card-front">
+                <p className="title">Corrida</p>
+                <p></p>
+              </div>
+              <div className="flip-card-back">
+                <p className="title">21/04/2025</p>
+                
+              </div>
+            </div>
+          </div>
+          <div className="flip-card">
+            <div className="flip-card-inner">
+              <div className="flip-card-front">
+                <p className="title">Corrida</p>
+                <p></p>
+              </div>
+              <div className="flip-card-back">
+                <p className="title">21/04/2025</p>
+                
+              </div>
+            </div>
+          </div>
+          <div className="flip-card">
+            <div className="flip-card-inner">
+              <div className="flip-card-front">
+                <p className="title">Corrida</p>
+                <p></p>
+              </div>
+              <div className="flip-card-back">
+                <p className="title">21/04/2025</p>
+                
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </>
