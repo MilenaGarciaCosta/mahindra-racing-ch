@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import fotoProduto1 from "../img/bone-mahindra-ft1.png";
-import fotoProduto2 from "../img/bone-mahindra-ft2.png";
+import fotoMoletom from "../img/moletom-formulaE.png";
 import { Link } from "react-router-dom";
 import "../css/produto.css";
 import axios from 'axios';
@@ -92,12 +91,9 @@ const Moletom = () => {
               <div className="img-back">
                 <img
                   className="foto1"
-                  src={fotoProduto1}
+                  src={fotoMoletom}
                   alt="Moletom Mahindra Racing"
                 />
-              </div>
-              <div className="img-back">
-                <img className="foto2" src={fotoProduto2} alt="" />
               </div>
             </div>
             <div className="descricaoProduto">

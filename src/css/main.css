@@ -47,7 +47,7 @@ strong {
 
 .main {
   margin: 50px;
-  height: 100%;
+  min-height: 70vh;
 }
 
 #pontosSvg {
@@ -60,6 +60,8 @@ strong {
   flex-direction: column;
   align-items: center;
   text-transform: uppercase;
+  text-align: center;
+  margin-top: 20px;
 }
 
 .titulo-container h2 {

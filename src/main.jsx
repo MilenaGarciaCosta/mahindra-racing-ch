@@ -9,7 +9,6 @@ import Egame from './router/Egame.jsx'
 import FormulaE from './router/Formulae.jsx'
 import Login from './router/Login.jsx';   
 import Cadastro from './router/Cadastro.jsx';
-import Produto from './router/Produto.jsx';
 import Bone from './router/Bone.jsx';
 import Garrafa from './router/Garrafa.jsx';
 import Moletom from './router/Moletom.jsx';
@@ -30,7 +29,6 @@ const router = createBrowserRouter([
       {path: '/formulae', element:<FormulaE/>},
       {path: '/login', element: <Login/>},     
       {path: '/cadastro', element: <Cadastro/>},
-      {path: '/produto', element: <Produto/>},
       {path: '/bone', element: <Bone/>},
       {path: '/garrafa', element: <Garrafa/>},
       {path: '/moletom', element: <Moletom/>},

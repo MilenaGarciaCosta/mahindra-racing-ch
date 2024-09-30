@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import fotoProduto1 from "../img/bone-mahindra-ft1.png";
-import fotoProduto2 from "../img/bone-mahindra-ft2.png";
+
 import { Link } from "react-router-dom";
 import "../css/produto.css";
 import axios from 'axios';
@@ -92,12 +91,9 @@ const Tickets = () => {
               <div className="img-back">
                 <img
                   className="foto1"
-                  src={fotoProduto1}
+                  src="https://imgv2-2-f.scribdassets.com/img/document/555141661/original/2d1e9b58c8/1672051634?v=1"
                   alt="Tickets Mahindra Racing"
                 />
-              </div>
-              <div className="img-back">
-                <img className="foto2" src={fotoProduto2} alt="" />
               </div>
             </div>
             <div className="descricaoProduto">

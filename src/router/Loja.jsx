@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import "../css/loja.css";
 import fotoProduto1 from "../img/bone-mahindra-ft1.png";
-import fotoProduto2 from "../img/bone-mahindra-ft2.png";
+import fotoMoletom from "../img/moletom-formulaE.png";
+import fotoGarrafa from "../img/garrafa-formulaE.png";
 
 
 const Loja = () => {
@@ -98,13 +99,13 @@ const Loja = () => {
               {/* Muda a imagem */}
               <img
                 className="relative w-40"
-                src={fotoProduto1}
+                src={fotoGarrafa}
                 alt=""
               />
             </div>
             <div className="relative text-white px-6 pb-6 mt-6">
               <span className="block opacity-75 -mb-1 capitalize">Itens</span>
-              <span className="font-bold text-l capitalize">Garrafa vigil race</span>
+              <span className="font-bold text-l capitalize">Garrafa Formula E</span>
               <div className="flex justify-center">
                 <Link to="/garrafa" className="produtoValText bg-white w-fit mt-2 cursor-pointer rounded-full text-teal-500 font-bold px-5 py-2 leading-none flex items-center">
                   <span id="valorDePontosItem">100 </span>&nbsp;&nbsp;pontos
@@ -148,7 +149,7 @@ const Loja = () => {
               {/* Muda a imagem */}
               <img
                 className="relative w-40"
-                src={fotoProduto1}
+                src={fotoMoletom}
                 alt=""
               />
             </div>
@@ -195,9 +196,8 @@ const Loja = () => {
               ></div>
               {/* Muda a imagem */}
               <img
-                className="relative w-40"
-                src={fotoProduto1}
-                alt=""
+                className="relative w-40 h-40"
+                src="https://imgv2-2-f.scribdassets.com/img/document/555141661/original/2d1e9b58c8/1672051634?v=1"
               />
             </div>
             <div className="relative text-white px-6 pb-6 mt-6">

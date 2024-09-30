@@ -73,7 +73,6 @@
   display: flex; 
   flex-wrap: wrap;
   width: 100%;
-  height: fit-content;
   background-image: linear-gradient(to right, #121d28, #121d28);
   box-shadow: var(--cor-de-fundo-topo) 0px 20px 30px -10px;
   border-radius: 0 0 20px 20px;
@@ -114,10 +113,6 @@ h2{
   font-size: 12px;
 }
 
-.container-info img{
-  width: 35vw;
-  height: fit-content;
-}
 
 .linhaDoTempo{
   margin: -50;
@@ -130,4 +125,17 @@ h2{
 
 .linhaDoTempo img{
   width: 80vw;
+}
+
+@media (max-width: 455px) {
+  .velocidade-conteiner, .motor-conteiner{
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .h2todos{
+    font-size: 16px;
+  }
+  .texto-motor, .texto-inicial{
+    font-size: 15px;
+  }
 }

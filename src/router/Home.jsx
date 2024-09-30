@@ -32,76 +32,7 @@ const Home = () => {
       </Swiper>
 
       <section className="main">
-        <div className="aprenda">
-          <h3 id="dt-corridas">Aprenda a jogar</h3>
-        </div>
-        <div className="container-home">
-          <div className="parent">
-            <div className="card">
-              <div className="logo">
-                <span className="circle circle1" />
-                <span className="circle circle2" />
-                <span className="circle circle3" />
-                <span className="circle circle4" />
-                <span className="circle circle5">
-                  <p className="comoJogarNum">1°</p>
-                </span>
-              </div>
-              <div className="glass" />
-              <div className="content">
-                <span className="title">Analisar</span>
-                <span className="text">
-                  Dentro do E-game, analise a tabela da corrida passada para
-                  fazer chute de quem vai ganhar
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div className="parent">
-            <div className="card">
-              <div className="logo">
-                <span className="circle circle1" />
-                <span className="circle circle2" />
-                <span className="circle circle3" />
-                <span className="circle circle4" />
-                <span className="circle circle5">
-                  <p className="comoJogarNum">2°</p>
-                </span>
-              </div>
-              <div className="glass" />
-              <div className="content">
-                <span className="title">Confiar</span>
-                <span className="text">
-                  Selecione um corredor e confirme seu chute
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div className="parent">
-            <div className="card">
-              <div className="logo">
-                <span className="circle circle1" />
-                <span className="circle circle2" />
-                <span className="circle circle3" />
-                <span className="circle circle4" />
-                <span className="circle circle5">
-                  <p className="comoJogarNum">3°</p>
-                </span>
-              </div>
-              <div className="glass" />
-              <div className="content">
-                <span className="title">Ganhar!</span>
-                <span className="text">
-                  Agora aguarde os resultados da corrida! Caso você acerte,
-                  receberá pontos que podem ser trocados por prêmios!
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <h3 id="dt-corridas">Data das corridas</h3>
+        <h3 id="dt-corridas">Próximas corridas</h3>
         <div className="container-card">
           <div className="parent-dt">
             <div className="card-dt">

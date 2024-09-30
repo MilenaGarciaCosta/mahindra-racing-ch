@@ -109,6 +109,7 @@ const Egame = () => {
               </option>
             ))}
           </select>
+          
           <button type="submit" className="palpite-button" disabled={loading}>
             {loading ? 'Enviando...' : 'Enviar Palpite'}
           </button>
@@ -119,12 +120,13 @@ const Egame = () => {
 
         {pilotos.length > 0 && (
           <div id="container-camp">
-            <div id="resultado">
-              <p>O piloto vencedor foi: {pilotos[0].piloto}, com a velocidade total de: {pilotos[0].velocidade} km/h.</p>
+            <div id="resultado" className="bordaNeon">
+              <p className="pilotosResultado">1° lugar: {pilotos[0].piloto}, com a velocidade total de: {pilotos[0].velocidade} km/h.</p>
               {pilotos.slice(1).map((piloto) => (
-                <p key={piloto.id}>
+                <p className="pilotosResultado" key={piloto.id}>
                   {piloto.posicao}º lugar: {piloto.piloto}, com a velocidade de: {piloto.velocidade} km/h.
                 </p>
+                
               ))}
             </div>
           </div>
@@ -137,6 +139,74 @@ const Egame = () => {
           title="Node-RED Dashboard"
         />
       </div>
+
+      <h2 id="race-last">Aprenda como jogar o Egame</h2>
+      <div className="container-home">
+          <div className="parent">
+            <div className="card">
+              <div className="logo">
+                <span className="circle circle1" />
+                <span className="circle circle2" />
+                <span className="circle circle3" />
+                <span className="circle circle4" />
+                <span className="circle circle5">
+                  <p className="comoJogarNum">1°</p>
+                </span>
+              </div>
+              <div className="glass" />
+              <div className="content">
+                <span className="title">Analisar</span>
+                <span className="text">
+                  Dentro do E-game, analise a tabela da corrida passada para
+                  fazer chute de quem vai ganhar
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className="parent">
+            <div className="card">
+              <div className="logo">
+                <span className="circle circle1" />
+                <span className="circle circle2" />
+                <span className="circle circle3" />
+                <span className="circle circle4" />
+                <span className="circle circle5">
+                  <p className="comoJogarNum">2°</p>
+                </span>
+              </div>
+              <div className="glass" />
+              <div className="content">
+                <span className="title">Confiar</span>
+                <span className="text">
+                  Selecione um corredor e confirme seu chute
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className="parent">
+            <div className="card">
+              <div className="logo">
+                <span className="circle circle1" />
+                <span className="circle circle2" />
+                <span className="circle circle3" />
+                <span className="circle circle4" />
+                <span className="circle circle5">
+                  <p className="comoJogarNum">3°</p>
+                </span>
+              </div>
+              <div className="glass" />
+              <div className="content">
+                <span className="title">Ganhar!</span>
+                <span className="text">
+                  Agora aguarde os resultados da corrida! Caso você acerte,
+                  receberá pontos que podem ser trocados por prêmios!
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
     </section>
   );
 };
