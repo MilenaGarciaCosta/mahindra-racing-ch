@@ -84,6 +84,7 @@
   color: var(--azul-petroleo);
   font-weight: 900;
   font-size: 20px;
+  text-align: left;
 }
 
 .content .text {
@@ -91,72 +92,6 @@
   color: var(--azul-petroleo);
   font-size: 15px;
   margin-top: 20px;
-}
-
-.bottom {
-  padding: 10px 12px;
-  transform-style: preserve-3d;
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
-  right: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  transform: translate3d(0, 0, 26px);
-}
-
-.bottom .view-more {
-  display: flex;
-  align-items: center;
-  width: 40%;
-  justify-content: flex-end;
-  transition: all 0.2s ease-in-out;
-}
-
-.bottom .view-more:hover {
-  transform: translate3d(0, 0, 10px);
-}
-
-.bottom .view-more .view-more-button {
-  background: none;
-  border: none;
-  font-weight: bolder;
-  font-size: 12px;
-}
-
-.bottom .social-buttons-container {
-  display: flex;
-  gap: 10px;
-  transform-style: preserve-3d;
-}
-
-.bottom .social-buttons-container .social-button {
-  width: 30px;
-  aspect-ratio: 1;
-  padding: 5px;
-  background: var(--branco);
-  border-radius: 50%;
-  border: none;
-  display: grid;
-  place-content: center;
-  box-shadow: #01c9c91a 0px 7px 5px -5px;
-}
-
-.bottom .social-buttons-container .social-button:first-child {
-  transition: transform 0.2s ease-in-out 0.4s, box-shadow 0.2s ease-in-out 0.4s;
-}
-
-.bottom .social-buttons-container .social-button:nth-child(2) {
-  transition: transform 0.2s ease-in-out 0.6s, box-shadow 0.2s ease-in-out 0.6s;
-}
-
-.bottom .social-buttons-container .social-button:nth-child(3) {
-  transition: transform 0.2s ease-in-out 0.8s, box-shadow 0.2s ease-in-out 0.8s;
-}
-
-.bottom .social-buttons-container .social-button:hover {
-  background: black;
 }
 
 .logo {
@@ -257,7 +192,6 @@
   transform: translate3d(0, 0, 120px);
 }
 
-
 .flip-card {
   background-color: transparent;
   width: 190px;
@@ -297,11 +231,10 @@
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   border: 1px solid lightblue; 
-  border-radius: 1rem;
+  border-radius: 10px;
 }
 
 .flip-card-front {
-  background-color: #003366;
   color: lightblue; 
   background-image: url('../img/card2.png'); 
   background-size: cover;
@@ -309,7 +242,7 @@
 }
 
 .flip-card-back {
-  background-color: #0b0069f3; 
+  background-color: var(--azul-escuro); 
   color: lightblue; 
   transform: rotateY(180deg);
 }
@@ -323,13 +256,13 @@
 }
 
 #dt-corridas {
-  font-family: "Bebas Neue", sans-serif;
-  font-size: 20px;
+  font-family: var(--fonte-Quantico);
+  font-size: 25px;
   color: #fff;
   font-weight: bold;
   text-transform: uppercase;
   position: relative;
-  background: linear-gradient(90deg, #fff, #0a85b6, #fff); 
+  background: linear-gradient(90deg, #fff, var(--azul-petroleo), #fff); 
   background-size: 200% auto;
   background-clip: text;
   -webkit-background-clip: text;
@@ -346,3 +279,4 @@
     background-position: -200% center;
   }
 }
+ 

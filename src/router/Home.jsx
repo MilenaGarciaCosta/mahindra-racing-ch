@@ -1,21 +1,19 @@
-import "../css/home.css";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { register } from "swiper/element/bundle";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { register } from "swiper/element/bundle";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "../css/home.css";
 
 register();
 
 import banner1 from "../img/card1.png";
 import banner2 from "../img/card2.png";
-import banner3 from "../img/banner3.png";
 
 const Home = () => {
   const data = [
     { id: "1", image: banner1 },
     { id: "2", image: banner2 },
-    { id: "3", image: banner3 },
   ];
 
   return (
@@ -51,9 +49,9 @@ const Home = () => {
               </div>
               <div className="glass" />
               <div className="content">
-                <span className="title">Como Jogar</span>
+                <span className="title">Analisar</span>
                 <span className="text">
-                  Entre no link de formula E para acessar o jogo e começar a se divertir!
+                  Dentro do E-game, analise a tabela da corrida passada para fazer chute de quem vai ganhar
                 </span>
               </div>
             </div>
@@ -72,9 +70,9 @@ const Home = () => {
               </div>
               <div className="glass" />
               <div className="content">
-                <span className="title">Como Jogar</span>
+                <span className="title">Confiar</span>
                 <span className="text">
-                  Dentro do Formula E, análise todas a tabela para um chute melhor de quem vai ganhar
+                  Selecione um corredor e confirme seu chute
                 </span>
               </div>
             </div>
@@ -93,9 +91,9 @@ const Home = () => {
               </div>
               <div className="glass" />
               <div className="content">
-                <span className="title">Como Jogar</span>
+                <span className="title">Ganhar!</span>
                 <span className="text">
-                  Escolha o corredor que mais te agrada e aposte nele
+                  Agora aguarde os resultados da corrida! Caso você acerte, receberá pontos que podem ser trocados por prêmios!
                 </span>
               </div>
             </div>
@@ -111,7 +109,7 @@ const Home = () => {
               </div>
               <div className="flip-card-back">
                 <p className="title">21/04/2025</p>
-                
+
               </div>
             </div>
           </div>
@@ -123,7 +121,7 @@ const Home = () => {
               </div>
               <div className="flip-card-back">
                 <p className="title">21/04/2025</p>
-                
+
               </div>
             </div>
           </div>
@@ -135,7 +133,7 @@ const Home = () => {
               </div>
               <div className="flip-card-back">
                 <p className="title">21/04/2025</p>
-                
+
               </div>
             </div>
           </div>
@@ -147,7 +145,7 @@ const Home = () => {
               </div>
               <div className="flip-card-back">
                 <p className="title">21/04/2025</p>
-                
+
               </div>
             </div>
           </div>
@@ -159,7 +157,7 @@ const Home = () => {
               </div>
               <div className="flip-card-back">
                 <p className="title">21/04/2025</p>
-                
+
               </div>
             </div>
           </div>
@@ -171,7 +169,7 @@ const Home = () => {
               </div>
               <div className="flip-card-back">
                 <p className="title">21/04/2025</p>
-                
+
               </div>
             </div>
           </div>

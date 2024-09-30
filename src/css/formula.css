@@ -1,25 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Jura:wght@300..700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Jura:wght@300..700&family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap");
-
-:root {
-  --cor-de-fundo-topo: #0a1520;
-  --cor-de-fundo-meio: #1a2731;
-  --cor-de-fundo-final: #2f3e46;
-  --cor-da-nav: #a50000;
-  --color-1: #fff;
-  --color-2: #000;
-  --fonte-Jura: "Jura", sans-serif;
-  --fonte-quantico: "Quantico", sans-serif;
-}
-
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-
-
-
 .proposta {
   display: grid;
   grid-template-rows: max-content;
@@ -34,16 +12,12 @@
 
 #titulo-conteudo {
   font-size: 20px;
-  color: white;
+  color: var(--branco);
   text-align: justify;  
   font-family: var(--fonte-quantico);
   width: 50%;
   text-transform: uppercase;
-  border-bottom: solid  1px var(--cor-da-nav);
-}
-
-.main {
-margin: 40px;
+  border-bottom: solid  1px var(--vermelho);
 }
 
 #text-titulo{
@@ -64,8 +38,8 @@ margin: 40px;
   color: var(--color-1);
 }
 
-span {
-  color: #e57272;
+.span {
+  color: var(--vermelho);
 }
 
 .genButton {
@@ -88,13 +62,12 @@ span {
 }
 
 .btnTds {
-  background-color: #a50000;
+  background-color: var(--vermelho);
   width: 600px;
   display: flex;
   justify-content: space-around;
   border-radius: 10px 10px 0px 0px;
 }
-
 
 .container-info {
   display: flex; 
@@ -107,8 +80,8 @@ span {
   color: var(--color-1);
   padding: 30px;
   align-items: center;
-  margin-bottom: 30px;
   justify-content: space-between;
+  margin-bottom: 60px;
 }
 
 .h2todos{
@@ -133,7 +106,7 @@ h2{
 }
 
 .velocidade-conteiner p, .motor-conteiner p{
-  color: #e57272;
+  color: var(--vermelho);
 }
 
 .velocidade-conteiner span{
