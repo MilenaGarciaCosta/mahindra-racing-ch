@@ -51,7 +51,8 @@ const Home = () => {
               <div className="content">
                 <span className="title">Analisar</span>
                 <span className="text">
-                  Dentro do E-game, analise a tabela da corrida passada para fazer chute de quem vai ganhar
+                  Dentro do E-game, analise a tabela da corrida passada para
+                  fazer chute de quem vai ganhar
                 </span>
               </div>
             </div>
@@ -93,7 +94,8 @@ const Home = () => {
               <div className="content">
                 <span className="title">Ganhar!</span>
                 <span className="text">
-                  Agora aguarde os resultados da corrida! Caso você acerte, receberá pontos que podem ser trocados por prêmios!
+                  Agora aguarde os resultados da corrida! Caso você acerte,
+                  receberá pontos que podem ser trocados por prêmios!
                 </span>
               </div>
             </div>
@@ -101,75 +103,63 @@ const Home = () => {
         </div>
         <h3 id="dt-corridas">Data das corridas</h3>
         <div className="container-card">
-          <div className="flip-card">
-            <div className="flip-card-inner">
-              <div className="flip-card-front">
-                <p className="title">Corrida</p>
-                <p></p>
+          <div className="parent-dt">
+            <div className="card-dt">
+              <div className="content-box-dt">
+                <span className="card-title-dt">3D Card</span>
+                <p className="card-content-dt">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                </p>
+                <span className="see-more-dt">See More</span>
               </div>
-              <div className="flip-card-back">
-                <p className="title">21/04/2025</p>
-
-              </div>
-            </div>
-          </div>
-          <div className="flip-card">
-            <div className="flip-card-inner">
-              <div className="flip-card-front">
-                <p className="title">Corrida</p>
-                <p></p>
-              </div>
-              <div className="flip-card-back">
-                <p className="title">21/04/2025</p>
-
+              <div className="date-box-dt">
+                <span className="month-dt">JUNE</span>
+                <span className="date-dt">29</span>
               </div>
             </div>
           </div>
-          <div className="flip-card">
-            <div className="flip-card-inner">
-              <div className="flip-card-front">
-                <p className="title">Corrida</p>
-                <p></p>
+          <div className="parent-dt">
+            <div className="card-dt">
+              <div className="content-box-dt">
+                <span className="card-title-dt">3D Card</span>
+                <p className="card-content-dt">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                </p>
+                <span className="see-more-dt">See More</span>
               </div>
-              <div className="flip-card-back">
-                <p className="title">21/04/2025</p>
-
-              </div>
-            </div>
-          </div>
-          <div className="flip-card">
-            <div className="flip-card-inner">
-              <div className="flip-card-front">
-                <p className="title">Corrida</p>
-                <p></p>
-              </div>
-              <div className="flip-card-back">
-                <p className="title">21/04/2025</p>
-
+              <div className="date-box-dt">
+                <span className="month-dt">JUNE</span>
+                <span className="date-dt">29</span>
               </div>
             </div>
           </div>
-          <div className="flip-card">
-            <div className="flip-card-inner">
-              <div className="flip-card-front">
-                <p className="title">Corrida</p>
-                <p></p>
+          <div className="parent-dt">
+            <div className="card-dt">
+              <div className="content-box-dt">
+                <span className="card-title-dt">3D Card</span>
+                <p className="card-content-dt">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                </p>
+                <span className="see-more-dt">See More</span>
               </div>
-              <div className="flip-card-back">
-                <p className="title">21/04/2025</p>
-
+              <div className="date-box-dt">
+                <span className="month-dt">JUNE</span>
+                <span className="date-dt">29</span>
               </div>
             </div>
           </div>
-          <div className="flip-card">
-            <div className="flip-card-inner">
-              <div className="flip-card-front">
-                <p className="title">Corrida</p>
-                <p></p>
+          <div className="parent-dt">
+            <div className="card-dt">
+              <div className="content-box-dt">
+                <span className="card-title-dt">3D Card</span>
+                <p className="card-content-dt">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                </p>
+                <span className="see-more-dt">See More</span>
               </div>
-              <div className="flip-card-back">
-                <p className="title">21/04/2025</p>
-
+              <div className="date-box-dt">
+                <span className="month-dt">JUNE</span>
+                <span className="date-dt">29</span>
               </div>
             </div>
           </div>
