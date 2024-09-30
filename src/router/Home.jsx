@@ -37,60 +37,60 @@ const Home = () => {
           <div className="parent-dt">
             <div className="card-dt">
               <div className="content-box-dt">
-                <span className="card-title-dt">3D Card</span>
+                <span className="card-title-dt">Corrida</span>
                 <p className="card-content-dt">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                  Venha participar da corrida de todos os tempos. Apenas os melhores na pista
                 </p>
-                <span className="see-more-dt">See More</span>
+                <span className="see-more-dt">Comprar ingresso</span>
               </div>
               <div className="date-box-dt">
-                <span className="month-dt">JUNE</span>
-                <span className="date-dt">29</span>
+                <span className="month-dt">Janeiro</span>
+                <span className="date-dt">01</span>
               </div>
             </div>
           </div>
           <div className="parent-dt">
             <div className="card-dt">
               <div className="content-box-dt">
-                <span className="card-title-dt">3D Card</span>
+                <span className="card-title-dt">Corrida</span>
                 <p className="card-content-dt">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                  Venha participar da corrida de todos os tempos. Apenas os melhores na pista
                 </p>
-                <span className="see-more-dt">See More</span>
+                <span className="see-more-dt">Comprar ingresso</span>
               </div>
               <div className="date-box-dt">
-                <span className="month-dt">JUNE</span>
-                <span className="date-dt">29</span>
+                <span className="month-dt">Março</span>
+                <span className="date-dt">15</span>
               </div>
             </div>
           </div>
           <div className="parent-dt">
             <div className="card-dt">
               <div className="content-box-dt">
-                <span className="card-title-dt">3D Card</span>
+                <span className="card-title-dt">Corrida</span>
                 <p className="card-content-dt">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                  Venha participar da corrida de todos os tempos. Apenas os melhores na pista
                 </p>
-                <span className="see-more-dt">See More</span>
+                <span className="see-more-dt">Comprar ingresso</span>
               </div>
               <div className="date-box-dt">
-                <span className="month-dt">JUNE</span>
-                <span className="date-dt">29</span>
+                <span className="month-dt">Setembro</span>
+                <span className="date-dt">30</span>
               </div>
             </div>
           </div>
           <div className="parent-dt">
             <div className="card-dt">
               <div className="content-box-dt">
-                <span className="card-title-dt">3D Card</span>
+                <span className="card-title-dt">Corrida</span>
                 <p className="card-content-dt">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                  Venha participar da corrida de todos os tempos. Apenas os melhores na pista
                 </p>
-                <span className="see-more-dt">See More</span>
+                <span className="see-more-dt">Comprar ingresso</span>
               </div>
               <div className="date-box-dt">
-                <span className="month-dt">JUNE</span>
-                <span className="date-dt">29</span>
+                <span className="month-dt">Dezembro</span>
+                <span className="date-dt">21</span>
               </div>
             </div>
           </div>

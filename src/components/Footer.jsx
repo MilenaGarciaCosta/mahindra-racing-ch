@@ -1,4 +1,5 @@
-import "../css/footer.css"
+import "../css/footer.css";
+import Carrinho from "../img/carrinho.png"
 
 const Footer = () => {
   return (
@@ -17,6 +18,9 @@ const Footer = () => {
               <a href="#">Instagram</a>
             </li>
           </ul>
+        </div>
+        <div className="imagem-car">
+          <img id="carro-car" src={Carrinho} alt="Carrinho de corrida" />
         </div>
       </footer>
     </>
