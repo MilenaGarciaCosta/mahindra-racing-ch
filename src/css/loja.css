@@ -10,4 +10,25 @@
     text-transform: uppercase;
 }
 
- 
+.cardProduto{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 1225px) {
+    .cardProduto {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 930px) {
+    .cardProduto {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .cardProduto {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}

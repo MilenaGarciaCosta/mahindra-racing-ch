@@ -14,7 +14,7 @@ const Loja = () => {
 
       <div className="gridCardsProduto grid justify-center">
         {/* Aqui esta sendo aplicado o grid */}
-        <div className="cardProduto p-1 grid grid-cols-4">
+        <div className="cardProduto p-1">
           {/* Aqui começa o primeiro card */}
           <div className="flex-shrink-0 m-6 w-60 relative overflow-hidden bg-card rounded-lg max-w-xs shadow-lg">
             <svg
