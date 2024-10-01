@@ -1,4 +1,4 @@
-# Formula E - E-game & Loja Virtual
+# Vigil Race - A comunidade da Formula E
 
 ## Descrição
 
