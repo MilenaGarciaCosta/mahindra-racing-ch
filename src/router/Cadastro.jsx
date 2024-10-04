@@ -11,7 +11,7 @@ const Cadastro = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/register', {
+      const response = await axios.post('http://4.228.225.124:5000/api/register', {
         email,
         senha,
         codigo_divulgacao: codigoDivulgacao.trim().toUpperCase() || undefined

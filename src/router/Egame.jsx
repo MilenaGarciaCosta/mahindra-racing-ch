@@ -23,7 +23,7 @@ const Egame = () => {
   useEffect(() => {
     const fetchPilotos = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/game/pilotos'); // Nova rota para buscar pilotos
+        const response = await axios.get('http://4.228.225.124:5000/api/game/pilotos'); // Nova rota para buscar pilotos
         setPilotos(response.data.pilotos);  // Atualiza a lista de pilotos no estado
       } catch (err) {
         console.error(err);
