@@ -75,7 +75,7 @@
   width: 100%;
   background-image: linear-gradient(to right, #121d28, #121d28);
   box-shadow: var(--cor-de-fundo-topo) 0px 20px 30px -10px;
-  border-radius: 0 0 20px 20px;
+  border-radius: 10px;
   font-family: var(--fonte-Jura);
   color: var(--color-1);
   padding: 30px;
@@ -98,6 +98,11 @@ h2{
   display: flex;
   flex-direction: column;
   gap: 25px;
+}
+
+.texto-inicial, .texto-motor{
+  max-width: 750px;
+  text-align: justify;
 }
 
 .velocidade-conteiner, .motor-conteiner{
@@ -137,5 +142,8 @@ h2{
   }
   .texto-motor, .texto-inicial{
     font-size: 15px;
+  }
+  .container-info{
+    border-radius: 0 0 10px 10px;
   }
 }

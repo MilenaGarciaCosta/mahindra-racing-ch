@@ -65,7 +65,7 @@ const Formula = () => {
       </div>
 
       <div className="proposta">
-        <h3 id="titulo-conteudo">Propósta</h3>
+        <h3 id="titulo-conteudo">Sobre a Fórmula E</h3>
         <p id="text">
           A Fórmula E foi criada para ser um campeonato de monopostos elétricos
           em pistas de rua temporárias dentro das cidades. A ideia se
