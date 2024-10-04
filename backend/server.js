@@ -11,7 +11,7 @@ const app = express();
 
 // Configuração do CORS para permitir o acesso do front-end
 app.use(cors({
-  origin: 'http://http://4.228.225.124:5173' // Substitua pelo IP ou domínio do seu front-end
+  origin: 'http://4.228.225.124:5173' // Substitua pelo IP ou domínio do seu front-end
 }));
 
 app.use(express.json());
