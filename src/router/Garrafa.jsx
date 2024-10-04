@@ -16,7 +16,7 @@ const Garrafa = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:5000/api/usuario/resgatar', {
+      const response = await axios.post('http://4.228.225.124:5000/api/usuario/resgatar', {
         usuarioId,
         itemCost,
         itemName: 'Garrafa Mahindra Racing',

@@ -45,7 +45,7 @@ const Egame = () => {
     const usuarioId = localStorage.getItem('usuarioId');
 
     try {
-      const response = await axios.post('http://localhost:5000/api/game/palpite', {
+      const response = await axios.post('http://4.228.225.124:5000/api/game/palpite', {
         palpite,
         usuarioId
       });

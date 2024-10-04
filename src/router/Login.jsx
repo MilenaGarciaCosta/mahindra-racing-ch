@@ -12,7 +12,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/login', { email, senha });
+      const response = await axios.post('http://4.228.225.124:5000/api/login', { email, senha });
 
       // Armazene o usuarioId no localStorage
       localStorage.setItem('usuarioId', response.data.usuarioId);
