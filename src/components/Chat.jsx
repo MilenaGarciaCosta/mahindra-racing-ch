@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import "../css/chat.css";
 
 export default function Chat({ socket }) {
-  const bottomRef = useRef(null);
+  /*const bottomRef = useRef(null);*/
   const messageRef = useRef();
   const [messageList, setMessageList] = useState([]);
 
@@ -14,9 +14,9 @@ export default function Chat({ socket }) {
     return () => socket.off("receive_message");
   }, [socket]);
 
-  useEffect(() => {
+  /*useEffect(() => {
     scrollDown();
-  }, [messageList]);
+  }, [messageList]);*/
 
   const handleSubmit = () => {
     const message = messageRef.current.value;
@@ -33,11 +33,11 @@ export default function Chat({ socket }) {
     if (e.key === "Enter") handleSubmit();
   };
 
-  const scrollDown = () => {
+  /*const scrollDown = () => {
     if (bottomRef.current) {
       bottomRef.current.scrollIntoView({ behavior: "smooth" });
     }
-  };
+  };*/
 
   return (
     <div className="main chatContainer">
@@ -55,7 +55,7 @@ export default function Chat({ socket }) {
               <div className="message-text">{message.text}</div>
             </div>
           ))}
-          <div ref={bottomRef} />
+          
         </div>
 
         <div class="messageBox">
