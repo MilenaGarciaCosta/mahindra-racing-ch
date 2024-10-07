@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../css/entrar_cad.css';
+import background from '../img/background_img.png';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -25,29 +26,35 @@ const Login = () => {
   };
 
   return (
-    <section className="main loginContainer">
-      <form className='form-login' onSubmit={handleSubmit}>
-        <div className="titulo-container">
-          <h2>Entrar</h2>
-        </div>
+    <>
+      <div id="backgroundImg">
+        <img src={background} />
+      </div>
 
-        <div className="input-group">
-          <input required type="text" name="email" className="input" value={email} onChange={(e) => setEmail(e.target.value)} />
-          <label className="user-label">Email</label>
-        </div>
+      <section className="main loginContainer">
+        <form className='form-login' onSubmit={handleSubmit}>
+          <div className="titulo-container">
+            <h2>Entrar</h2>
+          </div>
 
-        <div className="input-group">
-          <input required type="password" name="email" className="input" value={senha} onChange={(e) => setSenha(e.target.value)} />
-          <label className="user-label">Senha</label>
-        </div>
+          <div className="input-group">
+            <input required type="text" name="email" className="input" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <label className="user-label">Email</label>
+          </div>
 
-        <div className="compraContainer">
-          <button className="button" type="submit"> Entrar </button>
-        </div>
+          <div className="input-group">
+            <input required type="password" name="email" className="input" value={senha} onChange={(e) => setSenha(e.target.value)} />
+            <label className="user-label">Senha</label>
+          </div>
 
-        <Link to="/cadastro"><p>Ainda não tem uma conta? Cadastre-se</p></Link>
-      </form>
-    </section>
+          <div className="compraContainer">
+            <button className="button" type="submit"> Entrar </button>
+          </div>
+
+          <Link to="/cadastro"><p>Ainda não tem uma conta? Cadastre-se</p></Link>
+        </form>
+      </section>
+    </>
   );
 };
 

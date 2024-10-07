@@ -4,6 +4,7 @@ import Carro1 from "../img/carro1.png";
 import Carro2 from "../img/carro2.png";
 import Carro3 from "../img/carro3.png";
 import Linha from "../img/linha.png";
+import background from '../img/background_img.png';
 
 const Formula = () => {
   // Estado para armazenar dados da geração
@@ -54,34 +55,40 @@ const Formula = () => {
   };
 
   return (
-    <div className="main">
-      <div className="titulo-container">
-        <h2>Formula E</h2>
-        <h4>Campeonato de automobilismo elétrico</h4>
+    <>
+      <div id="backgroundImg">
+        <img src={background} />
       </div>
-      
+
+      <div className="main">
+
+        <div className="titulo-container">
+          <h2>Formula E</h2>
+          <h4>Campeonato de automobilismo elétrico</h4>
+        </div>
+
         <img src={Linha} id="img-linha" alt="linha do tempo Formula E" />
 
-      <div className="proposta">
-        <h3 id="titulo-conteudo">Sobre a Fórmula E</h3>
-        <p id="text">
-          A Fórmula E foi criada para ser um campeonato de monopostos elétricos
-          em pistas de rua temporárias dentro das cidades. A ideia se
-          concretizou em <span className="span">13 de setembro de 2014</span>, com o
-          <span className="span"> ePrix</span> de Pequim, a
-          <span className="span"> primeira corrida da categoria</span>.
-        </p>
-        <p id="text">
-          A Fórmula E &nbsp;
-          <span className="span">
-            desempenha para os veículos elétricos o mesmo papel que a Fórmula 1
-            teve para os veículos a combustão</span>: testar novas tecnologias que eventualmente chegam aos carros
-          elétricos de passeio. No início, os pilotos precisavam trocar de carro
-          durante a corrida devido à baixa autonomia das baterias. Hoje, as
-          baterias possuem
-          <span className="span"> 150% mais autonomia e duram a corrida inteira.</span>
-        </p>
-      </div>
+        <div className="proposta">
+          <h3 id="titulo-conteudo">Sobre a Fórmula E</h3>
+          <p id="text">
+            A Fórmula E foi criada para ser um campeonato de monopostos elétricos
+            em pistas de rua temporárias dentro das cidades. A ideia se
+            concretizou em <span className="span">13 de setembro de 2014</span>, com o
+            <span className="span"> ePrix</span> de Pequim, a
+            <span className="span"> primeira corrida da categoria</span>.
+          </p>
+          <p id="text">
+            A Fórmula E &nbsp;
+            <span className="span">
+              desempenha para os veículos elétricos o mesmo papel que a Fórmula 1
+              teve para os veículos a combustão</span>: testar novas tecnologias que eventualmente chegam aos carros
+            elétricos de passeio. No início, os pilotos precisavam trocar de carro
+            durante a corrida devido à baixa autonomia das baterias. Hoje, as
+            baterias possuem
+            <span className="span"> 150% mais autonomia e duram a corrida inteira.</span>
+          </p>
+        </div>
 
         <div className="container">
           <div className="genButton">
@@ -131,7 +138,8 @@ const Formula = () => {
           </div>
           <img src={dadosGeracoes[geracao].imagem} className="imagem-carro" alt={`Carro ${geracao}`} />
         </div>
-    </div>
+      </div>
+    </>
   );
 };
 

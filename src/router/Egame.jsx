@@ -2,13 +2,14 @@ import "../css/egame.css";
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import background from '../img/background_img.png';
 
 const Egame = () => {
   const [palpite, setPalpite] = useState('');
   const [pontos, setPontos] = useState(0);
   const [pilotos, setPilotos] = useState([]);  // Armazena os pilotos para o select
   const [resultadoPalpite, setResultadoPalpite] = useState('');
-  const [loading, setLoading] = useState(false); 
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   // Verifica se o usuário está logado ao carregar o componente
@@ -68,80 +69,85 @@ const Egame = () => {
   };
 
   return (
-    <section className="egame">
-      <div className="titulo-container">
-        <h2>E-game</h2>
+    <>
+      <div id="backgroundImg">
+        <img src={background} />
       </div>
-      <div className="race-space">
-        <div id="tabela-container">
-          <h1 id="race-last"> RESULTADO CORRIDA PASSADA</h1>
-          <table className="tg">
-            <thead>
-              <tr>
-                <th className="tg-0lax">Piloto</th>
-                <th className="tg-0lax">Velocidade</th>
-              </tr>
-            </thead>
-            <tbody>
-              {pilotos.map((piloto) => (
-                <tr key={piloto.id}>
-                  <td className="tg-0lax">{piloto.piloto}</td>
-                  <td className="tg-0lax">{piloto.velocidade}</td>
+
+      <section className="egame">
+        <div className="titulo-container">
+          <h2>E-game</h2>
+        </div>
+        <div className="race-space">
+          <div id="tabela-container">
+            <h1 id="race-last"> RESULTADO CORRIDA PASSADA</h1>
+            <table className="tg">
+              <thead>
+                <tr>
+                  <th className="tg-0lax">Piloto</th>
+                  <th className="tg-0lax">Velocidade</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        <h2 id="race-last">Faça seu palpite!</h2>
-        <form onSubmit={handleSubmit} className="palpite-form">
-          <select
-            name="seletor3"
-            id="seletor3"
-            value={palpite}
-            onChange={(e) => setPalpite(e.target.value)}
-            className="palpite-select"
-          >
-            <option value="">Selecione o piloto</option>
-            {pilotos.map((piloto) => (
-              <option key={piloto.id} value={piloto.piloto}>
-                {piloto.piloto}
-              </option>
-            ))}
-          </select>
-          
-          <button type="submit" className="palpite-button" disabled={loading}>
-            {loading ? 'Enviando...' : 'Enviar Palpite'}
-          </button>
-        </form>
-        <div className="resposta-palpite">
-          {resultadoPalpite && <p>{resultadoPalpite}</p>}
-        </div>
-
-        {pilotos.length > 0 && (
-          <div id="container-camp">
-            <div id="resultado" className="bordaNeon">
-              <p className="pilotosResultado">1° lugar: {pilotos[0].piloto}, com a velocidade total de: {pilotos[0].velocidade} km/h.</p>
-              {pilotos.slice(1).map((piloto) => (
-                <p className="pilotosResultado" key={piloto.id}>
-                  {piloto.posicao}º lugar: {piloto.piloto}, com a velocidade de: {piloto.velocidade} km/h.
-                </p>
-                
-              ))}
-            </div>
+              </thead>
+              <tbody>
+                {pilotos.map((piloto) => (
+                  <tr key={piloto.id}>
+                    <td className="tg-0lax">{piloto.piloto}</td>
+                    <td className="tg-0lax">{piloto.velocidade}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-        )}
-      </div>
-      <div id="grafico-corrida">
-        <iframe
-          src="http://20.206.203.235:1880/ui"
-          style={{ width: '100%', height: '100%', border: 'none' }}
-          title="Node-RED Dashboard"
-        />
-      </div>
 
-      <h2 id="race-last">Aprenda como jogar o Egame</h2>
-      <div className="container-home">
+          <h2 id="race-last">Faça seu palpite!</h2>
+          <form onSubmit={handleSubmit} className="palpite-form">
+            <select
+              name="seletor3"
+              id="seletor3"
+              value={palpite}
+              onChange={(e) => setPalpite(e.target.value)}
+              className="palpite-select"
+            >
+              <option value="">Selecione o piloto</option>
+              {pilotos.map((piloto) => (
+                <option key={piloto.id} value={piloto.piloto}>
+                  {piloto.piloto}
+                </option>
+              ))}
+            </select>
+
+            <button type="submit" className="palpite-button" disabled={loading}>
+              {loading ? 'Enviando...' : 'Enviar Palpite'}
+            </button>
+          </form>
+          <div className="resposta-palpite">
+            {resultadoPalpite && <p>{resultadoPalpite}</p>}
+          </div>
+
+          {pilotos.length > 0 && (
+            <div id="container-camp">
+              <div id="resultado" className="bordaNeon">
+                <p className="pilotosResultado">1° lugar: {pilotos[0].piloto}, com a velocidade total de: {pilotos[0].velocidade} km/h.</p>
+                {pilotos.slice(1).map((piloto) => (
+                  <p className="pilotosResultado" key={piloto.id}>
+                    {piloto.posicao}º lugar: {piloto.piloto}, com a velocidade de: {piloto.velocidade} km/h.
+                  </p>
+
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+        <div id="grafico-corrida">
+          <iframe
+            src="http://20.206.203.235:1880/ui"
+            style={{ width: '100%', height: '100%', border: 'none' }}
+            title="Node-RED Dashboard"
+          />
+        </div>
+
+        <h2 id="race-last">Aprenda como jogar o Egame</h2>
+        <div className="container-home">
           <div className="parent">
             <div className="card">
               <div className="logo">
@@ -207,7 +213,8 @@ const Egame = () => {
             </div>
           </div>
         </div>
-    </section>
+      </section>
+    </>
   );
 };
 

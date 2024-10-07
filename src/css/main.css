@@ -34,7 +34,6 @@ img{
 
 body {
   background-color: var(--azul-escuro);
-  background-image: url("../img/background_img.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -74,4 +73,15 @@ strong {
   font-weight: 500;
   letter-spacing: 2px;
   text-align: center;
+}
+
+#backgroundImg img{
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  z-index: -300;
+}
+
+@media (max-width: 450px) {
+  
 }

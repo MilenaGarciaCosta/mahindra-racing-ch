@@ -4,6 +4,7 @@ import "swiper/css/pagination";
 import { register } from "swiper/element/bundle";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "../css/home.css";
+import background from '../img/background_img.png';
 
 register();
 
@@ -18,6 +19,10 @@ const Home = () => {
 
   return (
     <>
+      <div id="backgroundImg">
+        <img src={background} />
+      </div>
+
       <Swiper
         spaceBetween={50}
         slidesPerView={1}

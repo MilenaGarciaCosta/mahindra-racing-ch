@@ -1,5 +1,5 @@
 .footer {
-    background-color:#080618;
+    background-color: #080618;
     color: #fff;
     padding: 20px 0;
     text-align: center;
@@ -40,34 +40,35 @@
 
 /* Carrinho */
 
-#carro-car{
+#carro-car {
     width: 200px;
     height: 70px;
-    animation: carro 5.5s linear infinite ;
+    animation: carro 5.5s linear infinite;
 }
 
-.imagem-car{
+.imagem-car {
     width: 100%;
     overflow: hidden;
 }
 
 
-@keyframes carro{
+@keyframes carro {
     0% {
         transform: translateX(-500px);
         opacity: 1;
     }
+
     90% {
         transform: translateX(calc(100vw - 30px));
         opacity: 1;
     }
+
     100% {
         transform: translateX(calc(100vw - 30px));
-        
+
     }
 }
 
-#carro-car:hover{
+#carro-car:hover {
     animation-play-state: paused;
 }
-
