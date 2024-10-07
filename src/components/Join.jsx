@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import io from "socket.io-client";
+import background from '../img/background_img.png';
 
 export default function Join({ setChatVisibility, setSocket }) {
   const usernameRef = useRef();
@@ -14,6 +15,9 @@ export default function Join({ setChatVisibility, setSocket }) {
 
   return (
     <>
+      <div id="backgroundImg">
+        <img src={background} />
+      </div>
       <section className="main loginContainer">
         <form className="form-login">
           <div className="titulo-container">
