@@ -6,7 +6,7 @@ export default function Chat({ socket }) {
   /*const bottomRef = useRef(null);*/
   const messageRef = useRef();
   const [messageList, setMessageList] = useState([]);
-  const authorColors = {};
+  const authorColors = { [socket.id]: '#0a3cff' };
 
   useEffect(() => {
     socket.on("receive_message", (data) => {
