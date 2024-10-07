@@ -354,7 +354,7 @@
 
 @media (max-width: 375px) {
   .banner {
-    height: 37vh;
+    height: 30vh;
   }
   .container-home{
     gap: 20px;

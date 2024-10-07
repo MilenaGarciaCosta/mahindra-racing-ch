@@ -28,6 +28,10 @@
   scroll-behavior: smooth;
 }
 
+img{
+  max-width: 100000px;
+}
+
 body {
   background-color: var(--azul-escuro);
   background-image: url("../img/background_img.png");

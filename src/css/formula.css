@@ -13,9 +13,9 @@
 #titulo-conteudo {
   font-size: 20px;
   color: var(--branco);
-  text-align: justify;  
+  text-align: left;  
   font-family: var(--fonte-quantico);
-  width: 50%;
+  width: 60%;
   text-transform: uppercase;
   border-bottom: solid  1px var(--vermelho);
 }
@@ -118,17 +118,9 @@ h2{
   font-size: 12px;
 }
 
-
-.linhaDoTempo{
-  margin: -50;
-}
-
 #img-linha{
   margin-top: 50px;
   margin-left: -90px;
-}
-
-.linhaDoTempo img{
   width: 80vw;
 }
 
@@ -145,5 +137,12 @@ h2{
   }
   .container-info{
     border-radius: 0 0 10px 10px;
+  }
+  #titulo-conteudo {
+    width: 100%;
+  }
+  #img-linha{
+    margin-left: -70px;
+    width: 100vw;
   }
 }

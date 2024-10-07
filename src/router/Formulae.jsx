@@ -59,10 +59,8 @@ const Formula = () => {
         <h2>Formula E</h2>
         <h4>Campeonato de automobilismo elétrico</h4>
       </div>
-
-      <div className="linhaDoTempo">
+      
         <img src={Linha} id="img-linha" alt="linha do tempo Formula E" />
-      </div>
 
       <div className="proposta">
         <h3 id="titulo-conteudo">Sobre a Fórmula E</h3>
