@@ -1,10 +1,12 @@
 import { useRef, useState, useEffect } from "react";
 import "../css/chat.css";
 
+
 export default function Chat({ socket }) {
   /*const bottomRef = useRef(null);*/
   const messageRef = useRef();
   const [messageList, setMessageList] = useState([]);
+  const authorColors = {};
 
   useEffect(() => {
     socket.on("receive_message", (data) => {
@@ -39,23 +41,39 @@ export default function Chat({ socket }) {
     }
   };*/
 
+  const getRandomColor = () => {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    } while (color === '#ffffff' || color === '#000000' || color === 'rgb(8, 6, 24)' || color === '#0a3cff');
+    return color;
+  };
+
   return (
     <div className="main chatContainer">
       <div className="chatMaster">
         <div className="chat-body">
-          {messageList.map((message, index) => (
-            <div
-              className={`message-container ${message.authorId === socket.id ? "message-mine" : ""
-                }`}
-              key={index}
-            >
-              <div className="message-author">
-                <strong className="authorName">{message.author}</strong>
+          {messageList.map((message, index) => {
+            if (!authorColors[message.authorId]) {
+              authorColors[message.authorId] = getRandomColor();
+            }
+
+            const messageColor = authorColors[message.authorId];
+
+            return (
+              <div
+                className={`message-container ${message.authorId === socket.id ? "message-mine" : ""}`}
+                key={index}
+                style={{ backgroundColor: messageColor }}
+              >
+                <div className="message-author">
+                  <strong className="authorName">{message.author}</strong>
+                </div>
+                <div className="message-text">{message.text}</div>
               </div>
-              <div className="message-text">{message.text}</div>
-            </div>
-          ))}
-          
+            );
+          })}
         </div>
 
         <div class="messageBox">

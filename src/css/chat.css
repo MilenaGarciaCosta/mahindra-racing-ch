@@ -82,7 +82,6 @@
 /* container de cada mensagem */
 .message-container {
   max-width: 250px;
-  background-color: var(--azul-petroleo);
   margin-top: 10px;
   padding: 5px 10px;
   border-radius: 0 7px 7px 7px;
