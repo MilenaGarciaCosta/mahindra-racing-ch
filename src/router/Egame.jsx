@@ -140,7 +140,7 @@ const Egame = () => {
         </div>
         <div id="grafico-corrida">
           <iframe
-            src="http://20.206.203.235:1880/ui"
+            src="http://4.228.225.124:1880/ui"
             style={{ width: '100%', height: '100%', border: 'none' }}
             title="Node-RED Dashboard"
           />
