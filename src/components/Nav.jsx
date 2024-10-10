@@ -14,7 +14,7 @@ const navigation = [
   { name: 'Loja', href: '/loja' },
 ]
 const userNavigation = [
-  { name: 'Meu perfil', href: '/login' },
+  { name: 'Meu perfil', href: '/perfil' },
 ]
 
 function classNames(...classes) {
@@ -23,7 +23,7 @@ function classNames(...classes) {
 const Nav = () => {
   return (
     <>
-      <div>
+      <div className="navbarFixed">
         <Disclosure as="nav" className="navBar-color">
           <div className="mx-auto px-4 sm:px-6 lg:px-8 primary-navbar bordaNeon">
             <div className="flex h-16 items-center justify-between">

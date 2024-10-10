@@ -14,6 +14,7 @@ import Garrafa from './router/Garrafa.jsx';
 import Moletom from './router/Moletom.jsx';
 import Tickets from './router/Tickets.jsx';
 import Forum from './router/Forum.jsx';
+import Perfil from './router/Perfil.jsx';
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,7 @@ const router = createBrowserRouter([
       {path: '/moletom', element: <Moletom/>},
       {path: '/tickets', element: <Tickets/>},
       {path: '/forum', element: <Forum/>},
+      {path: '/perfil', element: <Perfil/>},
    
     ]
   }

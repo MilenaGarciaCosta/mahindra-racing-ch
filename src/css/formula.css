@@ -70,7 +70,7 @@
 }
 
 .container-info {
-  display: flex; 
+  display: flex;
   flex-wrap: wrap;
   width: 100%;
   background-image: linear-gradient(to right, #121d28, #121d28);
@@ -144,5 +144,23 @@ h2{
   #img-linha{
     margin-left: -70px;
     width: 100vw;
+  }
+}
+
+@media (max-width: 702px) {
+  .container-info{
+    border-radius: 0 0 10px 10px;
+  }
+}
+
+@media (max-width: 670px) {
+  .imagem-carro{
+    width: 75vw;
+  }
+}
+
+@media (max-width: 1310px) {
+  .container-info{
+    justify-content: center;
   }
 }

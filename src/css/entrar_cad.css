@@ -62,6 +62,7 @@ input:valid~label {
   padding: 0 10px;
   color: var(--azul-petroleo);
   font-size: 18px;
+  border-radius: 5px;
 }
 
 .form-login p {
