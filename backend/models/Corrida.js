@@ -1,5 +1,3 @@
-// models/Corrida.js
-
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/db.js';
 
@@ -19,11 +17,22 @@ const Corrida = sequelize.define('Corrida', {
   },
   posicao: {
     type: DataTypes.INTEGER,
-    allowNull: true // Pode ser preenchido após a corrida
+    allowNull: true 
+  },
+  ultrapassagem: { 
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: 0
+  },
+  maiorVelocidade: { 
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: 0
   }
 }, {
   tableName: 'Corridas',
-  timestamps: false // Se não tiver as colunas createdAt e updatedAt
+  timestamps: false 
 });
 
 export default Corrida;
+

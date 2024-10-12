@@ -55,7 +55,7 @@ const Egame = () => {
       setPilotos(response.data.pilotos);  // Atualiza os pilotos na tabela de resultados
 
       if (response.data.pontos_ganhos > 0) {
-        setResultadoPalpite(`Palpite Correto! +10 pontos foram atualizados ao seu saldo. Agora seu saldo total atual é ${response.data.total_pontos}`);
+        setResultadoPalpite(`Palpite Correto! +${response.data.pontos_ganhos} pontos foram atualizados ao seu saldo. Agora seu saldo total atual é ${response.data.total_pontos}`);
       } else {
         setResultadoPalpite('Palpite incorreto, que pena... Você não ganhou nada, mas tente novamente!');
       }
@@ -71,7 +71,7 @@ const Egame = () => {
   return (
     <>
       <div id="backgroundImg">
-        <img src={background} />
+        <img src={background} alt="Background" />
       </div>
 
       <section className="egame">
@@ -80,19 +80,25 @@ const Egame = () => {
         </div>
         <div className="race-space">
           <div id="tabela-container">
-            <h1 id="race-last"> RESULTADO CORRIDA PASSADA</h1>
+            <h1 id="race-last">RESULTADO CORRIDA PASSADA</h1>
             <table className="tg">
               <thead>
                 <tr>
-                  <th className="tg-0lax">Piloto</th>
-                  <th className="tg-0lax">Velocidade</th>
+                  <th>Piloto</th>
+                  <th>Velocidade</th>
+                  <th>Ultrapassagens</th>
+                  <th>Maior Velocidade</th>
+                  <th>Posição</th>
                 </tr>
               </thead>
               <tbody>
                 {pilotos.map((piloto) => (
                   <tr key={piloto.id}>
-                    <td className="tg-0lax">{piloto.piloto}</td>
-                    <td className="tg-0lax">{piloto.velocidade}</td>
+                    <td>{piloto.piloto}</td>
+                    <td>{piloto.velocidade} km/h</td>
+                    <td>{piloto.ultrapassagem}</td> {/* Exibe o número de ultrapassagens */}
+                    <td>{piloto.maiorVelocidade} km/h</td> {/* Exibe a maior velocidade */}
+                    <td>{piloto.posicao}º</td>
                   </tr>
                 ))}
               </tbody>
@@ -130,88 +136,12 @@ const Egame = () => {
                 <p className="pilotosResultado">1° lugar: {pilotos[0].piloto}, com a velocidade total de: {pilotos[0].velocidade} km/h.</p>
                 {pilotos.slice(1).map((piloto) => (
                   <p className="pilotosResultado" key={piloto.id}>
-                    {piloto.posicao}º lugar: {piloto.piloto}, com a velocidade de: {piloto.velocidade} km/h.
+                    {piloto.posicao}º lugar: {piloto.piloto}, com a velocidade de: {piloto.velocidade} km/h, {piloto.ultrapassagem} ultrapassagens.
                   </p>
-
                 ))}
               </div>
             </div>
           )}
-        </div>
-        <div id="grafico-corrida">
-          <iframe
-            src="http://4.228.225.124:1880/ui"
-            style={{ width: '100%', height: '100%', border: 'none' }}
-            title="Node-RED Dashboard"
-          />
-        </div>
-
-        <h2 id="race-last">Aprenda como jogar o Egame</h2>
-        <div className="container-home">
-          <div className="parent">
-            <div className="card">
-              <div className="logo">
-                <span className="circle circle1" />
-                <span className="circle circle2" />
-                <span className="circle circle3" />
-                <span className="circle circle4" />
-                <span className="circle circle5">
-                  <p className="comoJogarNum">1°</p>
-                </span>
-              </div>
-              <div className="glass" />
-              <div className="content">
-                <span className="title">Analisar</span>
-                <span className="text">
-                  Dentro do E-game, analise a tabela da corrida passada para
-                  fazer chute de quem vai ganhar
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div className="parent">
-            <div className="card">
-              <div className="logo">
-                <span className="circle circle1" />
-                <span className="circle circle2" />
-                <span className="circle circle3" />
-                <span className="circle circle4" />
-                <span className="circle circle5">
-                  <p className="comoJogarNum">2°</p>
-                </span>
-              </div>
-              <div className="glass" />
-              <div className="content">
-                <span className="title">Confiar</span>
-                <span className="text">
-                  Selecione um corredor e confirme seu chute
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div className="parent">
-            <div className="card">
-              <div className="logo">
-                <span className="circle circle1" />
-                <span className="circle circle2" />
-                <span className="circle circle3" />
-                <span className="circle circle4" />
-                <span className="circle circle5">
-                  <p className="comoJogarNum">3°</p>
-                </span>
-              </div>
-              <div className="glass" />
-              <div className="content">
-                <span className="title">Ganhar!</span>
-                <span className="text">
-                  Agora aguarde os resultados da corrida! Caso você acerte,
-                  receberá pontos que podem ser trocados por prêmios!
-                </span>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
     </>
@@ -219,5 +149,6 @@ const Egame = () => {
 };
 
 export default Egame;
+
 
 
