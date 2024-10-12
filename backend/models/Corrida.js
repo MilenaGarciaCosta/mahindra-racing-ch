@@ -15,24 +15,25 @@ const Corrida = sequelize.define('Corrida', {
     type: DataTypes.INTEGER,
     allowNull: false
   },
+  ultrapassagem: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: 0
+  },
+  maiorVelocidade: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: 0
+  },
   posicao: {
     type: DataTypes.INTEGER,
-    allowNull: true 
-  },
-  ultrapassagem: { 
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    defaultValue: 0
-  },
-  maiorVelocidade: { 
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    defaultValue: 0
+    allowNull: true
   }
 }, {
   tableName: 'Corridas',
-  timestamps: false 
+  timestamps: false  // Não queremos os campos createdAt e updatedAt
 });
 
 export default Corrida;
+
 

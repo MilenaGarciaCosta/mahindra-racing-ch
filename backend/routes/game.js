@@ -4,6 +4,24 @@ import Corrida from '../models/Corrida.js';
 
 const router = express.Router();
 
+// Finalizar a corrida, mover os dados e limpar a corrida atual
+router.post('/finalizarCorrida', async (req, res) => {
+  try {
+    const corridaAtual = await Corrida.findAll();
+
+    if (corridaAtual && corridaAtual.length > 0) {
+      // Finaliza a corrida (opcionalmente, você pode mover os dados para outro lugar)
+      // Aqui apenas vamos limpar os dados da corrida atual
+      await Corrida.destroy({ where: {}, truncate: true });  // Limpa a tabela Corrida
+    }
+
+    res.json({ mensagem: 'Corrida finalizada e dados limpos!' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erro ao finalizar a corrida' });
+  }
+});
+
 // Rota para enviar palpite
 router.post('/palpite', async (req, res) => {
   const { palpite, usuarioId } = req.body;
