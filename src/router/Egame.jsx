@@ -66,7 +66,7 @@ const Egame = () => {
 
         } catch (err) {
           console.error(err);
-          alert('Erro ao buscar dados da corrida em tempo real');
+          alert('Corrida Finalizada!');
         }
       }, 5000);  // Atualiza a cada 5 segundos
 
@@ -94,7 +94,7 @@ const Egame = () => {
       setPilotos(response.data.pilotos);  // Atualiza os pilotos na tabela de resultados
 
       if (response.data.pontos_ganhos > 0) {
-        setResultadoPalpite(`Palpite Correto! +${response.data.pontos_ganhos} pontos foram atualizados ao seu saldo. Agora seu saldo total atual é ${response.data.total_pontos}`);
+        setResultadoPalpite(`+${response.data.pontos_ganhos} pontos foram atualizados ao seu saldo. Agora seu saldo total atual é ${response.data.total_pontos}`);
       } else {
         setResultadoPalpite('Palpite incorreto, que pena... Você não ganhou nada, mas tente novamente!');
       }
@@ -165,7 +165,7 @@ const Egame = () => {
           {/* Tabela da corrida atual em tempo real */}
           {corridaEmAndamento && (
             <div id="tabela-corrida-atual-container">
-              <h1 id="race-atual">CORRIDA ATUAL (Tempo Real)</h1>
+              <h1 id="race-atual">RESULTADO CORRIDA ATUAL</h1>
               <table className="tg">
                 <thead>
                   <tr>
