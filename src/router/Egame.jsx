@@ -29,7 +29,7 @@ const Egame = () => {
     const fetchPilotos = async () => {
       try {
         const response = await axios.get('http://4.228.225.124:5000/api/game/pilotos');
-        setPilotos(response.data.pilotos);  // Atualiza a lista de pilotos no estado
+        setPilotos(response.data.pilotos);  
       } catch (err) {
         console.error(err);
         alert('Erro ao buscar pilotos');

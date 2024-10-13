@@ -4,6 +4,17 @@ import Corrida from '../models/Corrida.js';
 
 const router = express.Router();
 
+// Adicionando a rota para buscar todos os pilotos
+router.get('/pilotos', async (req, res) => {
+  try {
+    const pilotos = await Corrida.findAll();  // Busca todos os pilotos da tabela Corrida
+    res.json({ pilotos });  // Retorna os pilotos como resposta em formato JSON
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erro ao buscar pilotos' });
+  }
+});
+
 // Finalizar a corrida, mover os dados e limpar a corrida atual
 router.post('/finalizarCorrida', async (req, res) => {
   try {
