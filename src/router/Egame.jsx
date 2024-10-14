@@ -47,20 +47,17 @@ const Egame = () => {
           const response = await axios.get('http://4.228.225.124:5000/api/game/corridaAtual');  // Nova rota para dados da corrida atual
           const novosPilotos = response.data.pilotos;
 
-          // Verifica se os dados mudaram em comparação com o estado anterior
           if (JSON.stringify(novosPilotos) === JSON.stringify(previousPilotos.current)) {
             setTentativasSemMudancas(tentativasSemMudancas + 1);
           } else {
-            setTentativasSemMudancas(0); // Reinicia o contador se houver mudança
+            setTentativasSemMudancas(0);
           }
 
-          // Se os dados não mudarem por 3 tentativas consecutivas, finalize a corrida
           if (tentativasSemMudancas >= 3) {
             finalizarCorrida();
             clearInterval(intervalId);  // Para de buscar os dados em tempo real
           }
 
-          // Atualiza os dados dos pilotos e o estado anterior
           setPilotos(novosPilotos);
           previousPilotos.current = novosPilotos;
 
@@ -68,7 +65,7 @@ const Egame = () => {
           console.error(err);
           alert('Corrida Finalizada!');
         }
-      }, 5000);  // Atualiza a cada 5 segundos
+      }, 5000);
 
       return () => clearInterval(intervalId);  // Limpa o intervalo quando o componente for desmontado
     }
@@ -91,7 +88,7 @@ const Egame = () => {
       });
 
       setPontos(response.data.total_pontos);
-      setPilotos(response.data.pilotos);  // Atualiza os pilotos na tabela de resultados
+      setPilotos(response.data.pilotos);
 
       if (response.data.pontos_ganhos > 0) {
         setResultadoPalpite(`+${response.data.pontos_ganhos} pontos foram atualizados ao seu saldo. Agora seu saldo total atual é ${response.data.total_pontos}`);
@@ -99,8 +96,7 @@ const Egame = () => {
         setResultadoPalpite('Palpite incorreto, que pena... Você não ganhou nada, mas tente novamente!');
       }
 
-      // Inicia a corrida em tempo real
-      setCorridaEmAndamento(true);  // Inicia a exibição da corrida em tempo real
+      setCorridaEmAndamento(true);
 
     } catch (err) {
       console.error(err.response ? err.response.data : err.message);
@@ -110,14 +106,13 @@ const Egame = () => {
     }
   };
 
-  // Função para finalizar a corrida
   const finalizarCorrida = async () => {
     try {
       const response = await axios.post('http://4.228.225.124:5000/api/game/finalizarCorrida');
       alert(response.data.mensagem);
-      setCorridaEmAndamento(false);  // Para de exibir a corrida em tempo real
-      setCorridaTerminada(true); // Marca que a corrida terminou
-      setTentativasSemMudancas(0); // Reseta o contador
+      setCorridaEmAndamento(false);
+      setCorridaTerminada(true);
+      setTentativasSemMudancas(0);
     } catch (error) {
       console.error(error);
       alert('Erro ao finalizar a corrida');
@@ -137,7 +132,6 @@ const Egame = () => {
         <div className="race-space">
           <div id="tabela-container">
             <h1 id="race-last">RESULTADO CORRIDA PASSADA</h1>
-            {/* Tabela da corrida passada */}
             <table className="tg">
               <thead>
                 <tr>
@@ -153,8 +147,8 @@ const Egame = () => {
                   <tr key={piloto.id}>
                     <td>{piloto.piloto}</td>
                     <td>{piloto.velocidade} km/h</td>
-                    <td>{piloto.ultrapassagem}</td> {/* Exibe o número de ultrapassagens */}
-                    <td>{piloto.maiorVelocidade} km/h</td> {/* Exibe a maior velocidade */}
+                    <td>{piloto.ultrapassagem}</td>
+                    <td>{piloto.maiorVelocidade} km/h</td>
                     <td>{piloto.posicao}º</td>
                   </tr>
                 ))}
@@ -162,7 +156,6 @@ const Egame = () => {
             </table>
           </div>
 
-          {/* Tabela da corrida atual em tempo real */}
           {corridaEmAndamento && (
             <div id="tabela-corrida-atual-container">
               <h1 id="race-atual">RESULTADO CORRIDA ATUAL</h1>
@@ -216,10 +209,12 @@ const Egame = () => {
             {resultadoPalpite && <p>{resultadoPalpite}</p>}
           </div>
 
-          {pilotos.length > 0 && (
+          {corridaTerminada && (
             <div id="container-camp">
               <div id="resultado" className="bordaNeon">
-                <p className="pilotosResultado">1° lugar: {pilotos[0].piloto}, com a velocidade total de: {pilotos[0].velocidade} km/h.</p>
+                <p className="pilotosResultado">
+                  1° lugar: {pilotos[0].piloto}, com a velocidade total de: {pilotos[0].velocidade} km/h.
+                </p>
                 {pilotos.slice(1).map((piloto) => (
                   <p className="pilotosResultado" key={piloto.id}>
                     {piloto.posicao}º lugar: {piloto.piloto}, com a velocidade de: {piloto.velocidade} km/h, {piloto.ultrapassagem} ultrapassagens.
