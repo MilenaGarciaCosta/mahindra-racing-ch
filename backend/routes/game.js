@@ -1,91 +1,69 @@
 import express from 'express';
 import Usuario from '../models/Usuario.js';
 import Corrida from '../models/Corrida.js'; 
+import { enviarAtualizacaoCorrida } from '../server.js';  // Importa a função de emissão
 
 const router = express.Router();
 
-// Rota para buscar todos os pilotos
-router.get('/pilotos', async (req, res) => {
+// Finaliza a corrida e calcula os pontos
+router.post('/finalizar-corrida', async (req, res) => {
   try {
-    const pilotos = await Corrida.findAll();  // Busca todos os pilotos da tabela Corrida
-    res.json({ pilotos });  // Retorna os pilotos como resposta em formato JSON
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Erro ao buscar pilotos' });
-  }
-});
-
-// Finalizar a corrida, mover os dados e limpar a corrida atual
-router.post('/finalizarCorrida', async (req, res) => {
-  try {
-    const corridaAtual = await Corrida.findAll();
-
-    if (corridaAtual && corridaAtual.length > 0) {
-      // Limpa a tabela Corrida
-      await Corrida.destroy({ where: {}, truncate: true });
+    const corrida = await Corrida.findByPk(req.body.corridaId);  // Pega a corrida pelo ID
+    if (!corrida) {
+      return res.status(404).json({ message: 'Corrida não encontrada' });
     }
 
-    res.json({ mensagem: 'Corrida finalizada e dados limpos!' });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Erro ao finalizar a corrida' });
-  }
-});
+    // Atualiza o status para finalizada
+    corrida.status = 'finalizada';
+    await corrida.save();
 
-// Rota para enviar palpite
-router.post('/palpite', async (req, res) => {
-  const { palpite, usuarioId } = req.body;
+    // Atualize os pontos e outros dados necessários...
+    const pilotos = await Corrida.findAll({ where: { status: 'finalizada' } });
+    pilotos.forEach(async (piloto) => {
+      let pontosGanhos = 0;
 
-  try {
-    const usuario = await Usuario.findByPk(usuarioId);
-
-    if (!usuario) {
-      return res.status(404).json({ error: 'Usuário não encontrado' });
-    }
-
-    let pilotos = await Corrida.findAll();
-
-    if (pilotos.length === 0) {
-      return res.status(404).json({ error: 'Nenhum piloto encontrado na tabela Corridas' });
-    }
-
-    pilotos = pilotos.map(piloto => piloto.toJSON());
-    const pilotosOrdenados = pilotos.sort((a, b) => a.posicao - b.posicao);
-
-    let pontos = 0;
-    const primeiroLugar = pilotosOrdenados[0];
-    const segundoLugar = pilotosOrdenados[1];
-
-    if (palpite === primeiroLugar.piloto) {
-      pontos += 25;
-    } else if (palpite === segundoLugar.piloto) {
-      pontos += 10;
-    }
-
-    pilotos.forEach((piloto) => {
-      if (palpite === piloto.piloto) {
-        pontos += piloto.ultrapassagem * 10;
+      if (piloto.ultrapassagem) {
+        pontosGanhos += 10;
       }
+
+      if (piloto.maiorVelocidade >= piloto.velocidade) {
+        pontosGanhos += 20;
+      }
+
+      if (piloto.posicao === 1) {
+        pontosGanhos += 25;
+      } else if (piloto.posicao === 2) {
+        pontosGanhos += 5;
+      }
+
+      // Aqui você precisa buscar o usuário associado a este piloto/palpite (como no seu sistema)
+      const usuario = await Usuario.findByPk(req.body.usuarioId); // Exemplo: supomos que o `usuarioId` está vindo da requisição
+      if (!usuario) {
+        return res.status(404).json({ message: 'Usuário não encontrado' });
+      }
+
+      // Atualiza o saldo de pontos do usuário
+      usuario.saldoPontos += pontosGanhos;
+      await usuario.save();  // Salva o novo saldo no banco de dados
+
+      // Enviar atualizações para os clientes em tempo real
+      enviarAtualizacaoCorrida({
+        piloto: piloto.piloto,
+        velocidade: piloto.velocidade,
+        ultrapassagem: piloto.ultrapassagem,
+        maiorVelocidade: piloto.maiorVelocidade,
+        posicao: piloto.posicao,
+        pontosGanhos,  // Envia os pontos ganhos
+        usuarioId: usuario.id,  // Envia o ID do usuário para o frontend se precisar
+        saldoAtualizado: usuario.saldoPontos  // Envia o novo saldo para o frontend
+      });
     });
 
-    const maiorVelocidadePiloto = pilotos.reduce((max, piloto) => piloto.maiorVelocidade > max.maiorVelocidade ? piloto : max, pilotos[0]);
-    if (palpite === maiorVelocidadePiloto.piloto) {
-      pontos += 20;
-    }
-
-    usuario.pontos += pontos;
-    await usuario.save();
-
-    res.json({
-      mensagem: `Palpite ${palpite === primeiroLugar.piloto || palpite === segundoLugar.piloto ? 'correto' : 'incorreto'}`,
-      pontos_ganhos: pontos,
-      total_pontos: usuario.pontos,
-      pilotos: pilotosOrdenados
-    });
+    return res.json({ message: 'Corrida finalizada e pontos calculados.' });
 
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Erro no servidor ao processar o palpite' });
+    return res.status(500).json({ message: 'Erro ao finalizar a corrida.' });
   }
 });
 

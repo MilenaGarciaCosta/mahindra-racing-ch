@@ -1,19 +1,16 @@
 import "../css/egame.css";
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import background from '../img/background_img.png';
+import { io } from 'socket.io-client';  // Importar o cliente do Socket.IO
 
 const Egame = () => {
   const [palpite, setPalpite] = useState('');
   const [pontos, setPontos] = useState(0);
-  const [pilotos, setPilotos] = useState([]);  // Armazena os pilotos para o select
+  const [pilotos, setPilotos] = useState([]);
   const [resultadoPalpite, setResultadoPalpite] = useState('');
   const [loading, setLoading] = useState(false);
-  const [corridaEmAndamento, setCorridaEmAndamento] = useState(false);  // Para indicar se a corrida está em andamento
-  const [corridaTerminada, setCorridaTerminada] = useState(false); // Para indicar se a corrida terminou
-  const [tentativasSemMudancas, setTentativasSemMudancas] = useState(0); // Para contar quantas tentativas sem mudanças
-  const previousPilotos = useRef([]); // Armazena o estado anterior dos pilotos para comparar
   const navigate = useNavigate();
 
   // Verifica se o usuário está logado ao carregar o componente
@@ -24,12 +21,39 @@ const Egame = () => {
     }
   }, [navigate]);
 
+  // Conectar ao Socket.IO no carregamento da página
+  useEffect(() => {
+    const socket = io('http://4.228.225.124:5000');  // Conectar ao servidor Socket.IO
+
+    // Escutar o evento de atualização da corrida
+    socket.on('atualizacaoCorrida', (dados) => {
+      console.log('Dados atualizados da corrida recebidos:', dados);
+      // Atualize os pilotos com os dados recebidos em tempo real
+      setPilotos((prevPilotos) => prevPilotos.map(piloto => {
+        if (piloto.piloto === dados.piloto) {
+          return {
+            ...piloto,
+            velocidade: dados.velocidade,
+            ultrapassagem: dados.ultrapassagem,
+            maiorVelocidade: dados.maiorVelocidade,
+            posicao: dados.posicao
+          };
+        }
+        return piloto;
+      }));
+    });
+
+    return () => {
+      socket.disconnect();  // Desconectar ao desmontar o componente
+    };
+  }, []);
+
   // Busca os pilotos ao carregar a página
   useEffect(() => {
     const fetchPilotos = async () => {
       try {
-        const response = await axios.get('http://4.228.225.124:5000/api/game/pilotos');
-        setPilotos(response.data.pilotos);  
+        const response = await axios.get('http://4.228.225.124:5000/api/game/pilotos'); // Nova rota para buscar pilotos
+        setPilotos(response.data.pilotos);  // Atualiza a lista de pilotos no estado
       } catch (err) {
         console.error(err);
         alert('Erro ao buscar pilotos');
@@ -39,90 +63,46 @@ const Egame = () => {
     fetchPilotos();  // Chama a função ao carregar o componente
   }, []);
 
-  // Atualiza os dados da corrida em tempo real quando o palpite for enviado
-  useEffect(() => {
-    if (corridaEmAndamento) {
-      const intervalId = setInterval(async () => {
-        try {
-          const response = await axios.get('http://4.228.225.124:5000/api/game/corridaAtual');  // Nova rota para dados da corrida atual
-          const novosPilotos = response.data.pilotos;
-
-          if (JSON.stringify(novosPilotos) === JSON.stringify(previousPilotos.current)) {
-            setTentativasSemMudancas(tentativasSemMudancas + 1);
-          } else {
-            setTentativasSemMudancas(0);
-          }
-
-          if (tentativasSemMudancas >= 3) {
-            finalizarCorrida();
-            clearInterval(intervalId);  // Para de buscar os dados em tempo real
-          }
-
-          setPilotos(novosPilotos);
-          previousPilotos.current = novosPilotos;
-
-        } catch (err) {
-          console.error(err);
-          alert('Corrida Finalizada!');
-        }
-      }, 5000);
-
-      return () => clearInterval(intervalId);  // Limpa o intervalo quando o componente for desmontado
-    }
-  }, [corridaEmAndamento, tentativasSemMudancas]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+  
     if (!palpite) {
       alert('Por favor, selecione um piloto!');
       return;
     }
-
+  
     setLoading(true);
-    const usuarioId = localStorage.getItem('usuarioId');
-
+    const usuarioId = localStorage.getItem('usuarioId');  // Pega o ID do usuário logado
+  
     try {
       const response = await axios.post('http://4.228.225.124:5000/api/game/palpite', {
         palpite,
         usuarioId
       });
-
-      setPontos(response.data.total_pontos);
-      setPilotos(response.data.pilotos);
-
+  
+      // Atualiza o estado com os dados retornados da API
+      setPontos(response.data.total_pontos);  // Atualiza o saldo de pontos
+      setPilotos(response.data.pilotos);  // Atualiza a lista de pilotos
+  
+      // Exibir a quantidade de pontos ganhos
       if (response.data.pontos_ganhos > 0) {
-        setResultadoPalpite(`+${response.data.pontos_ganhos} pontos foram atualizados ao seu saldo. Agora seu saldo total atual é ${response.data.total_pontos}`);
+        setResultadoPalpite(`Você ganhou ${response.data.pontos_ganhos} pontos. Agora seu saldo total é ${response.data.total_pontos}`);
       } else {
         setResultadoPalpite('Palpite incorreto, que pena... Você não ganhou nada, mas tente novamente!');
       }
-
-      setCorridaEmAndamento(true);
-
+  
     } catch (err) {
       console.error(err.response ? err.response.data : err.message);
-      alert('Erro ao enviar palpite');
+      alert('Erro ao enviar o palpite');
     } finally {
       setLoading(false);
     }
   };
-
-  const finalizarCorrida = async () => {
-    try {
-      const response = await axios.post('http://4.228.225.124:5000/api/game/finalizarCorrida');
-      alert(response.data.mensagem);
-      setCorridaEmAndamento(false);
-      setCorridaTerminada(true);
-      setTentativasSemMudancas(0);
-    } catch (error) {
-      console.error(error);
-      alert('Erro ao finalizar a corrida');
-    }
-  };
-
+  
   return (
     <>
       <div id="backgroundImg">
-        <img src={background} alt="Background" />
+        <img src={background} />
       </div>
 
       <section className="egame">
@@ -131,58 +111,24 @@ const Egame = () => {
         </div>
         <div className="race-space">
           <div id="tabela-container">
-            <h1 id="race-last">RESULTADO CORRIDA PASSADA</h1>
+            <h1 id="race-last"> RESULTADO CORRIDA PASSADA</h1>
             <table className="tg">
               <thead>
                 <tr>
-                  <th>Piloto</th>
-                  <th>Velocidade</th>
-                  <th>Ultrapassagens</th>
-                  <th>Maior Velocidade</th>
-                  <th>Posição</th>
+                  <th className="tg-0lax">Piloto</th>
+                  <th className="tg-0lax">Velocidade</th>
                 </tr>
               </thead>
               <tbody>
                 {pilotos.map((piloto) => (
                   <tr key={piloto.id}>
-                    <td>{piloto.piloto}</td>
-                    <td>{piloto.velocidade} km/h</td>
-                    <td>{piloto.ultrapassagem}</td>
-                    <td>{piloto.maiorVelocidade} km/h</td>
-                    <td>{piloto.posicao}º</td>
+                    <td className="tg-0lax">{piloto.piloto}</td>
+                    <td className="tg-0lax">{piloto.velocidade}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-
-          {corridaEmAndamento && (
-            <div id="tabela-corrida-atual-container">
-              <h1 id="race-atual">RESULTADO CORRIDA ATUAL</h1>
-              <table className="tg">
-                <thead>
-                  <tr>
-                    <th>Piloto</th>
-                    <th>Velocidade</th>
-                    <th>Ultrapassagens</th>
-                    <th>Maior Velocidade</th>
-                    <th>Posição</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {pilotos.map((piloto) => (
-                    <tr key={piloto.id}>
-                      <td>{piloto.piloto}</td>
-                      <td>{piloto.velocidade} km/h</td>
-                      <td>{piloto.ultrapassagem}</td>
-                      <td>{piloto.maiorVelocidade} km/h</td>
-                      <td>{piloto.posicao}º</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
 
           <h2 id="race-last">Faça seu palpite!</h2>
           <form onSubmit={handleSubmit} className="palpite-form">
@@ -209,20 +155,94 @@ const Egame = () => {
             {resultadoPalpite && <p>{resultadoPalpite}</p>}
           </div>
 
-          {corridaTerminada && (
+          {pilotos.length > 0 && (
             <div id="container-camp">
               <div id="resultado" className="bordaNeon">
-                <p className="pilotosResultado">
-                  1° lugar: {pilotos[0].piloto}, com a velocidade total de: {pilotos[0].velocidade} km/h.
-                </p>
+                <p className="pilotosResultado">1° lugar: {pilotos[0].piloto}, com a velocidade total de: {pilotos[0].velocidade} km/h e {pilotos[0].ultrapassagem} ultrapassagens.</p>
                 {pilotos.slice(1).map((piloto) => (
                   <p className="pilotosResultado" key={piloto.id}>
-                    {piloto.posicao}º lugar: {piloto.piloto}, com a velocidade de: {piloto.velocidade} km/h, {piloto.ultrapassagem} ultrapassagens.
+                    {piloto.posicao}º lugar: {piloto.piloto}, com a velocidade de: {piloto.velocidade} km/h, {piloto.ultrapassagem} ultrapassagens e maior velocidade de {piloto.maiorVelocidade} km/h.
                   </p>
                 ))}
               </div>
             </div>
           )}
+        </div>
+
+        <div id="grafico-corrida">
+          <iframe
+            src="http://4.228.225.124:1880/ui"
+            style={{ width: '100%', height: '100%', border: 'none' }}
+            title="Node-RED Dashboard"
+          />
+        </div>
+
+        <h2 id="race-last">Aprenda como jogar o Egame</h2>
+        <div className="container-home">
+          <div className="parent">
+            <div className="card">
+              <div className="logo">
+                <span className="circle circle1" />
+                <span className="circle circle2" />
+                <span className="circle circle3" />
+                <span className="circle circle4" />
+                <span className="circle circle5">
+                  <p className="comoJogarNum">1°</p>
+                </span>
+              </div>
+              <div className="glass" />
+              <div className="content">
+                <span className="title">Analisar</span>
+                <span className="text">
+                  Dentro do E-game, analise a tabela da corrida passada para
+                  fazer chute de quem vai ganhar
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className="parent">
+            <div className="card">
+              <div className="logo">
+                <span className="circle circle1" />
+                <span className="circle circle2" />
+                <span className="circle circle3" />
+                <span className="circle circle4" />
+                <span className="circle circle5">
+                  <p className="comoJogarNum">2°</p>
+                </span>
+              </div>
+              <div className="glass" />
+              <div className="content">
+                <span className="title">Confiar</span>
+                <span className="text">
+                  Selecione um corredor e confirme seu chute
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className="parent">
+            <div className="card">
+              <div className="logo">
+                <span className="circle circle1" />
+                <span className="circle circle2" />
+                <span className="circle circle3" />
+                <span className="circle circle4" />
+                <span className="circle circle5">
+                  <p className="comoJogarNum">3°</p>
+                </span>
+              </div>
+              <div className="glass" />
+              <div className="content">
+                <span className="title">Ganhar!</span>
+                <span className="text">
+                  Agora aguarde os resultados da corrida! Caso você acerte,
+                  receberá pontos que podem ser trocados por prêmios!
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </>
@@ -230,3 +250,4 @@ const Egame = () => {
 };
 
 export default Egame;
+
