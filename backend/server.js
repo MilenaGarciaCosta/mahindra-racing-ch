@@ -4,11 +4,11 @@ import sequelize from './config/db.js';
 import authRoutes from './routes/auth.js';
 import gameRoutes from './routes/game.js';
 import resgateRoutes from './routes/resgate.js';
-import { createServer } from 'http';  // Criar servidor HTTP
-import { Server } from 'socket.io';  // Importar Socket.IO
+import { createServer } from 'http';
+import { Server } from 'socket.io';
 
 const app = express();
-const httpServer = createServer(app);  // Criar servidor HTTP a partir do express
+const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
     origin: 'http://4.228.225.124:5173',  // Substitua pelo IP ou domínio do seu front-end
@@ -16,9 +16,8 @@ const io = new Server(httpServer, {
   }
 });
 
-// Configuração do CORS para permitir o acesso do front-end
 app.use(cors({
-  origin: 'http://4.228.225.124:5173'  // Substitua pelo IP ou domínio do seu front-end
+  origin: 'http://4.228.225.124:5173'
 }));
 
 app.use(express.json());
@@ -27,17 +26,14 @@ app.use('/api', authRoutes);
 app.use('/api/game', gameRoutes);
 app.use('/api/usuario', resgateRoutes);
 
-// Quando a conexão do WebSocket for estabelecida
 io.on('connection', (socket) => {
   console.log('Cliente conectado:', socket.id);
 
-  // Aqui você pode escutar eventos ou enviar dados em tempo real
   socket.on('disconnect', () => {
     console.log('Cliente desconectado:', socket.id);
   });
 });
 
-// Exemplo de função para enviar atualizações em tempo real
 const enviarAtualizacaoCorrida = (dadosDaCorrida) => {
   io.emit('atualizacaoCorrida', dadosDaCorrida);  // Envia os dados para todos os clientes conectados
 };
@@ -50,5 +46,7 @@ const PORT = process.env.PORT || 5000;
 httpServer.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
 });
+
+export { enviarAtualizacaoCorrida };
 
 

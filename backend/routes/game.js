@@ -13,11 +13,11 @@ router.post('/finalizar-corrida', async (req, res) => {
       return res.status(404).json({ message: 'Corrida não encontrada' });
     }
 
-    // Atualiza o status para finalizada
+    // Atualiza o status para "finalizada"
     corrida.status = 'finalizada';
     await corrida.save();
 
-    // Atualize os pontos e outros dados necessários...
+    // Calcular pontos ganhos
     const pilotos = await Corrida.findAll({ where: { status: 'finalizada' } });
     pilotos.forEach(async (piloto) => {
       let pontosGanhos = 0;
@@ -36,15 +36,15 @@ router.post('/finalizar-corrida', async (req, res) => {
         pontosGanhos += 5;
       }
 
-      // Aqui você precisa buscar o usuário associado a este piloto/palpite (como no seu sistema)
-      const usuario = await Usuario.findByPk(req.body.usuarioId); // Exemplo: supomos que o `usuarioId` está vindo da requisição
+      // Busca o usuário associado ao palpite
+      const usuario = await Usuario.findByPk(req.body.usuarioId);
       if (!usuario) {
         return res.status(404).json({ message: 'Usuário não encontrado' });
       }
 
       // Atualiza o saldo de pontos do usuário
       usuario.saldoPontos += pontosGanhos;
-      await usuario.save();  // Salva o novo saldo no banco de dados
+      await usuario.save();  // Salva o saldo no banco de dados
 
       // Enviar atualizações para os clientes em tempo real
       enviarAtualizacaoCorrida({
@@ -54,8 +54,9 @@ router.post('/finalizar-corrida', async (req, res) => {
         maiorVelocidade: piloto.maiorVelocidade,
         posicao: piloto.posicao,
         pontosGanhos,  // Envia os pontos ganhos
-        usuarioId: usuario.id,  // Envia o ID do usuário para o frontend se precisar
-        saldoAtualizado: usuario.saldoPontos  // Envia o novo saldo para o frontend
+        usuarioId: usuario.id,  // Envia o ID do usuário
+        saldoAtualizado: usuario.saldoPontos,  // Envia o saldo atualizado
+        status: corrida.status  // Envia o status da corrida
       });
     });
 
@@ -68,3 +69,4 @@ router.post('/finalizar-corrida', async (req, res) => {
 });
 
 export default router;
+

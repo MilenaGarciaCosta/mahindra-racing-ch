@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import background from '../img/background_img.png';
-import { io } from 'socket.io-client';  // Importar o cliente do Socket.IO
+import { io } from 'socket.io-client';
 
 const Egame = () => {
   const [palpite, setPalpite] = useState('');
@@ -11,9 +11,9 @@ const Egame = () => {
   const [pilotos, setPilotos] = useState([]);
   const [resultadoPalpite, setResultadoPalpite] = useState('');
   const [loading, setLoading] = useState(false);
+  const [statusCorrida, setStatusCorrida] = useState('em andamento'); // Adiciona status da corrida
   const navigate = useNavigate();
 
-  // Verifica se o usuário está logado ao carregar o componente
   useEffect(() => {
     const usuarioId = localStorage.getItem('usuarioId');
     if (!usuarioId) {
@@ -25,10 +25,10 @@ const Egame = () => {
   useEffect(() => {
     const socket = io('http://4.228.225.124:5000');  // Conectar ao servidor Socket.IO
 
-    // Escutar o evento de atualização da corrida
     socket.on('atualizacaoCorrida', (dados) => {
       console.log('Dados atualizados da corrida recebidos:', dados);
-      // Atualize os pilotos com os dados recebidos em tempo real
+      setStatusCorrida(dados.status);  // Atualiza o status da corrida
+      setPontos(dados.saldoAtualizado);  // Atualiza os pontos do usuário
       setPilotos((prevPilotos) => prevPilotos.map(piloto => {
         if (piloto.piloto === dados.piloto) {
           return {
@@ -44,53 +44,50 @@ const Egame = () => {
     });
 
     return () => {
-      socket.disconnect();  // Desconectar ao desmontar o componente
+      socket.disconnect();
     };
   }, []);
 
-  // Busca os pilotos ao carregar a página
   useEffect(() => {
     const fetchPilotos = async () => {
       try {
-        const response = await axios.get('http://4.228.225.124:5000/api/game/pilotos'); // Nova rota para buscar pilotos
-        setPilotos(response.data.pilotos);  // Atualiza a lista de pilotos no estado
+        const response = await axios.get('http://4.228.225.124:5000/api/game/pilotos');
+        setPilotos(response.data.pilotos);
       } catch (err) {
         console.error(err);
         alert('Erro ao buscar pilotos');
       }
     };
 
-    fetchPilotos();  // Chama a função ao carregar o componente
+    fetchPilotos();
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     if (!palpite) {
       alert('Por favor, selecione um piloto!');
       return;
     }
-  
+
     setLoading(true);
-    const usuarioId = localStorage.getItem('usuarioId');  // Pega o ID do usuário logado
-  
+    const usuarioId = localStorage.getItem('usuarioId');
+
     try {
       const response = await axios.post('http://4.228.225.124:5000/api/game/palpite', {
         palpite,
         usuarioId
       });
-  
-      // Atualiza o estado com os dados retornados da API
-      setPontos(response.data.total_pontos);  // Atualiza o saldo de pontos
-      setPilotos(response.data.pilotos);  // Atualiza a lista de pilotos
-  
-      // Exibir a quantidade de pontos ganhos
+
+      setPontos(response.data.total_pontos);
+      setPilotos(response.data.pilotos);
+
       if (response.data.pontos_ganhos > 0) {
         setResultadoPalpite(`Você ganhou ${response.data.pontos_ganhos} pontos. Agora seu saldo total é ${response.data.total_pontos}`);
       } else {
         setResultadoPalpite('Palpite incorreto, que pena... Você não ganhou nada, mas tente novamente!');
       }
-  
+
     } catch (err) {
       console.error(err.response ? err.response.data : err.message);
       alert('Erro ao enviar o palpite');
@@ -98,7 +95,7 @@ const Egame = () => {
       setLoading(false);
     }
   };
-  
+
   return (
     <>
       <div id="backgroundImg">
@@ -108,22 +105,27 @@ const Egame = () => {
       <section className="egame">
         <div className="titulo-container">
           <h2>E-game</h2>
+          <p>Status da Corrida: {statusCorrida}</p> {/* Exibe o status da corrida */}
         </div>
         <div className="race-space">
           <div id="tabela-container">
-            <h1 id="race-last"> RESULTADO CORRIDA PASSADA</h1>
+            <h1 id="race-last">RESULTADO CORRIDA PASSADA</h1>
             <table className="tg">
               <thead>
                 <tr>
+                  <th className="tg-0lax">Posição</th>
                   <th className="tg-0lax">Piloto</th>
-                  <th className="tg-0lax">Velocidade</th>
+                  <th className="tg-0lax">Maior Velocidade</th>
+                  <th className="tg-0lax">Ultrapassagens</th>
                 </tr>
               </thead>
               <tbody>
                 {pilotos.map((piloto) => (
                   <tr key={piloto.id}>
+                    <td className="tg-0lax">{piloto.posicao}º</td>
                     <td className="tg-0lax">{piloto.piloto}</td>
-                    <td className="tg-0lax">{piloto.velocidade}</td>
+                    <td className="tg-0lax">{piloto.maiorVelocidade} km/h</td>
+                    <td className="tg-0lax">{piloto.ultrapassagem}</td>
                   </tr>
                 ))}
               </tbody>
@@ -244,6 +246,7 @@ const Egame = () => {
             </div>
           </div>
         </div>
+
       </section>
     </>
   );
