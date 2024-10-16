@@ -29,11 +29,6 @@ const Corrida = sequelize.define('Corrida', {
     type: DataTypes.INTEGER,
     allowNull: true // Pode ser atualizado após a corrida
   },
-  status: {
-    type: DataTypes.STRING,
-    allowNull: false, // Valores podem ser 'em andamento', 'finalizada', etc.
-    defaultValue: 'em andamento' // Valor padrão se nada for definido
-  },
   ultrapassado: {
     type: DataTypes.INTEGER,
     allowNull: true // Quantidade de vezes que foi ultrapassado

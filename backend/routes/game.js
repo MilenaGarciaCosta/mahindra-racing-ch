@@ -4,93 +4,101 @@ import Corrida from '../models/Corrida.js';
 
 const router = express.Router();
 
-// Rota para enviar palpite (não calcula pontos imediatamente)
+// Rota para enviar palpite
 router.post('/palpite', async (req, res) => {
   const { palpite, usuarioId } = req.body;
 
   try {
-    // Verifica se o usuário existe
     const usuario = await Usuario.findByPk(usuarioId);
+
     if (!usuario) {
       return res.status(404).json({ error: 'Usuário não encontrado' });
     }
 
-    // Verifica se há uma corrida em andamento
-    const corrida = await Corrida.findOne({ where: { status: 'em andamento' } });
-    if (!corrida) {
-      return res.status(404).json({ error: 'Nenhuma corrida em andamento' });
-    }
+    // Busca os dados dos pilotos da tabela Corridas
+    let pilotos = await Corrida.findAll();
 
-    // O palpite será armazenado no front-end (localStorage), apenas retornamos a confirmação aqui
-    res.json({ mensagem: 'Palpite registrado com sucesso! Aguarde o término da corrida.' });
-
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Erro ao processar o palpite.' });
-  }
-});
-
-// Rota para buscar status da corrida e dados dos pilotos
-router.get('/status-corrida', async (req, res) => {
-  try {
-    // Busca a corrida com status 'em andamento' ou 'finalizada'
-    const corrida = await Corrida.findOne({ where: { status: ['em andamento', 'finalizada'] } });
-    if (!corrida) {
-      return res.status(404).json({ error: 'Nenhuma corrida em andamento ou finalizada' });
-    }
-
-    // Busca todos os pilotos associados à corrida
-    const pilotos = await Corrida.findAll({
-      where: { corridaId: corrida.id } // Certifique-se de que 'corridaId' está correto no seu modelo
-    });
-
+    // Verifica se há pilotos cadastrados
     if (pilotos.length === 0) {
       return res.status(404).json({ error: 'Nenhum piloto encontrado na tabela Corridas' });
     }
 
-    // Retorna o status da corrida e os dados dos pilotos
-    res.json({ status: corrida.status, pilotos });
+    // Converte para um array simples de objetos
+    pilotos = pilotos.map(piloto => piloto.toJSON());
+
+    // Ordena os pilotos pela maior velocidade em ordem decrescente
+    const pilotosOrdenados = pilotos.sort((a, b) => b.maiorVelocidade - a.maiorVelocidade);
+
+    // Adiciona a posição a cada piloto
+    pilotosOrdenados.forEach((piloto, index) => {
+      piloto.posicao = index + 1;
+    });
+
+    // Encontra o piloto escolhido (com base no palpite do usuário)
+    const pilotoEscolhido = pilotos.find(piloto => piloto.piloto === palpite);
+
+    if (!pilotoEscolhido) {
+      return res.status(404).json({ error: 'Piloto não encontrado' });
+    }
+
+    // Verifica se a corrida foi finalizada (status 'finalizada')
+    if (pilotoEscolhido.status !== 'finalizada') {
+      return res.status(400).json({ error: 'A corrida ainda não foi finalizada.' });
+    }
+
+    // Inicializa os pontos do usuário com 0
+    let pontos = 0;
+
+    // Regra 1: +10 pontos por cada ultrapassagem
+    pontos += pilotoEscolhido.ultrapassagem * 10;
+
+    // Regra 2: -3 pontos por cada vez que foi ultrapassado
+    pontos -= pilotoEscolhido.ultrapassado * 3;
+
+    // Regra 3: +20 pontos se for o corredor com a maior velocidade
+    const maiorVelocidade = Math.max(...pilotos.map(p => p.maiorVelocidade));
+    if (pilotoEscolhido.maiorVelocidade === maiorVelocidade) {
+      pontos += 20;
+    }
+
+    // Regra 4: Pontuação com base na posição
+    if (pilotoEscolhido.posicao === 1) {
+      pontos += 25; // Primeiro lugar
+    } else if (pilotoEscolhido.posicao === 2) {
+      pontos += 5; // Segundo lugar
+    }
+
+    // Atualiza os pontos do usuário
+    usuario.pontos += pontos;
+    await usuario.save();
+
+    res.json({
+      mensagem: `Palpite ${pilotoEscolhido.posicao === 1 ? 'correto' : 'incorreto'}`,
+      pontos_ganhos: pontos,
+      total_pontos: usuario.pontos,
+      piloto: pilotoEscolhido,
+      pilotos: pilotosOrdenados // Inclui os pilotos ordenados na resposta
+    });
 
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Erro ao buscar status da corrida' });
+    res.status(500).json({ error: 'Erro no servidor ao processar o palpite' });
   }
 });
 
-// Rota para finalizar a corrida e calcular os pontos
-router.put('/finalizar-corrida', async (req, res) => {
-  const { corridaId } = req.body;
-
+// Rota para buscar todos os pilotos
+router.get('/pilotos', async (req, res) => {
   try {
-    // Busca a corrida pelo ID
-    const corrida = await Corrida.findByPk(corridaId);
-    if (!corrida) {
-      return res.status(404).json({ error: 'Corrida não encontrada' });
-    }
-
-    // Define o status da corrida como 'finalizada'
-    corrida.status = 'finalizada';
-    await corrida.save();
-
-    // Busca todos os pilotos da corrida finalizada
-    const pilotos = await Corrida.findAll({ where: { corridaId } });
-
-    if (pilotos.length === 0) {
-      return res.status(404).json({ error: 'Nenhum piloto encontrado na corrida finalizada' });
-    }
-
-    // Aqui você pode adicionar a lógica de cálculo de pontos, se necessário
-
-    // Retorna os pilotos atualizados e a mensagem de sucesso
-    res.json({ mensagem: 'Corrida finalizada e pontos calculados', pilotos });
-
+    const pilotos = await Corrida.findAll();
+    res.json({ pilotos });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Erro ao finalizar a corrida' });
+    res.status(500).json({ error: 'Erro ao buscar pilotos' });
   }
 });
 
 export default router;
+
 
 
 
