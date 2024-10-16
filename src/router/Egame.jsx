@@ -3,17 +3,16 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import background from '../img/background_img.png';
-import { io } from 'socket.io-client';
 
 const Egame = () => {
   const [palpite, setPalpite] = useState('');
   const [pontos, setPontos] = useState(0);
-  const [pilotos, setPilotos] = useState([]);
+  const [pilotos, setPilotos] = useState([]);  // Armazena os pilotos para o select
   const [resultadoPalpite, setResultadoPalpite] = useState('');
   const [loading, setLoading] = useState(false);
-  const [statusCorrida, setStatusCorrida] = useState('em andamento'); // Adiciona status da corrida
   const navigate = useNavigate();
 
+  // Verifica se o usuário está logado ao carregar o componente
   useEffect(() => {
     const usuarioId = localStorage.getItem('usuarioId');
     if (!usuarioId) {
@@ -21,50 +20,23 @@ const Egame = () => {
     }
   }, [navigate]);
 
-  // Conectar ao Socket.IO no carregamento da página
-  useEffect(() => {
-    const socket = io('http://4.228.225.124:5000');  // Conectar ao servidor Socket.IO
-
-    socket.on('atualizacaoCorrida', (dados) => {
-      console.log('Dados atualizados da corrida recebidos:', dados);
-      setStatusCorrida(dados.status);  // Atualiza o status da corrida
-      setPontos(dados.saldoAtualizado);  // Atualiza os pontos do usuário
-      setPilotos((prevPilotos) => prevPilotos.map(piloto => {
-        if (piloto.piloto === dados.piloto) {
-          return {
-            ...piloto,
-            velocidade: dados.velocidade,
-            ultrapassagem: dados.ultrapassagem,
-            maiorVelocidade: dados.maiorVelocidade,
-            posicao: dados.posicao
-          };
-        }
-        return piloto;
-      }));
-    });
-
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
-
+  // Busca os pilotos ao carregar a página
   useEffect(() => {
     const fetchPilotos = async () => {
       try {
-        const response = await axios.get('http://4.228.225.124:5000/api/game/pilotos');
-        setPilotos(response.data.pilotos);
+        const response = await axios.get('http://4.228.225.124:5000/api/game/pilotos'); // Nova rota para buscar pilotos
+        setPilotos(response.data.pilotos);  // Atualiza a lista de pilotos no estado
       } catch (err) {
         console.error(err);
         alert('Erro ao buscar pilotos');
       }
     };
 
-    fetchPilotos();
+    fetchPilotos();  // Chama a função ao carregar o componente
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!palpite) {
       alert('Por favor, selecione um piloto!');
       return;
@@ -80,17 +52,17 @@ const Egame = () => {
       });
 
       setPontos(response.data.total_pontos);
-      setPilotos(response.data.pilotos);
+      setPilotos(response.data.pilotos);  // Atualiza os pilotos na tabela de resultados
 
       if (response.data.pontos_ganhos > 0) {
-        setResultadoPalpite(`Você ganhou ${response.data.pontos_ganhos} pontos. Agora seu saldo total é ${response.data.total_pontos}`);
+        setResultadoPalpite(`Palpite Correto! +10 pontos foram atualizados ao seu saldo. Agora seu saldo total atual é ${response.data.total_pontos}`);
       } else {
         setResultadoPalpite('Palpite incorreto, que pena... Você não ganhou nada, mas tente novamente!');
       }
 
     } catch (err) {
       console.error(err.response ? err.response.data : err.message);
-      alert('Erro ao enviar o palpite');
+      alert('Erro ao enviar palpite');
     } finally {
       setLoading(false);
     }
@@ -105,27 +77,22 @@ const Egame = () => {
       <section className="egame">
         <div className="titulo-container">
           <h2>E-game</h2>
-          <p>Status da Corrida: {statusCorrida}</p> {/* Exibe o status da corrida */}
         </div>
         <div className="race-space">
           <div id="tabela-container">
-            <h1 id="race-last">RESULTADO CORRIDA PASSADA</h1>
+            <h1 id="race-last"> RESULTADO CORRIDA PASSADA</h1>
             <table className="tg">
               <thead>
                 <tr>
-                  <th className="tg-0lax">Posição</th>
                   <th className="tg-0lax">Piloto</th>
-                  <th className="tg-0lax">Maior Velocidade</th>
-                  <th className="tg-0lax">Ultrapassagens</th>
+                  <th className="tg-0lax">Velocidade</th>
                 </tr>
               </thead>
               <tbody>
                 {pilotos.map((piloto) => (
                   <tr key={piloto.id}>
-                    <td className="tg-0lax">{piloto.posicao}º</td>
                     <td className="tg-0lax">{piloto.piloto}</td>
-                    <td className="tg-0lax">{piloto.maiorVelocidade} km/h</td>
-                    <td className="tg-0lax">{piloto.ultrapassagem}</td>
+                    <td className="tg-0lax">{piloto.velocidade}</td>
                   </tr>
                 ))}
               </tbody>
@@ -160,17 +127,17 @@ const Egame = () => {
           {pilotos.length > 0 && (
             <div id="container-camp">
               <div id="resultado" className="bordaNeon">
-                <p className="pilotosResultado">1° lugar: {pilotos[0].piloto}, com a velocidade total de: {pilotos[0].velocidade} km/h e {pilotos[0].ultrapassagem} ultrapassagens.</p>
+                <p className="pilotosResultado">1° lugar: {pilotos[0].piloto}, com a velocidade total de: {pilotos[0].velocidade} km/h.</p>
                 {pilotos.slice(1).map((piloto) => (
                   <p className="pilotosResultado" key={piloto.id}>
-                    {piloto.posicao}º lugar: {piloto.piloto}, com a velocidade de: {piloto.velocidade} km/h, {piloto.ultrapassagem} ultrapassagens e maior velocidade de {piloto.maiorVelocidade} km/h.
+                    {piloto.posicao}º lugar: {piloto.piloto}, com a velocidade de: {piloto.velocidade} km/h.
                   </p>
+
                 ))}
               </div>
             </div>
           )}
         </div>
-
         <div id="grafico-corrida">
           <iframe
             src="http://4.228.225.124:1880/ui"
@@ -246,7 +213,6 @@ const Egame = () => {
             </div>
           </div>
         </div>
-
       </section>
     </>
   );

@@ -1,70 +1,74 @@
 import express from 'express';
 import Usuario from '../models/Usuario.js';
 import Corrida from '../models/Corrida.js'; 
-import { enviarAtualizacaoCorrida } from '../server.js';  // Importa a função de emissão
 
 const router = express.Router();
 
-// Finaliza a corrida e calcula os pontos
-router.post('/finalizar-corrida', async (req, res) => {
+// Rota para enviar palpite
+router.post('/palpite', async (req, res) => {
+  const { palpite, usuarioId } = req.body;
+
   try {
-    const corrida = await Corrida.findByPk(req.body.corridaId);  // Pega a corrida pelo ID
-    if (!corrida) {
-      return res.status(404).json({ message: 'Corrida não encontrada' });
+    const usuario = await Usuario.findByPk(usuarioId);
+
+    if (!usuario) {
+      return res.status(404).json({ error: 'Usuário não encontrado' });
     }
 
-    // Atualiza o status para "finalizada"
-    corrida.status = 'finalizada';
-    await corrida.save();
+    // Busca os dados dos pilotos da tabela Corridas
+    let pilotos = await Corrida.findAll();
 
-    // Calcular pontos ganhos
-    const pilotos = await Corrida.findAll({ where: { status: 'finalizada' } });
-    pilotos.forEach(async (piloto) => {
-      let pontosGanhos = 0;
+    // Verifica se há pilotos cadastrados
+    if (pilotos.length === 0) {
+      return res.status(404).json({ error: 'Nenhum piloto encontrado na tabela Corridas' });
+    }
 
-      if (piloto.ultrapassagem) {
-        pontosGanhos += 10;
-      }
+    // Converte para um array simples de objetos
+    pilotos = pilotos.map(piloto => piloto.toJSON());
 
-      if (piloto.maiorVelocidade >= piloto.velocidade) {
-        pontosGanhos += 20;
-      }
+    // Ordena os pilotos pela velocidade em ordem decrescente
+    const pilotosOrdenados = pilotos.sort((a, b) => b.velocidade - a.velocidade);
 
-      if (piloto.posicao === 1) {
-        pontosGanhos += 25;
-      } else if (piloto.posicao === 2) {
-        pontosGanhos += 5;
-      }
-
-      // Busca o usuário associado ao palpite
-      const usuario = await Usuario.findByPk(req.body.usuarioId);
-      if (!usuario) {
-        return res.status(404).json({ message: 'Usuário não encontrado' });
-      }
-
-      // Atualiza o saldo de pontos do usuário
-      usuario.saldoPontos += pontosGanhos;
-      await usuario.save();  // Salva o saldo no banco de dados
-
-      // Enviar atualizações para os clientes em tempo real
-      enviarAtualizacaoCorrida({
-        piloto: piloto.piloto,
-        velocidade: piloto.velocidade,
-        ultrapassagem: piloto.ultrapassagem,
-        maiorVelocidade: piloto.maiorVelocidade,
-        posicao: piloto.posicao,
-        pontosGanhos,  // Envia os pontos ganhos
-        usuarioId: usuario.id,  // Envia o ID do usuário
-        saldoAtualizado: usuario.saldoPontos,  // Envia o saldo atualizado
-        status: corrida.status  // Envia o status da corrida
-      });
+    // Adiciona a posição a cada piloto
+    pilotosOrdenados.forEach((piloto, index) => {
+      piloto.posicao = index + 1;
     });
 
-    return res.json({ message: 'Corrida finalizada e pontos calculados.' });
+    // Define o vencedor (o piloto na primeira posição)
+    const pilotoVencedor = pilotosOrdenados[0].piloto; // Nome do piloto vencedor
+
+    let pontos = 0;
+
+    // Se o palpite for igual ao nome do piloto vencedor, o usuário ganha 10 pontos
+    if (palpite === pilotoVencedor) {
+      pontos = 10;
+    }
+
+    // Atualiza os pontos do usuário
+    usuario.pontos += pontos;
+    await usuario.save();
+
+    res.json({
+      mensagem: `Palpite ${palpite === pilotoVencedor ? 'correto' : 'incorreto'}`,
+      pontos_ganhos: pontos,
+      total_pontos: usuario.pontos,
+      pilotos: pilotosOrdenados // Inclui os pilotos ordenados na resposta
+    });
 
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: 'Erro ao finalizar a corrida.' });
+    res.status(500).json({ error: 'Erro no servidor ao processar o palpite' });
+  }
+});
+
+// Rota para buscar todos os pilotos
+router.get('/pilotos', async (req, res) => {
+  try {
+    const pilotos = await Corrida.findAll();
+    res.json({ pilotos });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erro ao buscar pilotos' });
   }
 });
 
