@@ -9,7 +9,7 @@ const Egame = () => {
   const [pontos, setPontos] = useState(0);
   const [pilotos, setPilotos] = useState([]);  
   const [resultadoPalpite, setResultadoPalpite] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false); // Para indicar o estado de carregamento
   const navigate = useNavigate();
 
   // Verifica se o usuário está logado ao carregar o componente
@@ -43,9 +43,11 @@ const Egame = () => {
       return;
     }
 
+    // Armazena o palpite localmente
     localStorage.setItem('palpite', palpite);
     alert('Palpite registrado! Aguarde o término da corrida.');
-    setPalpite('');
+    setPalpite(''); // Limpa o campo do palpite
+    setLoading(true); // Ativa o estado de carregamento
   };
 
   // Verifica o status da corrida e calcula os pontos quando finalizada
@@ -55,9 +57,13 @@ const Egame = () => {
         const response = await axios.get('http://4.228.225.124:5000/api/game/status-corrida');
         const { status, pilotos } = response.data;
 
+        // Atualiza os pilotos independentemente do status
+        setPilotos(pilotos);
+
         if (status === 'finalizada') {
           const palpiteSalvo = localStorage.getItem('palpite');
           if (palpiteSalvo) {
+            // Encontra o piloto escolhido com base no palpite armazenado
             const pilotoEscolhido = pilotos.find(p => p.piloto === palpiteSalvo);
             let pontosGanhos = 0;
 
@@ -74,16 +80,21 @@ const Egame = () => {
               pontosGanhos += 5;
             }
 
-            // Exibe a pontuação
+            // Exibe os pontos ganhos para o usuário
             setResultadoPalpite(`Você ganhou ${pontosGanhos} pontos com seu palpite no piloto ${palpiteSalvo}!`);
             setPontos(pontosGanhos);
+            setLoading(false); // Desativa o estado de carregamento
 
-            // Limpa o palpite do localStorage
+            // Limpa o palpite armazenado no localStorage
             localStorage.removeItem('palpite');
           }
+        } else {
+          // Caso o status não seja "finalizada", manter o estado de aguardando
+          setResultadoPalpite('Aguardando a finalização da corrida...');
         }
       } catch (error) {
         console.error('Erro ao verificar status da corrida:', error);
+        alert('Erro ao buscar pilotos');
       }
     };
 
