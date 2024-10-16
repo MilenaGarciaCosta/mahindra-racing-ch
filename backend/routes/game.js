@@ -3,7 +3,6 @@ import Usuario from '../models/Usuario.js';
 import Corrida from '../models/Corrida.js'; 
 
 const router = express.Router();
-
 // Rota para enviar palpite
 router.post('/palpite', async (req, res) => {
   const { palpite, usuarioId } = req.body;
@@ -27,7 +26,7 @@ router.post('/palpite', async (req, res) => {
     pilotos = pilotos.map(piloto => piloto.toJSON());
 
     // Ordena os pilotos pela velocidade em ordem decrescente
-    const pilotosOrdenados = pilotos.sort((a, b) => b.velocidade - a.velocidade);
+    const pilotosOrdenados = pilotos.sort((a, b) => b.maiorVelocidade - a.maiorVelocidade);
 
     // Adiciona a posição a cada piloto
     pilotosOrdenados.forEach((piloto, index) => {
@@ -35,7 +34,7 @@ router.post('/palpite', async (req, res) => {
     });
 
     // Define o vencedor (o piloto na primeira posição)
-    const pilotoVencedor = pilotosOrdenados[0].piloto; // Nome do piloto vencedor
+    const pilotoVencedor = pilotosOrdenados[0].piloto;
 
     let pontos = 0;
 
@@ -60,6 +59,7 @@ router.post('/palpite', async (req, res) => {
     res.status(500).json({ error: 'Erro no servidor ao processar o palpite' });
   }
 });
+
 
 // Rota para buscar todos os pilotos
 router.get('/pilotos', async (req, res) => {

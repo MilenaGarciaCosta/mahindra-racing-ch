@@ -15,18 +15,36 @@ const Corrida = sequelize.define('Corrida', {
   },
   velocidade: {
     type: DataTypes.INTEGER,
-    allowNull: false
+    allowNull: true
   },
   posicao: {
     type: DataTypes.INTEGER,
     allowNull: true // Pode ser preenchido após a corrida
+  },
+  ultrapassagem: {
+    type: DataTypes.INTEGER,
+    allowNull: true // Pode ser atualizado durante ou após a corrida
+  },
+  maiorVelocidade: {
+    type: DataTypes.INTEGER,
+    allowNull: true // Pode ser atualizado após a corrida
+  },
+  status: {
+    type: DataTypes.STRING,
+    allowNull: false, // Valores podem ser 'em andamento', 'finalizada', etc.
+    defaultValue: 'em andamento' // Valor padrão se nada for definido
+  },
+  ultrapassado: {
+    type: DataTypes.INTEGER,
+    allowNull: true // Quantidade de vezes que foi ultrapassado
   }
 }, {
   tableName: 'Corridas',
-  timestamps: false // Se não tiver as colunas createdAt e updatedAt
+  timestamps: false 
 });
 
 export default Corrida;
+
 
 
 
