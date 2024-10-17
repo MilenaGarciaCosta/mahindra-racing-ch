@@ -1,31 +1,8 @@
 import express from 'express';
-import mqtt from 'mqtt';  // Adicionando o MQTT
 import Usuario from '../models/Usuario.js';
 import Corrida from '../models/Corrida.js'; 
 
 const router = express.Router();
-
-// Conectar ao broker MQTT
-const mqttClient = mqtt.connect('mqtt://4.228.225.124');
-
-// Variável para armazenar o status da corrida
-let statusCorrida = 'em andamento'; // Valor inicial
-
-// Listener para atualizar o status da corrida com base nas mensagens MQTT
-mqttClient.on('connect', () => {
-  mqttClient.subscribe('/TEF/device004/attrs/status_corrida', (err) => {
-    if (err) {
-      console.error('Erro ao se inscrever no tópico MQTT:', err);
-    }
-  });
-});
-
-mqttClient.on('message', (topic, message) => {
-  if (topic === '/TEF/device004/attrs/status_corrida') {
-    statusCorrida = message.toString(); // Atualiza o status da corrida
-    console.log('Status da corrida atualizado para:', statusCorrida);
-  }
-});
 
 // Rota para enviar palpite
 router.post('/palpite', async (req, res) => {
@@ -64,8 +41,8 @@ router.post('/palpite', async (req, res) => {
       return res.status(404).json({ error: 'Piloto não encontrado' });
     }
 
-    // Verifica o status da corrida via MQTT
-    if (statusCorrida !== 'finalizada') {
+    // Verifica se a corrida foi finalizada (status 'finalizada')
+    if (pilotoEscolhido.status !== 'finalizada') {
       return res.status(400).json({ error: 'A corrida ainda não foi finalizada.' });
     }
 
@@ -121,7 +98,6 @@ router.get('/pilotos', async (req, res) => {
 });
 
 export default router;
-
 
 
 
