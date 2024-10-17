@@ -4,9 +4,31 @@ import Corrida from '../models/Corrida.js';
 
 const router = express.Router();
 
-// Rota para enviar palpite
+// Rota para enviar palpite e armazená-lo sem calcular os pontos
 router.post('/palpite', async (req, res) => {
   const { palpite, usuarioId } = req.body;
+
+  try {
+    const usuario = await Usuario.findByPk(usuarioId);
+
+    if (!usuario) {
+      return res.status(404).json({ error: 'Usuário não encontrado' });
+    }
+
+    // Simplesmente armazenar o palpite
+    usuario.palpite = palpite;
+    await usuario.save();
+
+    res.json({ mensagem: 'Palpite armazenado com sucesso, aguarde a corrida finalizar.' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erro ao armazenar o palpite' });
+  }
+});
+
+// Rota para verificar se a corrida foi finalizada e calcular a pontuação
+router.get('/exibir-resultado/:usuarioId', async (req, res) => {
+  const { usuarioId } = req.params;
 
   try {
     const usuario = await Usuario.findByPk(usuarioId);
@@ -34,16 +56,18 @@ router.post('/palpite', async (req, res) => {
       piloto.posicao = index + 1;
     });
 
-    // Encontra o piloto escolhido (com base no palpite do usuário)
-    const pilotoEscolhido = pilotos.find(piloto => piloto.piloto === palpite);
+    // Verifica se a corrida foi finalizada
+    const corridaFinalizada = pilotos.some(piloto => piloto.status === 'finalizada');
 
-    if (!pilotoEscolhido) {
-      return res.status(404).json({ error: 'Piloto não encontrado' });
+    if (!corridaFinalizada) {
+      return res.status(400).json({ error: 'A corrida ainda está em andamento.' });
     }
 
-    // Verifica se a corrida foi finalizada (status 'finalizada')
-    if (pilotoEscolhido.status !== 'finalizada') {
-      return res.status(400).json({ error: 'A corrida ainda não foi finalizada.' });
+    // Encontra o piloto escolhido pelo usuário
+    const pilotoEscolhido = pilotos.find(piloto => piloto.piloto === usuario.palpite);
+
+    if (!pilotoEscolhido) {
+      return res.status(404).json({ error: 'Piloto não encontrado.' });
     }
 
     // Inicializa os pontos do usuário com 0
@@ -77,14 +101,15 @@ router.post('/palpite', async (req, res) => {
       pontos_ganhos: pontos,
       total_pontos: usuario.pontos,
       piloto: pilotoEscolhido,
-      pilotos: pilotosOrdenados // Inclui os pilotos ordenados na resposta
+      pilotos: pilotosOrdenados
     });
-
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Erro no servidor ao processar o palpite' });
   }
 });
+
+export default router;
 
 // Rota para buscar todos os pilotos
 router.get('/pilotos', async (req, res) => {
@@ -97,7 +122,6 @@ router.get('/pilotos', async (req, res) => {
   }
 });
 
-export default router;
 
 
 

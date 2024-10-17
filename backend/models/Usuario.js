@@ -24,6 +24,10 @@ const Usuario = sequelize.define('Usuario', {
     type: DataTypes.CHAR(6),
     allowNull: true,
   },
+  palpite: {  // Novo campo para armazenar o palpite temporariamente
+    type: DataTypes.STRING,
+    allowNull: true
+  },
 }, {
   timestamps: false  // Desativa createdAt e updatedAt
 });
