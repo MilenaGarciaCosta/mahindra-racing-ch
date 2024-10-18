@@ -4,7 +4,7 @@ import Corrida from '../models/Corrida.js';
 
 const router = express.Router();
 
-router.post('/palpite', async (req, res) => { // calculo
+router.post('/palpite', async (req, res) => { // cálculo
   const { palpite, usuarioId } = req.body;
 
   try {
@@ -21,19 +21,26 @@ router.post('/palpite', async (req, res) => { // calculo
       return res.json({ status: 'em andamento' });
     }
 
-    // Se a corrida foi finalizada, prossegue com o cálculo de pontos
+    // Obtém os pilotos
     let pilotos = await Corrida.findAll();
 
     if (pilotos.length === 0) {
       return res.status(404).json({ error: 'Nenhum piloto encontrado na tabela Corridas' });
     }
 
-    pilotos = pilotos.map((piloto) => piloto.toJSON());
+    // Converter valores para números
+    pilotos = pilotos.map((piloto) => {
+      const p = piloto.toJSON();
+      p.maiorVelocidade = Number(p.maiorVelocidade);
+      p.ultrapassagem = Number(p.ultrapassagem);
+      p.ultrapassado = Number(p.ultrapassado);
+      return p;
+    });
 
     // Encontrar a maior velocidade entre os pilotos
     const maiorVelocidade = Math.max(...pilotos.map(p => p.maiorVelocidade));
 
-    // Calcular pontos para cada piloto
+    // Calcular pontos para cada piloto (sem alterar a posição)
     pilotos.forEach(piloto => {
       piloto.pontos = 0;
 
@@ -54,15 +61,10 @@ router.post('/palpite', async (req, res) => { // calculo
     });
 
     // Ordenar os pilotos pelos pontos (do maior para o menor)
-    const pilotosOrdenados = pilotos.sort((a, b) => b.pontos - a.pontos);
-
-    // Atribuir posições
-    pilotosOrdenados.forEach((piloto, index) => {
-      piloto.posicao = index + 1;
-    });
+    const pilotosOrdenados = [...pilotos].sort((a, b) => b.pontos - a.pontos);
 
     // Encontra o piloto correspondente ao palpite do usuário
-    const pilotoDoPalpite = pilotosOrdenados.find(piloto => piloto.piloto === palpite);
+    const pilotoDoPalpite = pilotos.find(piloto => piloto.piloto === palpite);
 
     if (!pilotoDoPalpite) {
       return res.status(404).json({ error: 'Piloto não encontrado' });
@@ -70,7 +72,7 @@ router.post('/palpite', async (req, res) => { // calculo
 
     let pontos = 0;
 
-    // Pontos pela posição
+    // Pontos pela posição (usando a posição original do banco de dados)
     if (pilotoDoPalpite.posicao === 1) {
       pontos += 25; // Pontos pelo primeiro lugar
     } else if (pilotoDoPalpite.posicao === 2) {
@@ -86,7 +88,7 @@ router.post('/palpite', async (req, res) => { // calculo
 
     res.json({
       status: 'finalizada',
-      mensagem:  `Palpite ${pilotoDoPalpite.posicao === 1 ? 'correto' : 'incorreto'}`,
+      mensagem: `Palpite ${pilotoDoPalpite.posicao === 1 ? 'correto' : 'incorreto'}`,
       pontos_ganhos: pontos,
       total_pontos: usuario.pontos,
       pilotos: pilotosOrdenados,
@@ -96,8 +98,6 @@ router.post('/palpite', async (req, res) => { // calculo
     res.status(500).json({ error: 'Erro ao processar o palpite' });
   }
 });
-
-
 
 // Rota para buscar todos os pilotos
 router.get('/pilotos', async (req, res) => {
