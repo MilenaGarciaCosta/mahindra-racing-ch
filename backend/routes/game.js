@@ -45,16 +45,20 @@ router.post('/palpite', async (req, res) => { // calculo
       pontos += 25;  // Pontos pelo primeiro lugar
     }
 
-    // Primeiro, encontre a maior velocidade
     const maiorVelocidade = Math.max(...pilotos.map(p => p.maiorVelocidade));
 
     // Atribuir pontos apenas ao piloto que alcançou a maior velocidade
-    const pilotoComMaiorVelocidade = pilotosOrdenados.find(p => p.maiorVelocidade === maiorVelocidade);
+    let pilotoComMaiorVelocidade;
+    pilotosOrdenados.forEach((piloto) => {
+      if (piloto.maiorVelocidade === maiorVelocidade) {
+        pilotoComMaiorVelocidade = piloto;
+      }
+    });
+    
     if (pilotoComMaiorVelocidade) {
-      pilotoComMaiorVelocidade.pontosExtra = (pilotoComMaiorVelocidade.pontosExtra || 0) + 20; // Adiciona 20 pontos pela maior velocidade
+      pontos += 20;  // Adiciona 20 pontos para o piloto com a maior velocidade
     }
-
-
+    
     // Calcula pontos adicionais com base nas regras
     pilotosOrdenados.forEach((piloto) => {
       if (piloto.ultrapassagem > 0) {
@@ -62,9 +66,6 @@ router.post('/palpite', async (req, res) => { // calculo
       }
       if (piloto.ultrapassado > 0) {
         pontos -= piloto.ultrapassado * 3;  // Subtrai 3 pontos por cada vez que foi ultrapassado
-      }
-      if (piloto.pontosExtra) {
-        pontos += piloto.pontosExtra;  // Adiciona pontos extras (como maior velocidade)
       }
     });
 
