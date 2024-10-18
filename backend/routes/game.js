@@ -44,20 +44,6 @@ router.post('/palpite', async (req, res) => { // calculo
     if (palpite === pilotoVencedor) {
       pontos += 25;  // Pontos pelo primeiro lugar
     }
-
-    const maiorVelocidade = Math.max(...pilotos.map(p => p.maiorVelocidade));
-
-    // Atribuir pontos apenas ao piloto que alcançou a maior velocidade
-    let pilotoComMaiorVelocidade;
-    pilotosOrdenados.forEach((piloto) => {
-      if (piloto.maiorVelocidade === maiorVelocidade) {
-        pilotoComMaiorVelocidade = piloto;
-      }
-    });
-    
-    if (pilotoComMaiorVelocidade) {
-      pontos += 20;  // Adiciona 20 pontos para o piloto com a maior velocidade
-    }
     
     // Calcula pontos adicionais com base nas regras
     pilotosOrdenados.forEach((piloto) => {
