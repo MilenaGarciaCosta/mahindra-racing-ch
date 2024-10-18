@@ -67,10 +67,6 @@ router.post('/palpite', async (req, res) => { // calculo
       pontos += 20; // Adiciona 20 pontos pela maior velocidade
     }
 
-    if (palpite === pilotosOrdenados[1].piloto) {
-      pontos += 5;  // Pontos pelo segundo lugar
-    }
-
     usuario.pontos += pontos;
     await usuario.save();
 
