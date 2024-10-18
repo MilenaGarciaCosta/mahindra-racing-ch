@@ -36,6 +36,12 @@ router.post('/palpite', async (req, res) => { // calculo
       piloto.posicao = index + 1;
     });
 
+    const pilotoDoPalpite = pilotosOrdenados.find(piloto => piloto.piloto === palpite);
+
+    if (!pilotoDoPalpite) {
+      return res.status(404).json({ error: 'Piloto não encontrado' });
+    }
+
     const pilotoVencedor = pilotosOrdenados[0].piloto;
 
     let pontos = 0;
@@ -55,6 +61,12 @@ router.post('/palpite', async (req, res) => { // calculo
       }
     });
 
+    // Pontos extras pela maior velocidade
+    const maiorVelocidade = Math.max(...pilotos.map(p => p.maiorVelocidade));
+    if (pilotoDoPalpite.maiorVelocidade === maiorVelocidade) {
+      pontos += 20; // Adiciona 20 pontos pela maior velocidade
+    }
+    
     if (palpite === pilotosOrdenados[1].piloto) {
       pontos += 5;  // Pontos pelo segundo lugar
     }
