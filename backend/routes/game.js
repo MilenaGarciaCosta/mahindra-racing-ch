@@ -64,7 +64,9 @@ router.post('/palpite', async (req, res) => {
 // Rota para buscar todos os pilotos
 router.get('/pilotos', async (req, res) => {
   try {
-    const pilotos = await Corrida.findAll();
+    const pilotos = await Corrida.findAll({
+      attributes: ['posicao', 'piloto', 'maiorVelocidade', 'ultrapassagem', 'ultrapassado']  // Colunas que deseja buscar
+    });
     res.json({ pilotos });
   } catch (error) {
     console.error(error);

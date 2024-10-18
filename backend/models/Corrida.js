@@ -13,11 +13,19 @@ const Corrida = sequelize.define('Corrida', {
     type: DataTypes.STRING,
     allowNull: false
   },
-  velocidade: {
+  maiorVelocidade: {
     type: DataTypes.INTEGER,
-    allowNull: false
+    allowNull: true
   },
   posicao: {
+    type: DataTypes.INTEGER,
+    allowNull: true // Pode ser preenchido após a corrida
+  },
+  ultrapassagem: {
+    type: DataTypes.INTEGER,
+    allowNull: true // Pode ser preenchido após a corrida
+  },
+  ultrapassado: {
     type: DataTypes.INTEGER,
     allowNull: true // Pode ser preenchido após a corrida
   }
