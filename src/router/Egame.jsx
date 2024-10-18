@@ -35,7 +35,52 @@ const Egame = () => {
     fetchPilotos();  // Chama a função ao carregar o componente
   }, []);
 
-  const handleSubmit = async (e) => {
+  // Função para salvar palpite localmente
+const handlePalpite = async (e) => {
+  e.preventDefault();
+  if (!palpite) {
+    alert('Por favor, selecione um piloto!');
+    return;
+  }
+  localStorage.setItem('palpite', palpite);
+  alert('Palpite salvo localmente! Agora aguarde o resultado.');
+};
+
+// Função para exibir resultado e calcular pontos
+const handleExibirResultado = async () => {
+  setLoading(true);
+  const usuarioId = localStorage.getItem('usuarioId');
+  const palpiteLocal = localStorage.getItem('palpite');
+
+  try {
+    const response = await axios.get('http://4.228.225.124:5000/api/game/status');
+
+    if (response.data.status === 'finalizada') {
+      // Realiza o cálculo de pontos baseado nas regras definidas
+      const resultado = await axios.post('http://4.228.225.124:5000/api/game/palpite', {
+        palpite: palpiteLocal,
+        usuarioId,
+      });
+
+      setPontos(resultado.data.total_pontos);
+      setPilotos(resultado.data.pilotos);
+
+      setResultadoPalpite(resultado.data.pontos_ganhos > 0 
+        ? `+${resultado.data.pontos_ganhos} pontos foram atualizados ao seu saldo.`
+        : 'Palpite incorreto, que pena... Você não ganhou nada, mas tente novamente!'
+      );
+    } else {
+      alert('A corrida ainda não foi finalizada.');
+    }
+  } catch (err) {
+    console.error(err.response ? err.response.data : err.message);
+    alert('Erro ao verificar o status da corrida');
+  } finally {
+    setLoading(false);
+  }
+};
+
+ /* const handleSubmit = async (e) => {
     e.preventDefault();
     if (!palpite) {
       alert('Por favor, selecione um piloto!');
@@ -55,7 +100,7 @@ const Egame = () => {
       setPilotos(response.data.pilotos);  // Atualiza os pilotos na tabela de resultados
 
       if (response.data.pontos_ganhos > 0) {
-        setResultadoPalpite(`Palpite Correto! +10 pontos foram atualizados ao seu saldo. Agora seu saldo total atual é ${response.data.total_pontos}`);
+        setResultadoPalpite(`+10 pontos foram atualizados ao seu saldo. Agora seu saldo total atual é ${response.data.total_pontos}`);
       } else {
         setResultadoPalpite('Palpite incorreto, que pena... Você não ganhou nada, mas tente novamente!');
       }
@@ -66,7 +111,7 @@ const Egame = () => {
     } finally {
       setLoading(false);
     }
-  };
+  };*/
 
   return (
     <>
@@ -108,7 +153,7 @@ const Egame = () => {
           </div>
 
           <h2 id="race-last">Faça seu palpite!</h2>
-          <form onSubmit={handleSubmit} className="palpite-form">
+          <form onSubmit={handlePalpite} className="palpite-form">
             <select
               name="seletor3"
               id="seletor3"
@@ -128,6 +173,11 @@ const Egame = () => {
               {loading ? 'Enviando...' : 'Enviar Palpite'}
             </button>
           </form>
+
+          <button onClick={handleExibirResultado} className="palpite-button">
+            Exibir Resultado
+          </button>
+
           <div className="resposta-palpite">
             {resultadoPalpite && <p>{resultadoPalpite}</p>}
           </div>
@@ -145,6 +195,7 @@ const Egame = () => {
               </div>
             </div>
           )}
+
         </div>
         <div id="grafico-corrida">
           <iframe
