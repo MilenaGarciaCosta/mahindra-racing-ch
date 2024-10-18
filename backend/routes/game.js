@@ -42,31 +42,31 @@ router.post('/palpite', async (req, res) => { // calculo
       return res.status(404).json({ error: 'Piloto não encontrado' });
     }
 
-    const pilotoVencedor = pilotosOrdenados[0].piloto;
-
     let pontos = 0;
 
-    // Verifica se o palpite do usuário foi correto (primeiro lugar)
-    if (palpite === pilotoVencedor) {
-      pontos += 25;  // Pontos pelo primeiro lugar
+    // Pontos pela posição
+    if (pilotoDoPalpite.posicao === 1) {
+      pontos += 25; // Pontos pelo primeiro lugar
+    } else if (pilotoDoPalpite.posicao === 2) {
+      pontos += 5; // Pontos pelo segundo lugar
     }
-    
-    // Calcula pontos adicionais com base nas regras
-    pilotosOrdenados.forEach((piloto) => {
-      if (piloto.ultrapassagem > 0) {
-        pontos += piloto.ultrapassagem * 10;
-      }
-      if (piloto.ultrapassado > 0) {
-        pontos -= piloto.ultrapassado * 3;  // Subtrai 3 pontos por cada vez que foi ultrapassado
-      }
-    });
+
+     // Pontos por ultrapassagens
+    if (pilotoDoPalpite.ultrapassagem > 0) {
+      pontos += pilotoDoPalpite.ultrapassagem * 10;
+    }
+
+    // Subtrair pontos se foi ultrapassado
+    if (pilotoDoPalpite.ultrapassado > 0) {
+      pontos -= pilotoDoPalpite.ultrapassado * 3;
+    }
 
     // Pontos extras pela maior velocidade
     const maiorVelocidade = Math.max(...pilotos.map(p => p.maiorVelocidade));
     if (pilotoDoPalpite.maiorVelocidade === maiorVelocidade) {
       pontos += 20; // Adiciona 20 pontos pela maior velocidade
     }
-    
+
     if (palpite === pilotosOrdenados[1].piloto) {
       pontos += 5;  // Pontos pelo segundo lugar
     }
@@ -76,7 +76,7 @@ router.post('/palpite', async (req, res) => { // calculo
 
     res.json({
       status: 'finalizada',
-      mensagem: `Palpite ${palpite === pilotoVencedor ? 'correto' : 'incorreto'}`,
+      mensagem:  `Palpite ${pilotoDoPalpite.posicao === 1 ? 'correto' : 'incorreto'}`,
       pontos_ganhos: pontos,
       total_pontos: usuario.pontos,
       pilotos: pilotosOrdenados,
