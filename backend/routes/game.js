@@ -30,12 +30,38 @@ router.post('/palpite', async (req, res) => { // calculo
 
     pilotos = pilotos.map((piloto) => piloto.toJSON());
 
-    // Ordena os pilotos pela velocidade
-    const pilotosOrdenados = pilotos.sort((a, b) => b.maiorVelocidade - a.maiorVelocidade);
+    // Encontrar a maior velocidade entre os pilotos
+    const maiorVelocidade = Math.max(...pilotos.map(p => p.maiorVelocidade));
+
+    // Calcular pontos para cada piloto
+    pilotos.forEach(piloto => {
+      piloto.pontos = 0;
+
+      // Pontos por ultrapassagens
+      if (piloto.ultrapassagem > 0) {
+        piloto.pontos += piloto.ultrapassagem * 10;
+      }
+
+      // Subtrair pontos se foi ultrapassado
+      if (piloto.ultrapassado > 0) {
+        piloto.pontos -= piloto.ultrapassado * 3;
+      }
+
+      // Pontos extras pela maior velocidade
+      if (piloto.maiorVelocidade === maiorVelocidade) {
+        piloto.pontos += 20; // Adiciona 20 pontos pela maior velocidade
+      }
+    });
+
+    // Ordenar os pilotos pelos pontos (do maior para o menor)
+    const pilotosOrdenados = pilotos.sort((a, b) => b.pontos - a.pontos);
+
+    // Atribuir posições
     pilotosOrdenados.forEach((piloto, index) => {
       piloto.posicao = index + 1;
     });
 
+    // Encontra o piloto correspondente ao palpite do usuário
     const pilotoDoPalpite = pilotosOrdenados.find(piloto => piloto.piloto === palpite);
 
     if (!pilotoDoPalpite) {
@@ -51,22 +77,10 @@ router.post('/palpite', async (req, res) => { // calculo
       pontos += 5; // Pontos pelo segundo lugar
     }
 
-     // Pontos por ultrapassagens
-    if (pilotoDoPalpite.ultrapassagem > 0) {
-      pontos += pilotoDoPalpite.ultrapassagem * 10;
-    }
+    // Pontos do piloto escolhido (já calculados)
+    pontos += pilotoDoPalpite.pontos;
 
-    // Subtrair pontos se foi ultrapassado
-    if (pilotoDoPalpite.ultrapassado > 0) {
-      pontos -= pilotoDoPalpite.ultrapassado * 3;
-    }
-
-    // Pontos extras pela maior velocidade
-    const maiorVelocidade = Math.max(...pilotos.map(p => p.maiorVelocidade));
-    if (pilotoDoPalpite.maiorVelocidade === maiorVelocidade) {
-      pontos += 20; // Adiciona 20 pontos pela maior velocidade
-    }
-
+    // Atualiza os pontos do usuário e salva
     usuario.pontos += pontos;
     await usuario.save();
 
@@ -82,6 +96,7 @@ router.post('/palpite', async (req, res) => { // calculo
     res.status(500).json({ error: 'Erro ao processar o palpite' });
   }
 });
+
 
 
 // Rota para buscar todos os pilotos
