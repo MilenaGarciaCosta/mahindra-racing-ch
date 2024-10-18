@@ -43,3 +43,4 @@ router.post('/resgatar', async (req, res) => {
 
 export default router;
 
+

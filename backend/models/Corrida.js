@@ -1,3 +1,8 @@
+// models/Corrida.js
+
+import { DataTypes } from 'sequelize';
+import sequelize from '../config/db.js';
+
 const Corrida = sequelize.define('Corrida', {
   id: {
     type: DataTypes.INTEGER,
@@ -10,33 +15,18 @@ const Corrida = sequelize.define('Corrida', {
   },
   velocidade: {
     type: DataTypes.INTEGER,
-    allowNull: true
+    allowNull: false
   },
   posicao: {
     type: DataTypes.INTEGER,
-    allowNull: true
-  },
-  ultrapassagem: {
-    type: DataTypes.INTEGER,
-    allowNull: true
-  },
-  maiorVelocidade: {
-    type: DataTypes.INTEGER,
-    allowNull: true
-  },
-  ultrapassado: {
-    type: DataTypes.INTEGER,
-    allowNull: true
-  },
-  status: {  // Novo campo status
-    type: DataTypes.STRING,
-    allowNull: false,
-    defaultValue: 'em andamento'  // Definido como 'em andamento' por padrão
+    allowNull: true // Pode ser preenchido após a corrida
   }
 }, {
   tableName: 'Corridas',
-  timestamps: false 
+  timestamps: false // Se não tiver as colunas createdAt e updatedAt
 });
+
+export default Corrida;
 
 
 

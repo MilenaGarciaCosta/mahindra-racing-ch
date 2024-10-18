@@ -26,46 +26,22 @@ router.post('/palpite', async (req, res) => {
     // Converte para um array simples de objetos
     pilotos = pilotos.map(piloto => piloto.toJSON());
 
-    // Ordena os pilotos pela maior velocidade em ordem decrescente
-    const pilotosOrdenados = pilotos.sort((a, b) => b.maiorVelocidade - a.maiorVelocidade);
+    // Ordena os pilotos pela velocidade em ordem decrescente
+    const pilotosOrdenados = pilotos.sort((a, b) => b.velocidade - a.velocidade);
 
     // Adiciona a posição a cada piloto
     pilotosOrdenados.forEach((piloto, index) => {
       piloto.posicao = index + 1;
     });
 
-    // Encontra o piloto escolhido (com base no palpite do usuário)
-    const pilotoEscolhido = pilotos.find(piloto => piloto.piloto === palpite);
+    // Define o vencedor (o piloto na primeira posição)
+    const pilotoVencedor = pilotosOrdenados[0].piloto; // Nome do piloto vencedor
 
-    if (!pilotoEscolhido) {
-      return res.status(404).json({ error: 'Piloto não encontrado' });
-    }
-
-    // Verifica se a corrida foi finalizada (status 'finalizada')
-    if (pilotoEscolhido.status !== 'finalizada') {
-      return res.status(400).json({ error: 'A corrida ainda não foi finalizada.' });
-    }
-
-    // Inicializa os pontos do usuário com 0
     let pontos = 0;
 
-    // Regra 1: +10 pontos por cada ultrapassagem
-    pontos += pilotoEscolhido.ultrapassagem * 10;
-
-    // Regra 2: -3 pontos por cada vez que foi ultrapassado
-    pontos -= pilotoEscolhido.ultrapassado * 3;
-
-    // Regra 3: +20 pontos se for o corredor com a maior velocidade
-    const maiorVelocidade = Math.max(...pilotos.map(p => p.maiorVelocidade));
-    if (pilotoEscolhido.maiorVelocidade === maiorVelocidade) {
-      pontos += 20;
-    }
-
-    // Regra 4: Pontuação com base na posição
-    if (pilotoEscolhido.posicao === 1) {
-      pontos += 25; // Primeiro lugar
-    } else if (pilotoEscolhido.posicao === 2) {
-      pontos += 5; // Segundo lugar
+    // Se o palpite for igual ao nome do piloto vencedor, o usuário ganha 10 pontos
+    if (palpite === pilotoVencedor) {
+      pontos = 10;
     }
 
     // Atualiza os pontos do usuário
@@ -73,10 +49,9 @@ router.post('/palpite', async (req, res) => {
     await usuario.save();
 
     res.json({
-      mensagem: `Palpite ${pilotoEscolhido.posicao === 1 ? 'correto' : 'incorreto'}`,
+      mensagem: `Palpite ${palpite === pilotoVencedor ? 'correto' : 'incorreto'}`,
       pontos_ganhos: pontos,
       total_pontos: usuario.pontos,
-      piloto: pilotoEscolhido,
       pilotos: pilotosOrdenados // Inclui os pilotos ordenados na resposta
     });
 
@@ -98,7 +73,6 @@ router.get('/pilotos', async (req, res) => {
 });
 
 export default router;
-
 
 
 
