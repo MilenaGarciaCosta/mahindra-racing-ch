@@ -4,7 +4,7 @@ import Corrida from '../models/Corrida.js';
 
 const router = express.Router();
 
-router.post('/palpite', async (req, res) => {
+router.post('/palpite', async (req, res) => { // calculo
   const { palpite, usuarioId } = req.body;
 
   try {
@@ -45,16 +45,26 @@ router.post('/palpite', async (req, res) => {
       pontos += 25;  // Pontos pelo primeiro lugar
     }
 
+    // Primeiro, encontre a maior velocidade
+    const maiorVelocidade = Math.max(...pilotos.map(p => p.maiorVelocidade));
+
+    // Atribuir pontos apenas ao piloto que alcançou a maior velocidade
+    const pilotoComMaiorVelocidade = pilotosOrdenados.find(p => p.maiorVelocidade === maiorVelocidade);
+    if (pilotoComMaiorVelocidade) {
+      pilotoComMaiorVelocidade.pontosExtra = (pilotoComMaiorVelocidade.pontosExtra || 0) + 20; // Adiciona 20 pontos pela maior velocidade
+    }
+
+
     // Calcula pontos adicionais com base nas regras
     pilotosOrdenados.forEach((piloto) => {
       if (piloto.ultrapassagem > 0) {
         pontos += piloto.ultrapassagem * 10;
       }
-      if (piloto.maiorVelocidade === Math.max(...pilotos.map(p => p.maiorVelocidade))) {
-        pontos += 20;  // Pontos por maior velocidade
-      }
       if (piloto.ultrapassado > 0) {
         pontos -= piloto.ultrapassado * 3;  // Subtrai 3 pontos por cada vez que foi ultrapassado
+      }
+      if (piloto.pontosExtra) {
+        pontos += piloto.pontosExtra;  // Adiciona pontos extras (como maior velocidade)
       }
     });
 
