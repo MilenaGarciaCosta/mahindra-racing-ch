@@ -34,7 +34,7 @@ const Egame = () => {
 
     fetchPilotos();  // Chama a função ao carregar o componente
   }, []);
-
+/*
   // Função para salvar palpite localmente
 const handlePalpite = async (e) => {
   e.preventDefault();
@@ -113,6 +113,43 @@ const handleExibirResultado = async () => {
     }
   };*/
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!palpite) {
+      alert('Por favor, selecione um piloto!');
+      return;
+    }
+  
+    setLoading(true);
+    const usuarioId = localStorage.getItem('usuarioId');
+  
+    try {
+      const response = await axios.post('http://4.228.225.124:5000/api/game/palpite', {
+        palpite,
+        usuarioId,
+      });
+  
+      if (response.data.status === 'finalizada') {
+        // Exibe o resultado com o cálculo de pontos
+        setPontos(response.data.total_pontos);
+        setPilotos(response.data.pilotos);
+  
+        setResultadoPalpite(
+          response.data.pontos_ganhos > 0 
+            ? `Palpite Correto! +${response.data.pontos_ganhos} pontos foram atualizados ao seu saldo.`
+            : 'Palpite incorreto, que pena... Você não ganhou nada, mas tente novamente!'
+        );
+      } else {
+        alert('A corrida ainda não foi finalizada. Aguarde o término para ver os resultados.');
+      }
+    } catch (err) {
+      console.error(err.response ? err.response.data : err.message);
+      alert('Erro ao enviar palpite ou verificar status da corrida.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <div id="backgroundImg">
@@ -153,7 +190,7 @@ const handleExibirResultado = async () => {
           </div>
 
           <h2 id="race-last">Faça seu palpite!</h2>
-          <form onSubmit={handlePalpite} className="palpite-form">
+          <form onSubmit={handleSubmit} className="palpite-form">
             <select
               name="seletor3"
               id="seletor3"
