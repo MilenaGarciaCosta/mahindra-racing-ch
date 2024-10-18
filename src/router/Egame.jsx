@@ -84,17 +84,25 @@ const Egame = () => {
             <table className="tg">
               <thead>
                 <tr>
+                  <th className="tg-0lax">Posição</th>
                   <th className="tg-0lax">Piloto</th>
-                  <th className="tg-0lax">Velocidade</th>
+                  <th className="tg-0lax">Maior Velocidade</th>
+                  <th className="tg-0lax">Ultrapassagens</th>
+                  <th className="tg-0lax">Ultrapassado</th>
                 </tr>
               </thead>
               <tbody>
-                {pilotos.map((piloto) => (
-                  <tr key={piloto.id}>
-                    <td className="tg-0lax">{piloto.piloto}</td>
-                    <td className="tg-0lax">{piloto.velocidade}</td>
-                  </tr>
-                ))}
+                {pilotos
+                  .sort((a, b) => a.posicao - b.posicao)  // Ordena pela posição (1º, 2º, 3º)
+                  .map((piloto) => (
+                    <tr key={piloto.id}>
+                      <td className="tg-0lax">{piloto.posicao}º</td>
+                      <td className="tg-0lax">{piloto.piloto}</td>
+                      <td className="tg-0lax">{piloto.maiorVelocidade} km/h</td>
+                      <td className="tg-0lax">{piloto.ultrapassagem}</td>
+                      <td className="tg-0lax">{piloto.ultrapassado}</td>
+                    </tr>
+                 ))}
               </tbody>
             </table>
           </div>
