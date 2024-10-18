@@ -132,16 +132,20 @@ router.post('/palpite', async (req, res) => {
     // Calcula pontos adicionais com base nas regras
     pilotosOrdenados.forEach((piloto) => {
       if (piloto.ultrapassagem > 0) {
-        pontos += piloto.ultrapassagem * 10;
+        pontos += piloto.ultrapassagem * 10;  // Pontos por ultrapassagens feitas
       }
-      if (pilotos.ultrapassado > 0){
-        pontos += piloto.ultrapassado * -3; 
+
+      if (piloto.ultrapassado > 0) {
+        pontos += piloto.ultrapassado * -3;  // Desconto de pontos por ter sido ultrapassado
       }
+
+      // Pontos por maior velocidade
       if (piloto.maiorVelocidade === Math.max(...pilotos.map(p => p.maiorVelocidade))) {
         pontos += 20;  // Pontos por maior velocidade
       }
     });
 
+    // Pontos para o segundo lugar
     if (palpite === pilotosOrdenados[1].piloto) {
       pontos += 5;  // Pontos pelo segundo lugar
     }
@@ -161,6 +165,7 @@ router.post('/palpite', async (req, res) => {
     res.status(500).json({ error: 'Erro ao processar o palpite' });
   }
 });
+
 
 
 // Rota para buscar todos os pilotos
