@@ -129,7 +129,18 @@ const handleExibirResultado = async () => {
         usuarioId,
       });
   
+      // Verifica o status da corrida
+      if (response.data.status === 'em andamento') {
+        alert('Corrida em andamento. Não é possível fazer palpites.');
+        return;
+      }
+  
       if (response.data.status === 'finalizada') {
+        alert('Corrida já finalizada. Não é possível fazer palpites.');
+        return;
+      }
+  
+      if (response.data.status === 'não iniciada') {
         // Exibe o resultado com o cálculo de pontos
         setPontos(response.data.total_pontos);
         setPilotos(response.data.pilotos);
@@ -140,7 +151,7 @@ const handleExibirResultado = async () => {
             : 'Palpite incorreto, que pena... Você não ganhou nada, mas tente novamente!'
         );
       } else {
-        alert('A corrida ainda não foi finalizada. Aguarde o término para ver os resultados.');
+        alert('Status da corrida desconhecido.');
       }
     } catch (err) {
       console.error(err.response ? err.response.data : err.message);
@@ -149,6 +160,7 @@ const handleExibirResultado = async () => {
       setLoading(false);
     }
   };
+  
 
   return (
     <>
