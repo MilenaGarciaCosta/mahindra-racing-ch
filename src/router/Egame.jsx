@@ -7,7 +7,7 @@ import background from '../img/background_img.png';
 const Egame = () => {
   const [palpite, setPalpite] = useState('');
   const [pontos, setPontos] = useState(0);
-  const [pilotos, setPilotos] = useState([]);  // Armazena os pilotos para o select
+  const [pilotos, setPilotos] = useState([]);  
   const [resultadoPalpite, setResultadoPalpite] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -210,10 +210,6 @@ const handleExibirResultado = async () => {
               {loading ? 'Enviando...' : 'Enviar Palpite'}
             </button>
           </form>
-
-          <button onClick={handleExibirResultado} className="palpite-button">
-            Exibir Resultado
-          </button>
 
           <div className="resposta-palpite">
             {resultadoPalpite && <p>{resultadoPalpite}</p>}

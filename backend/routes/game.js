@@ -155,7 +155,6 @@ router.post('/palpite', async (req, res) => {
   }
 });
 
-
 // Rota para buscar todos os pilotos
 router.get('/pilotos', async (req, res) => {
   try {
