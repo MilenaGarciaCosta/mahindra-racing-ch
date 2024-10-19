@@ -1,20 +1,11 @@
 // backend/server.js
-import Usuario from './models/Usuario.js';
-import Corrida from './models/Corrida.js';
-import Palpite from './models/Palpite.js';
+
 import express from 'express';
 import cors from 'cors';
 import sequelize from './config/db.js';
 import authRoutes from './routes/auth.js';
 import gameRoutes from './routes/game.js';
-import resgateRoutes from './routes/resgate.js'; 
-
-// Associações
-Usuario.hasMany(Palpite, { foreignKey: 'usuarioId' });
-Palpite.belongsTo(Usuario, { foreignKey: 'usuarioId' });
-
-Corrida.hasMany(Palpite, { foreignKey: 'corridaId' });
-Palpite.belongsTo(Corrida, { foreignKey: 'corridaId' });
+import resgateRoutes from './routes/resgate.js'; // Import the resgate route
 
 const app = express();
 
@@ -34,8 +25,9 @@ sequelize.sync().then(() => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, '0.0.0.0', () => {
+app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
-});
+});;
+
 
 
