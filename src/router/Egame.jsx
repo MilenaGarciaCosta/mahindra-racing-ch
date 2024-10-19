@@ -51,6 +51,28 @@ const Egame = () => {
         usuarioId,
       });
   
+      alert(response.data.mensagem);
+      // Opcional: resetar o palpite ou atualizar a interface
+    } catch (err) {
+      console.error(err.response ? err.response.data : err.message);
+      alert(err.response?.data?.error || 'Erro ao enviar palpite.');
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+
+  const obterResultados = async (e) => {
+    e.preventDefault();
+  
+    setLoading(true);
+    const usuarioId = localStorage.getItem('usuarioId');
+  
+    try {
+      const response = await axios.post('http://4.228.225.124:5000/api/game/processar-palpites', {
+        usuarioId,
+      });
+  
       if (response.data.status === 'finalizada') {
         // Exibe o resultado com o cálculo de pontos
         setPontos(response.data.total_pontos);
@@ -137,15 +159,17 @@ const Egame = () => {
 
           <div className="resposta-palpite">
             {resultadoPalpite && <p>{resultadoPalpite}</p>}
+            <button onClick={obterResultados}>Ver Resultados</button>
           </div>
+
 
           {pilotos.length > 0 && (
             <div id="container-camp">
               <div id="resultado" className="bordaNeon">
-                <p className="pilotosResultado">1° lugar: {pilotos[0].piloto}, com a velocidade total de: {pilotos[0].velocidade} km/h.</p>
+                <p className="pilotosResultado">1° lugar: {pilotos[0].piloto}, com a velocidade total de: {pilotos[0].maiorVelocidade} km/h.</p>
                 {pilotos.slice(1).map((piloto) => (
                   <p className="pilotosResultado" key={piloto.id}>
-                    {piloto.posicao}º lugar: {piloto.piloto}, com a velocidade de: {piloto.velocidade} km/h.
+                    {piloto.posicao}º lugar: {piloto.piloto}, com a velocidade de: {piloto.maiorVelocidade} km/h.
                   </p>
 
                 ))}

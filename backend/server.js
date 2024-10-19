@@ -1,11 +1,20 @@
 // backend/server.js
-
+import Usuario from './models/Usuario.js';
+import Corrida from './models/Corrida.js';
+import Palpite from './models/Palpite.js';
 import express from 'express';
 import cors from 'cors';
 import sequelize from './config/db.js';
 import authRoutes from './routes/auth.js';
 import gameRoutes from './routes/game.js';
 import resgateRoutes from './routes/resgate.js'; // Import the resgate route
+
+// Associações
+Usuario.hasMany(Palpite, { foreignKey: 'usuarioId' });
+Palpite.belongsTo(Usuario, { foreignKey: 'usuarioId' });
+
+Corrida.hasMany(Palpite, { foreignKey: 'corridaId' });
+Palpite.belongsTo(Corrida, { foreignKey: 'corridaId' });
 
 const app = express();
 

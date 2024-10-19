@@ -28,6 +28,9 @@ const Usuario = sequelize.define('Usuario', {
   timestamps: false  // Desativa createdAt e updatedAt
 });
 
+// Associações
+Usuario.hasMany(Palpite, { foreignKey: 'usuarioId' });
+
 export default Usuario;
 
 
