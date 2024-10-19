@@ -1,194 +1,111 @@
+// backend/routes/auth.js
+
 import express from 'express';
 import Usuario from '../models/Usuario.js';
-import Corrida from '../models/Corrida.js'; 
+import { Sequelize } from 'sequelize';
 
 const router = express.Router();
 
-// Rota para enviar palpite
-/*router.post('/palpite', async (req, res) => {
-  const { palpite, usuarioId } = req.body;
+// Função auxiliar para gerar um código único de 6 caracteres
+const generateUniqueCode = async () => {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let code;
+  let exists = true;
+  while (exists) {
+    code = '';
+    for (let i = 0; i < 6; i++) {
+      code += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    // Verifica se o código já existe
+    const user = await Usuario.findOne({ where: { codigo_unico: code } });
+    if (!user) {
+      exists = false;
+    }
+  }
+  return code;
+};
+
+// Rota para cadastro sem criptografia de senha
+router.post('/register', async (req, res) => {
+  const { email, senha, codigo_divulgacao } = req.body;
+
+  // Inicia uma transação para garantir atomicidade
+  const transaction = await Usuario.sequelize.transaction();
+  try {
+    let referrer = null;
+    let pontosUsuario = 0; // Padrão para novos usuários
+
+    // Se um código de divulgação foi fornecido, verifica sua validade
+    if (codigo_divulgacao) {
+      referrer = await Usuario.findOne({ where: { codigo_unico: codigo_divulgacao }, transaction });
+      if (!referrer) {
+        await transaction.rollback();
+        return res.status(400).json({ error: 'Código de divulgação inválido' });
+      }
+      pontosUsuario = 100; // Usuário recebe 100 pontos ao usar um código válido
+    }
+
+    // Gera um código único para o novo usuário
+    const codigo_unico = await generateUniqueCode();
+
+    // Cria o novo usuário
+    const novoUsuario = await Usuario.create({
+      email,
+      senha,
+      codigo_unico,
+      codigo_divulgacao: codigo_divulgacao || null,
+      pontos: pontosUsuario, // Define pontos com base na utilização do código
+    }, { transaction });
+
+    // Se houver um referrer válido, atualiza os pontos
+    if (referrer) {
+      referrer.pontos += 100;
+      await referrer.save({ transaction });
+    }
+
+    // Confirma a transação
+    await transaction.commit();
+
+    // Retorna o novo usuário com o código único
+    res.status(201).json({
+      id: novoUsuario.id,
+      email: novoUsuario.email,
+      pontos: novoUsuario.pontos,
+      codigo_unico: novoUsuario.codigo_unico,
+      codigo_divulgacao: novoUsuario.codigo_divulgacao,
+    });
+  } catch (error) {
+    // Em caso de erro, desfaz a transação
+    await transaction.rollback();
+    res.status(400).json({ error: 'Erro ao criar usuário', details: error.message });
+  }
+});
+
+// Rota para login sem verificação de hash de senha
+router.post('/login', async (req, res) => {
+  const { email, senha } = req.body;
 
   try {
-    const usuario = await Usuario.findByPk(usuarioId);
+    // Busca o usuário no banco de dados
+    const usuario = await Usuario.findOne({ where: { email } });
 
     if (!usuario) {
       return res.status(404).json({ error: 'Usuário não encontrado' });
     }
 
-    // Busca os dados dos pilotos da tabela Corridas
-    let pilotos = await Corrida.findAll();
-
-    // Verifica se há pilotos cadastrados
-    if (pilotos.length === 0) {
-      return res.status(404).json({ error: 'Nenhum piloto encontrado na tabela Corridas' });
+    // Verifica se a senha fornecida corresponde à do banco de dados
+    if (senha !== usuario.senha) {
+      return res.status(401).json({ error: 'Senha incorreta' });
     }
 
-    // Converte para um array simples de objetos
-    pilotos = pilotos.map(piloto => piloto.toJSON());
-
-    // Ordena os pilotos pela velocidade em ordem decrescente
-    const pilotosOrdenados = pilotos.sort((a, b) => b.velocidade - a.velocidade);
-
-    // Adiciona a posição a cada piloto
-    pilotosOrdenados.forEach((piloto, index) => {
-      piloto.posicao = index + 1;
-    });
-
-    // Define o vencedor (o piloto na primeira posição)
-    const pilotoVencedor = pilotosOrdenados[0].piloto; // Nome do piloto vencedor
-
-    let pontos = 0;
-
-    // Se o palpite for igual ao nome do piloto vencedor, o usuário ganha 10 pontos
-    if (palpite === pilotoVencedor) {
-      pontos = 10;
-    }
-
-    // Atualiza os pontos do usuário
-    usuario.pontos += pontos;
-    await usuario.save();
-
-    res.json({
-      mensagem: `Palpite ${palpite === pilotoVencedor ? 'correto' : 'incorreto'}`,
-      pontos_ganhos: pontos,
-      total_pontos: usuario.pontos,
-      pilotos: pilotosOrdenados // Inclui os pilotos ordenados na resposta
-    });
-
+    res.json({ mensagem: 'Login bem-sucedido', usuarioId: usuario.id });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Erro no servidor ao processar o palpite' });
-  }
-});*/
-
-router.post('/palpite', async (req, res) => { // cálculo
-  const { palpite, usuarioId } = req.body;
-
-  try {
-    const usuario = await Usuario.findByPk(usuarioId);
-
-    if (!usuario) {
-      return res.status(404).json({ error: 'Usuário não encontrado' });
-    }
-
-    // Verifica o status da corrida
-    const corrida = await Corrida.findOne({ where: { status: 'finalizada' } });
-
-    if (!corrida) {
-      return res.json({ status: 'em andamento' });
-    }
-
-    // Obtém os pilotos
-    let pilotos = await Corrida.findAll();
-
-    if (pilotos.length === 0) {
-      return res.status(404).json({ error: 'Nenhum piloto encontrado na tabela Corridas' });
-    }
-
-    // Converter valores para números
-    pilotos = pilotos.map((piloto) => {
-      const p = piloto.toJSON();
-      p.maiorVelocidade = Number(p.maiorVelocidade);
-      p.ultrapassagem = Number(p.ultrapassagem);
-      p.ultrapassado = Number(p.ultrapassado);
-      return p;
-    });
-
-    // Encontrar a maior velocidade entre os pilotos
-    const maiorVelocidade = Math.max(...pilotos.map(p => p.maiorVelocidade));
-
-    // Calcular pontos para cada piloto (sem alterar a posição)
-    pilotos.forEach(piloto => {
-      piloto.pontos = 0;
-
-      // Pontos por ultrapassagens
-      if (piloto.ultrapassagem > 0) {
-        piloto.pontos += piloto.ultrapassagem * 10;
-      }
-
-      // Subtrair pontos se foi ultrapassado
-      if (piloto.ultrapassado > 0) {
-        piloto.pontos -= piloto.ultrapassado * 3;
-      }
-
-      // Pontos extras pela maior velocidade
-      if (piloto.maiorVelocidade === maiorVelocidade) {
-        piloto.pontos += 20; // Adiciona 20 pontos pela maior velocidade
-      }
-    });
-
-    // Ordenar os pilotos pelos pontos (do maior para o menor)
-    const pilotosOrdenados = [...pilotos].sort((a, b) => b.pontos - a.pontos);
-
-    // Encontra o piloto correspondente ao palpite do usuário
-    const pilotoDoPalpite = pilotos.find(piloto => piloto.piloto === palpite);
-
-    if (!pilotoDoPalpite) {
-      return res.status(404).json({ error: 'Piloto não encontrado' });
-    }
-
-    let pontos = 0;
-
-    // Pontos pela posição (usando a posição original do banco de dados)
-    if (pilotoDoPalpite.posicao === 1) {
-      pontos += 25; // Pontos pelo primeiro lugar
-    } else if (pilotoDoPalpite.posicao === 2) {
-      pontos += 5; // Pontos pelo segundo lugar
-    }
-
-    // Pontos do piloto escolhido (já calculados)
-    pontos += pilotoDoPalpite.pontos;
-
-    // Atualiza os pontos do usuário e salva
-    usuario.pontos += pontos;
-    await usuario.save();
-
-    res.json({
-      status: 'finalizada',
-      mensagem: `Palpite ${pilotoDoPalpite.posicao === 1 ? 'correto' : 'incorreto'}`,
-      pontos_ganhos: pontos,
-      total_pontos: usuario.pontos,
-      pilotos: pilotosOrdenados,
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Erro ao processar o palpite' });
-  }
-});
-
-
-router.get('/status', async (req, res) => {
-  try {
-    const corrida = await Corrida.findOne({
-      where: { status: 'finalizada' }
-    });
-
-    if (!corrida) {
-      return res.json({ status: 'em andamento' });
-    }
-
-    res.json({ status: 'finalizada' });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Erro no servidor ao verificar o status da corrida' });
-  }
-});
-
-
-// Rota para buscar todos os pilotos
-router.get('/pilotos', async (req, res) => {
-  try {
-    const pilotos = await Corrida.findAll({
-      attributes: ['posicao', 'piloto', 'maiorVelocidade', 'ultrapassagem', 'ultrapassado']  // Colunas que deseja buscar
-    });
-    res.json({ pilotos });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Erro ao buscar pilotos' });
+    res.status(500).json({ error: 'Erro no servidor' });
   }
 });
 
 export default router;
+
 
 
 

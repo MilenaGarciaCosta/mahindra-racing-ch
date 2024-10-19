@@ -5,6 +5,8 @@ import Logo from "../img/Vigil Race logo-prata.svg"
 import profileIcon from "../img/profile-icon.png"
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import { useNavigate } from 'react-router-dom'; // Correta importação de useNavigate
+import { useEffect, useState } from 'react'; // Correta importação de useEffect e useState
 
 const navigation = [
   { name: 'Home', href: '/' },
@@ -13,6 +15,7 @@ const navigation = [
   { name: 'Egame', href: '/egame' },
   { name: 'Loja', href: '/loja' },
 ]
+
 const userNavigation = [
   { name: 'Meu perfil', href: '/perfil' },
 ]
@@ -20,7 +23,26 @@ const userNavigation = [
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
+
 const Nav = () => {
+  const navigate = useNavigate(); // Inicializando o hook useNavigate
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado para verificar se o usuário está logado
+
+  // Verifica se o usuário está logado ao carregar o componente
+  useEffect(() => {
+    const usuarioId = localStorage.getItem('usuarioId'); // Verifica se há um usuário no localStorage
+    setIsLoggedIn(!!usuarioId); // Atualiza o estado de login
+  }, []);
+
+  // Função para lidar com o clique no perfil
+  const handleProfileClick = () => {
+    if (isLoggedIn) {
+      navigate('/perfil'); // Se o usuário estiver logado, redireciona para o perfil
+    } else {
+      navigate('/login'); // Se não estiver logado, redireciona para o login
+    }
+  };
+
   return (
     <>
       <div className="navbarFixed">
@@ -45,15 +67,10 @@ const Nav = () => {
                     </a>
                   ))}
 
-                  {userNavigation.map((item) => (
-                  <DisclosureButton
-                    key={item.name}
-                    as="a"
-                    href={item.href}
-                  >
-                    <img src={profileIcon} className="h-8" />
+                  {/* Verificação de login para redirecionamento */}
+                  <DisclosureButton as="button" onClick={handleProfileClick}>
+                    <img src={profileIcon} className="h-8" alt="Profile" />
                   </DisclosureButton>
-                ))}
                 </div>
               </div>
               <div className="-mr-2 flex md:hidden">
@@ -84,16 +101,10 @@ const Nav = () => {
             </div>
             <div className="border-t border-gray-700 pb-3 pt-4">
               <div className="space-y-1 px-2 text-right">
-                {userNavigation.map((item) => (
-                  <DisclosureButton
-                    key={item.name}
-                    as="a"
-                    href={item.href}
-                    className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-                  >
-                    {item.name}
-                  </DisclosureButton>
-                ))}
+                {/* Verificação de login para o menu móvel */}
+                <DisclosureButton as="button" onClick={handleProfileClick} className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">
+                  <img src={profileIcon} className="h-8" alt="Profile" />
+                </DisclosureButton>
               </div>
             </div>
           </DisclosurePanel>
