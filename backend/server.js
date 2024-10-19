@@ -7,7 +7,7 @@ import cors from 'cors';
 import sequelize from './config/db.js';
 import authRoutes from './routes/auth.js';
 import gameRoutes from './routes/game.js';
-import resgateRoutes from './routes/resgate.js'; // Import the resgate route
+import resgateRoutes from './routes/resgate.js'; 
 
 // Associações
 Usuario.hasMany(Palpite, { foreignKey: 'usuarioId' });
