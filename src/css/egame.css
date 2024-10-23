@@ -50,12 +50,16 @@ tbody .tg-0lax {
 }
 
 .palpite-form {
-  width: 100%;
+  display: flex;
+  align-items: start;
+  gap: 40px;
+  text-align: center;
+}
+
+.palpite-container{
   display: flex;
   justify-content: center;
-  align-items: baseline;
   gap: 20px;
-  text-align: center;
 }
 
 .palpite-select {
@@ -81,6 +85,14 @@ tbody .tg-0lax {
   transition: background-color 0.3s ease;
   text-transform: uppercase;
   font-family: var(--fonte-Quantico);
+  height: 43px;
+}
+
+.resultado-button{
+  border: 1px solid var(--vermelho);
+  border-radius: 5px;
+  padding: 10px 15px;
+  height: 43px;
 }
 
 .palpite-button:hover {
@@ -90,12 +102,11 @@ tbody .tg-0lax {
 
 #resultado {
   width: 850px;
-
   border-radius: 10px;
   border-color: var(--vermelho);
   box-shadow: 1px 0px 27px 3px rgba(255, 0, 0, 0.37);
   -webkit-box-shadow: 1px 0px 27px 3px rgba(255, 0, 0, 0.37);
-  -moz-box-shadow: 1px 0px 27px 3px rgba(255, 0, 0, 0.37));
+  -moz-box-shadow: 1px 0px 27px 3px rgba(255, 0, 0, 0.37);
   padding: 20px;
   margin-top: 20px;
   font-size: 18px;
