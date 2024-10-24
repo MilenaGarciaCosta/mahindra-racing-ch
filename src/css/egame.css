@@ -6,6 +6,9 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
+  width: 90vw;
+  overflow:auto;
+  margin-bottom: 30px;
 }
 
 .tg-0lax {
@@ -47,19 +50,25 @@ tbody .tg-0lax {
 
 .race-space {
   margin: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .palpite-form {
   display: flex;
   align-items: start;
+  flex-wrap: wrap;
   gap: 40px;
   text-align: center;
+  justify-content: center;
 }
 
 .palpite-container{
   display: flex;
   justify-content: center;
   gap: 20px;
+  flex-wrap: wrap;
 }
 
 .palpite-select {
@@ -93,6 +102,7 @@ tbody .tg-0lax {
   border-radius: 5px;
   padding: 10px 15px;
   height: 43px;
+  text-transform: uppercase;
 }
 
 .palpite-button:hover {
@@ -136,6 +146,11 @@ tbody .tg-0lax {
 
 #resultado p:nth-child(n+2) {
   animation-delay: 0.4s;
+}
+
+#grafico-corrida{
+  height: 500px;
+  margin-top: 50px;
 }
 
 @keyframes fadeInUp {
