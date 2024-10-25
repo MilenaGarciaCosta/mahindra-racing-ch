@@ -16,8 +16,6 @@ import Tickets from './router/Tickets.jsx';
 import Forum from './router/Forum.jsx';
 import Perfil from './router/Perfil.jsx';
 
-import Teste from'./router/Testinho.jsx';
-
 const router = createBrowserRouter([
   {
     //Elementos Pai
@@ -38,7 +36,6 @@ const router = createBrowserRouter([
       {path: '/tickets', element: <Tickets/>},
       {path: '/forum', element: <Forum/>},
       {path: '/perfil', element: <Perfil/>},
-      {path: '/teste', element: <Teste/>},
     ]
   }
 ])

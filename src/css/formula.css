@@ -98,6 +98,7 @@ h2{
   display: flex;
   flex-direction: column;
   gap: 25px;
+
 }
 
 .texto-inicial, .texto-motor{
@@ -162,5 +163,11 @@ h2{
 @media (max-width: 1310px) {
   .container-info{
     justify-content: center;
+  }
+}
+
+@media (min-width: 1366px) {
+  .imagem-carro{
+    width: 32vw;
   }
 }

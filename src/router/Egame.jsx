@@ -1,14 +1,14 @@
 import "../css/egame.css";
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import background from '../img/background_img.png';
+import axios from "axios";
+import background from "../img/background_img.png";
 
 const Egame = () => {
-  const [palpite, setPalpite] = useState('');
+  const [palpite, setPalpite] = useState("");
   const [pontos, setPontos] = useState(0);
-  const [pilotos, setPilotos] = useState([]);  // Armazena os pilotos para o select
-  const [resultadoPalpite, setResultadoPalpite] = useState('');
+  const [pilotos, setPilotos] = useState([]); // Armazena os pilotos para o select
+  const [resultadoPalpite, setResultadoPalpite] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -24,94 +24,102 @@ const Egame = () => {
   useEffect(() => {
     const fetchPilotos = async () => {
       try {
-        const response = await axios.get('http://4.228.225.124:5000/api/game/pilotos'); // Nova rota para buscar pilotos
-        setPilotos(response.data.pilotos);  // Atualiza a lista de pilotos no estado
+        const response = await axios.get(
+          "http://4.228.225.124:5000/api/game/pilotos"
+        ); // Nova rota para buscar pilotos
+        setPilotos(response.data.pilotos); // Atualiza a lista de pilotos no estado
       } catch (err) {
         console.error(err);
-        alert('Erro ao buscar pilotos');
+        alert("Erro ao buscar pilotos");
       }
     };
 
-    fetchPilotos();  // Chama a função ao carregar o componente
+    fetchPilotos(); // Chama a função ao carregar o componente
   }, []);
 
   // Função para salvar palpite localmente
-const handlePalpite = async (e) => {
-  e.preventDefault();
-  if (!palpite) {
-    alert('Por favor, selecione um piloto!');
-    return;
-  }
-  localStorage.setItem('palpite', palpite);
-  alert('Palpite salvo localmente! Agora aguarde o resultado.');
-};
-
-// Função para exibir resultado e calcular pontos
-const handleExibirResultado = async () => {
-  setLoading(true);
-  const usuarioId = localStorage.getItem('usuarioId');
-  const palpiteLocal = localStorage.getItem('palpite');
-
-  try {
-    const response = await axios.get('http://4.228.225.124:5000/api/game/status');
-
-    if (response.data.status === 'finalizada') {
-      // Realiza o cálculo de pontos baseado nas regras definidas
-      const resultado = await axios.post('http://4.228.225.124:5000/api/game/palpite', {
-        palpite: palpiteLocal,
-        usuarioId,
-      });
-
-      setPontos(resultado.data.total_pontos);
-      setPilotos(resultado.data.pilotos);
-
-      setResultadoPalpite(resultado.data.pontos_ganhos > 0 
-        ? `+${resultado.data.pontos_ganhos} pontos foram atualizados ao seu saldo.`
-        : 'Palpite incorreto, que pena... Você não ganhou nada, mas tente novamente!'
-      );
-    } else {
-      alert('A corrida ainda não foi finalizada.');
-    }
-  } catch (err) {
-    console.error(err.response ? err.response.data : err.message);
-    alert('Erro ao verificar o status da corrida');
-  } finally {
-    setLoading(false);
-  }
-};
-
- /* const handleSubmit = async (e) => {
+  const handlePalpite = async (e) => {
     e.preventDefault();
     if (!palpite) {
-      alert('Por favor, selecione um piloto!');
+      alert("Por favor, selecione um piloto!");
       return;
     }
+    localStorage.setItem("palpite", palpite);
+    alert("Palpite salvo localmente! Agora aguarde o resultado.");
+  };
 
+  // Função para exibir resultado e calcular pontos
+  const handleExibirResultado = async () => {
     setLoading(true);
-    const usuarioId = localStorage.getItem('usuarioId');
+    const usuarioId = localStorage.getItem("usuarioId");
+    const palpiteLocal = localStorage.getItem("palpite");
 
     try {
-      const response = await axios.post('http://4.228.225.124:5000/api/game/palpite', {
-        palpite,
-        usuarioId
-      });
+      const response = await axios.get(
+        "http://4.228.225.124:5000/api/game/status"
+      );
 
-      setPontos(response.data.total_pontos);
-      setPilotos(response.data.pilotos);  // Atualiza os pilotos na tabela de resultados
+      if (response.data.status === "finalizada") {
+        // Realiza o cálculo de pontos baseado nas regras definidas
+        const resultado = await axios.post(
+          "http://4.228.225.124:5000/api/game/palpite",
+          {
+            palpite: palpiteLocal,
+            usuarioId,
+          }
+        );
 
-      if (response.data.pontos_ganhos > 0) {
-        setResultadoPalpite(`+10 pontos foram atualizados ao seu saldo. Agora seu saldo total atual é ${response.data.total_pontos}`);
+        setPontos(resultado.data.total_pontos);
+        setPilotos(resultado.data.pilotos);
+
+        setResultadoPalpite(
+          resultado.data.pontos_ganhos > 0
+            ? `+${resultado.data.pontos_ganhos} pontos foram atualizados ao seu saldo.`
+            : "Palpite incorreto, que pena... Você não ganhou nada, mas tente novamente!"
+        );
       } else {
-        setResultadoPalpite('Palpite incorreto, que pena... Você não ganhou nada, mas tente novamente!');
+        alert("A corrida ainda não foi finalizada.");
       }
-
     } catch (err) {
       console.error(err.response ? err.response.data : err.message);
-      alert('Erro ao enviar palpite');
+      alert("Erro ao verificar o status da corrida");
     } finally {
       setLoading(false);
     }
-  };*/
+  };
+
+  /* const handleSubmit = async (e) => {
+       e.preventDefault();
+       if (!palpite) {
+         alert('Por favor, selecione um piloto!');
+         return;
+       }
+   
+       setLoading(true);
+       const usuarioId = localStorage.getItem('usuarioId');
+   
+       try {
+         const response = await axios.post('http://4.228.225.124:5000/api/game/palpite', {
+           palpite,
+           usuarioId
+         });
+   
+         setPontos(response.data.total_pontos);
+         setPilotos(response.data.pilotos);  // Atualiza os pilotos na tabela de resultados
+   
+         if (response.data.pontos_ganhos > 0) {
+           setResultadoPalpite(`+10 pontos foram atualizados ao seu saldo. Agora seu saldo total atual é ${response.data.total_pontos}`);
+         } else {
+           setResultadoPalpite('Palpite incorreto, que pena... Você não ganhou nada, mas tente novamente!');
+         }
+   
+       } catch (err) {
+         console.error(err.response ? err.response.data : err.message);
+         alert('Erro ao enviar palpite');
+       } finally {
+         setLoading(false);
+       }
+     };*/
 
   return (
     <>
@@ -121,11 +129,11 @@ const handleExibirResultado = async () => {
 
       <section className="egame">
         <div className="titulo-container">
-          <h2>E-game</h2>
+          <h2>E game</h2>
         </div>
         <div className="race-space">
           <div id="tabela-container">
-            <h1 id="race-last"> RESULTADO CORRIDA PASSADA</h1>
+            <h1 id="race-last"> ESTATÍSTICAS DA CORRIDA PASSADA</h1>
             <table className="tg">
               <thead>
                 <tr>
@@ -138,7 +146,7 @@ const handleExibirResultado = async () => {
               </thead>
               <tbody>
                 {pilotos
-                  .sort((a, b) => a.posicao - b.posicao)  // Ordena pela posição (1º, 2º, 3º)
+                  .sort((a, b) => a.posicao - b.posicao) // Ordena pela posição (1º, 2º, 3º)
                   .map((piloto) => (
                     <tr key={piloto.id}>
                       <td className="tg-0lax">{piloto.posicao}º</td>
@@ -147,36 +155,46 @@ const handleExibirResultado = async () => {
                       <td className="tg-0lax">{piloto.ultrapassagem}</td>
                       <td className="tg-0lax">{piloto.ultrapassado}</td>
                     </tr>
-                 ))}
+                  ))}
               </tbody>
             </table>
           </div>
 
           <h2 id="race-last">Faça seu palpite!</h2>
-          <form onSubmit={handlePalpite} className="palpite-form">
-            <select
-              name="seletor3"
-              id="seletor3"
-              value={palpite}
-              onChange={(e) => setPalpite(e.target.value)}
-              className="palpite-select"
+
+          <div className="palpite-container">
+            <form onSubmit={handlePalpite} className="palpite-form">
+              <select
+                name="seletor3"
+                id="seletor3"
+                value={palpite}
+                onChange={(e) => setPalpite(e.target.value)}
+                className="palpite-select"
+              >
+                <option value="">Selecione o piloto</option>
+                {pilotos.map((piloto) => (
+                  <option key={piloto.id} value={piloto.piloto}>
+                    {piloto.piloto}
+                  </option>
+                ))}
+              </select>
+
+              <button
+                type="submit"
+                className="palpite-button"
+                disabled={loading}
+              >
+                {loading ? "Analisando..." : "Confirmar"}
+              </button>
+            </form>
+
+            <button
+              onClick={handleExibirResultado}
+              className="resultado-button"
             >
-              <option value="">Selecione o piloto</option>
-              {pilotos.map((piloto) => (
-                <option key={piloto.id} value={piloto.piloto}>
-                  {piloto.piloto}
-                </option>
-              ))}
-            </select>
-
-            <button type="submit" className="palpite-button" disabled={loading}>
-              {loading ? 'Enviando...' : 'Enviar Palpite'}
+              Resultado
             </button>
-          </form>
-
-          <button onClick={handleExibirResultado} className="palpite-button">
-            Exibir Resultado
-          </button>
+          </div>
 
           <div className="resposta-palpite">
             {resultadoPalpite && <p>{resultadoPalpite}</p>}
@@ -185,27 +203,31 @@ const handleExibirResultado = async () => {
           {pilotos.length > 0 && (
             <div id="container-camp">
               <div id="resultado" className="bordaNeon">
-                <p className="pilotosResultado">1° lugar: {pilotos[0].piloto}, com a velocidade total de: {pilotos[0].velocidade} km/h.</p>
+                <p className="pilotosResultado">
+                  1° lugar: {pilotos[0].piloto}, com a velocidade total de:{" "}
+                  {pilotos[0].velocidade} km/h.
+                </p>
                 {pilotos.slice(1).map((piloto) => (
                   <p className="pilotosResultado" key={piloto.id}>
-                    {piloto.posicao}º lugar: {piloto.piloto}, com a velocidade de: {piloto.velocidade} km/h.
+                    {piloto.posicao}º lugar: {piloto.piloto}, com a velocidade
+                    de: {piloto.velocidade} km/h.
                   </p>
-
                 ))}
               </div>
             </div>
           )}
-
         </div>
+
+        <h1 id="race-last"> ESTATÍSTICAS DA DA CORRIDA ATUAL</h1>
         <div id="grafico-corrida">
           <iframe
             src="http://4.228.225.124:1880/ui"
-            style={{ width: '100%', height: '100%', border: 'none' }}
+            style={{ width: "100%", height: "100%", border: "none" }}
             title="Node-RED Dashboard"
           />
         </div>
 
-        <h2 id="race-last">Aprenda como jogar o Egame</h2>
+        <h2 id="race-last">Como jogar o E game</h2>
         <div className="container-home">
           <div className="parent">
             <div className="card">
@@ -242,7 +264,7 @@ const handleExibirResultado = async () => {
               </div>
               <div className="glass" />
               <div className="content">
-                <span className="title">Confiar</span>
+                <span className="title">Torcer</span>
                 <span className="text">
                   Selecione um corredor e confirme seu chute
                 </span>
@@ -278,4 +300,3 @@ const handleExibirResultado = async () => {
 };
 
 export default Egame;
-

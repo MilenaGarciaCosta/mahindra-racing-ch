@@ -7,9 +7,10 @@
     margin-top: 50px;
 }
 
-.asideContainer, .codigoDivulgacaoContainer{
+.asideContainer, .codigoDivulgacaoContainer, .saldoContaianer{
     border-radius: 8px;
     padding: 15px;
+    background-color: rgba(10, 7, 29, 0.733);
 }
 
 .codigoDivulgacaoContainer .containerCodigoTitulo{
