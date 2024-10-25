@@ -1,6 +1,8 @@
 import { useRef, useState, useEffect } from "react";
 import "../css/chat.css";
 
+const forbiddenWords = ["puta", "viado", "filho da puta", "vagabundo", "safado"]; // Teste para filtro de palavras
+
 export default function Chat({ socket }) {
   /*const bottomRef = useRef(null);*/
   const messageRef = useRef();
@@ -21,6 +23,15 @@ export default function Chat({ socket }) {
   const handleSubmit = () => {
     const message = messageRef.current.value;
     if (!message.trim()) return;
+
+    const containsForbiddenWords = forbiddenWords.some((word) =>
+      message.toLowerCase().includes(word)
+    );
+    if (containsForbiddenWords) {
+      alert("Sua mensagem não foi inviada por conter palavras inapropriadas.");
+      return;
+    }
+
     socket.emit("message", message);
     clearInput();
   };
@@ -44,10 +55,11 @@ export default function Chat({ socket }) {
       <div className="chatMaster">
         <div className="chat-body">
           {messageList.map((message, index) => {
-
             return (
               <div
-                className={`message-container ${message.authorId === socket.id ? "message-mine" : ""}`}
+                className={`message-container ${
+                  message.authorId === socket.id ? "message-mine" : ""
+                }`}
                 key={index}
               >
                 <div className="message-author">
