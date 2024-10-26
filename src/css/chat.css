@@ -10,6 +10,7 @@
   border-radius: 10px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   padding: 0 15px;
 }
 
