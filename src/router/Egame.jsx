@@ -162,7 +162,6 @@ const Egame = () => {
             {resultadoPalpite && <p>{resultadoPalpite}</p>}
           </div>
 
-          // Exibição dos pilotos com base na quantidade de voltas completadas
           {pilotos.length > 0 && (
             <div id="container-camp">
               <div id="resultado" className="bordaNeon">

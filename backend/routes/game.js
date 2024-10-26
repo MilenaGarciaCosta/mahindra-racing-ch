@@ -94,7 +94,7 @@ router.get('/status', async (req, res) => {
 router.get('/pilotos', async (req, res) => {
   try {
     const voltas = await voltas.findAll({
-      attributes: ['piloto', 'voltas']  // Ajuste as colunas conforme o banco
+      attributes: ['piloto', 'voltas']  
     });
     res.json({ pilotos: voltas });
   } catch (error) {
