@@ -88,12 +88,45 @@ const Egame = () => {
     }
   };
 
+  /* const handleSubmit = async (e) => {
+       e.preventDefault();
+       if (!palpite) {
+         alert('Por favor, selecione um piloto!');
+         return;
+       }
+   
+       setLoading(true);
+       const usuarioId = localStorage.getItem('usuarioId');
+   
+       try {
+         const response = await axios.post('http://4.228.225.124:5000/api/game/palpite', {
+           palpite,
+           usuarioId
+         });
+   
+         setPontos(response.data.total_pontos);
+         setPilotos(response.data.pilotos);  // Atualiza os pilotos na tabela de resultados
+   
+         if (response.data.pontos_ganhos > 0) {
+           setResultadoPalpite(`+10 pontos foram atualizados ao seu saldo. Agora seu saldo total atual é ${response.data.total_pontos}`);
+         } else {
+           setResultadoPalpite('Palpite incorreto, que pena... Você não ganhou nada, mas tente novamente!');
+         }
+   
+       } catch (err) {
+         console.error(err.response ? err.response.data : err.message);
+         alert('Erro ao enviar palpite');
+       } finally {
+         setLoading(false);
+       }
+     };*/
+
   return (
     <>
       <div id="backgroundImg">
         <img src={background} />
       </div>
-  
+
       <section className="egame">
         <div className="titulo-container">
           <h2>E game</h2>
@@ -106,24 +139,29 @@ const Egame = () => {
                 <tr>
                   <th className="tg-0lax">Posição</th>
                   <th className="tg-0lax">Piloto</th>
-                  <th className="tg-0lax">Voltas</th>
+                  <th className="tg-0lax">Maior Velocidade</th>
+                  <th className="tg-0lax">Ultrapassagens</th>
+                  <th className="tg-0lax">Ultrapassado</th>
                 </tr>
               </thead>
               <tbody>
                 {pilotos
-                  .map((piloto, index) => (
+                  .sort((a, b) => a.posicao - b.posicao) // Ordena pela posição (1º, 2º, 3º)
+                  .map((piloto) => (
                     <tr key={piloto.id}>
-                      <td className="tg-0lax">{index + 1}º</td>
+                      <td className="tg-0lax">{piloto.posicao}º</td>
                       <td className="tg-0lax">{piloto.piloto}</td>
-                      <td className="tg-0lax">{piloto.voltas}</td>
+                      <td className="tg-0lax">{piloto.maiorVelocidade} km/h</td>
+                      <td className="tg-0lax">{piloto.ultrapassagem}</td>
+                      <td className="tg-0lax">{piloto.ultrapassado}</td>
                     </tr>
                   ))}
               </tbody>
             </table>
           </div>
-  
+
           <h2 id="race-last">Faça seu palpite!</h2>
-  
+
           <div className="palpite-container">
             <form onSubmit={handlePalpite} className="palpite-form">
               <select
@@ -140,7 +178,7 @@ const Egame = () => {
                   </option>
                 ))}
               </select>
-  
+
               <button
                 type="submit"
                 className="palpite-button"
@@ -149,7 +187,7 @@ const Egame = () => {
                 {loading ? "Analisando..." : "Confirmar"}
               </button>
             </form>
-  
+
             <button
               onClick={handleExibirResultado}
               className="resultado-button"
@@ -157,7 +195,7 @@ const Egame = () => {
               Resultado
             </button>
           </div>
-  
+
           <div className="resposta-palpite">
             {resultadoPalpite && <p>{resultadoPalpite}</p>}
           </div>
@@ -166,17 +204,18 @@ const Egame = () => {
             <div id="container-camp">
               <div id="resultado" className="bordaNeon">
                 <p className="pilotosResultado">
-                  1° lugar: {pilotos[0].piloto}, com {pilotos[0].voltas} voltas completadas.
+                  1° lugar: {pilotos[0].piloto}, com a velocidade total de:{" "}
+                  {pilotos[0].velocidade} km/h.
                 </p>
-                {pilotos.slice(1).map((piloto, index) => (
+                {pilotos.slice(1).map((piloto) => (
                   <p className="pilotosResultado" key={piloto.id}>
-                    {index + 2}º lugar: {piloto.piloto}, com {piloto.voltas} voltas completadas.
+                    {piloto.posicao}º lugar: {piloto.piloto}, com a velocidade
+                    de: {piloto.velocidade} km/h.
                   </p>
                 ))}
               </div>
             </div>
           )}
-
         </div>
 
         <h1 id="race-last"> ESTATÍSTICAS DA DA CORRIDA ATUAL</h1>
