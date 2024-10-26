@@ -20,25 +20,27 @@ router.post('/palpite', async (req, res) => {
       return res.json({ status: 'em andamento' });
     }
 
-    // Obtém os dados de voltas dos pilotos (usando 'voltas' como nome da tabela)
-    let voltas = await voltas.findAll(); // Nome da tabela é 'voltas' em minúsculas
+    // Obtém os dados dos pilotos e suas voltas diretamente da tabela Corrida
+    const pilotos = await Corrida.findAll({
+      attributes: ['piloto', 'voltas'],
+    });
 
-    if (voltas.length === 0) {
+    if (pilotos.length === 0) {
       return res.status(404).json({ error: 'Nenhum dado de voltas encontrado' });
     }
 
     // Calcula os pontos e organiza os pilotos de acordo com o número de voltas
-    const pilotos = voltas.map(volta => ({
-      piloto: volta.piloto,
-      voltas: volta.voltas, // 'voltas' aqui é a quantidade de voltas do piloto
-      pontos: volta.voltas * 10 // Cada volta vale 10 pontos
+    const pilotosComPontos = pilotos.map(piloto => ({
+      piloto: piloto.piloto,
+      voltas: piloto.voltas,
+      pontos: piloto.voltas * 10, // Cada volta vale 10 pontos
     }));
 
     // Ordena os pilotos pelos pontos, do maior para o menor
-    const pilotosOrdenados = [...pilotos].sort((a, b) => b.pontos - a.pontos);
+    const pilotosOrdenados = [...pilotosComPontos].sort((a, b) => b.pontos - a.pontos);
 
     // Encontra o piloto correspondente ao palpite do usuário
-    const pilotoDoPalpite = pilotos.find(piloto => piloto.piloto === palpite);
+    const pilotoDoPalpite = pilotosComPontos.find(piloto => piloto.piloto === palpite);
 
     if (!pilotoDoPalpite) {
       return res.status(404).json({ error: 'Piloto não encontrado' });
@@ -76,7 +78,7 @@ router.post('/palpite', async (req, res) => {
 router.get('/status', async (req, res) => {
   try {
     const corrida = await Corrida.findOne({
-      where: { status: 'finalizada' }
+      where: { status: 'finalizada' },
     });
 
     if (!corrida) {
@@ -90,20 +92,18 @@ router.get('/status', async (req, res) => {
   }
 });
 
-// Rota para buscar todos os pilotos e suas voltas
+// Rota para buscar todos os pilotos e suas voltas diretamente da tabela Corrida
 router.get('/pilotos', async (req, res) => {
   try {
-    const voltas = await voltas.findAll({
-      attributes: ['piloto', 'voltas']  
+    const pilotos = await Corrida.findAll({
+      attributes: ['piloto', 'voltas'],
     });
-    res.json({ pilotos: voltas });
+    res.json({ pilotos });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Erro ao buscar pilotos' });
   }
 });
-
-
 
 export default router;
 
